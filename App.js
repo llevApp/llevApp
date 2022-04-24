@@ -1,28 +1,11 @@
-import * as React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import SplashScreen from './src/pages/Home/SplashScreen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 export default function App() {
   return (
-    <NavigationContainer>
-    <View style={styles.container}>
-      <Text>Hola mundsdasdaso!</Text>
-      <Text>Hola mundsdasdaso!</Text>
-      <Text>Hola mundsdasdaso!</Text>
-      <Text>Hola mundsdasdaso!</Text>
-      <Text>Hola mundsdasdaso!</Text>
-      <Text>Hola mundsdasdaso!</Text>
-      <StatusBar style="auto" />
-    </View>
-    </NavigationContainer>
+<SafeAreaProvider>
+  <SplashScreen></SplashScreen>
+</SafeAreaProvider>
+
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
