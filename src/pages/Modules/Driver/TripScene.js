@@ -18,7 +18,7 @@ import {
 
 const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
 const destination = {latitude: -29.965314, longitude: -71.349513};
-const GOOGLE_MAPS_APIKEY = 'AIzaSyC8fYfWfaZWA9SONxiglhKR6n9aWEGWNgI';
+const GOOGLE_MAPS_APIKEY = '';
 
 export default function TripScreen() {
   const {
