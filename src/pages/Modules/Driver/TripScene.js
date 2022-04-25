@@ -58,11 +58,6 @@ export default function TripScreen() {
             strokeWidth={4}
         />
         </MapView>
-        
-        
-
-          
-
         <Button onPress={onOpen}>Actionsheet</Button>
         <Actionsheet isOpen={isOpen} onClose={onClose} >
           <Actionsheet.Content justifyContent="center">
