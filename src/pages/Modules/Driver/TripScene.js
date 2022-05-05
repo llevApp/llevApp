@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, View , Text} from "react-native";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import CountDown from 'react-native-countdown-component';
  
 import {
