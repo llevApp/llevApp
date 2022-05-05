@@ -3,13 +3,14 @@ import { ImageBackground,View,Image ,Animated} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Logo from '../../../img/logo.png';
 import background from '../../../img/background.png';
-
+import Login from '../Login/LoginScene'
 
 export default function SplashScreen(){
     //Safe area value
     const edges = useSafeAreaInsets();
     //Animation Values
     const startAnimation = useRef( new Animated.Value(0)).current;
+    const pushRoute = () => setTimeout(() => push.Login(), 1000);
 //useEffect change animation
     useEffect(() => {
    
@@ -23,7 +24,9 @@ export default function SplashScreen(){
                     }
                 )
             ]).start();
+            {() => pushRoute()}
         },500);
+       
     }, [])
 
 
