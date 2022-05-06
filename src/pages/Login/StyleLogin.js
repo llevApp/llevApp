@@ -52,6 +52,20 @@ const styles = StyleSheet.create({
     logoContainer:{
     width: '100%',
     height: '100%'
+  },
+  radioButton:{
+    height: 24,
+    width: 24,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: '#000'
+  },
+  radioButtonDraw:{
+    height: 12,
+    width: 12,
+    borderRadius: 6,
+    backgroundColor: '#000'
   }
+
   })
 export default styles;

@@ -4,16 +4,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Logo from '../../../img/logo.png';
 import background from '../../../img/background.png';
 import Login from '../Login/LoginScene'
-
+import { useNavigation } from '@react-navigation/core'
 export default function SplashScreen(){
+    const navigation = useNavigation()
     //Safe area value
     const edges = useSafeAreaInsets();
     //Animation Values
     const startAnimation = useRef( new Animated.Value(0)).current;
-    const pushRoute = () => setTimeout(() => push.Login(), 1000);
+  
 //useEffect change animation
     useEffect(() => {
-   
         setTimeout( ()=>{
        //Sequence animation
             Animated.sequence([
@@ -23,10 +23,10 @@ export default function SplashScreen(){
                         useNativeDriver:true
                     }
                 )
-            ]).start();
-            {() => pushRoute()}
+            ]).start();            
         },500);
-       
+        setTimeout( ()=>{navigation.replace("Login")},1500)
+        
     }, [])
 
 
