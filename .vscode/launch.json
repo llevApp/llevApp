@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Run iOS Hermes - Experimental",
+            "request": "launch",
+            "type": "reactnativedirect",
+            "cwd": "${workspaceFolder}",
+            "enableDebug": false,
+            "platform": "ios"
+        },
+        {
+            "type": "pwa-chrome",
+            "name": "http://localhost:8081/",
+            "request": "launch",
+            "url": "http://localhost:8081/"
+        }
+    ]
+}
