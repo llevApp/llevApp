@@ -1,6 +1,7 @@
 import SplashScreen from './src/pages/Home/SplashScreen';
-import TripScreen from './src/pages/Modules/Driver/TripScene';
-import FooterTab from './src/ui/FooterTab';
+import TripScreen from './src/pages/Modules/Driver/TripDriver/TripScene';
+import Driver from './src/pages/Modules/Driver/Driver';
+
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NativeBaseProvider } from 'native-base';
 export default function App() {
@@ -8,7 +9,7 @@ export default function App() {
     <NativeBaseProvider>
     <SafeAreaProvider>
     {/* <TripScreen></TripScreen>  */}
-      <FooterTab></FooterTab>
+    <Driver></Driver>
     </SafeAreaProvider>
   </NativeBaseProvider>
 
