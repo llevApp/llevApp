@@ -39,7 +39,7 @@ function MainContainer() {
             return <MaterialCommunityIcons name={iconName} size={size} color={color}/>;
           },
         })}
-        tabBarOptions={{
+        screenOptions={{
           activeTintColor: '#159A9C',
           inactiveTintColor: 'grey',
           labelStyle: { paddingBottom: 5, fontSize: 15 },
