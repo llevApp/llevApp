@@ -29,12 +29,15 @@ const [value, setValue] = useState("driver");
   }
 /* Use Effect unsuscribe */
   useEffect(() => {
-    useLoginStore.getState().setTarget(undefined);
+ 
     useLoginStore.getState().setEmail(undefined);
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         useLoginStore.getState().setEmail(user.email);
-        navigation.replace("Home")
+        console.log(useLoginStore.getState().target);
+        if(useLoginStore.getState().target == 'driver'){
+          navigation.replace("Driver") 
+        }
       }
     })
 

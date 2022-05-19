@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { auth } from '../../../firebase'
 import styles from './StyleHome'
@@ -15,7 +15,7 @@ const HomeScreen = () => {
       })
       .catch(error => alert(error.message))
   }
-
+useEffect(()=>{console.log(useLoginStore.getState().target)},[])
   return (
     <View style={styles.container}>
 
