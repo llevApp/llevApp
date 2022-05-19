@@ -8,7 +8,7 @@ import HomeScreen from './src/pages/Home/HomeScreen';
 import SplashScreen from './src/pages/Home/SplashScreen'
 import RegisterScene from './src/pages/Register/RegisterScene';
 const Stack = createNativeStackNavigator();
-
+/* Changes */
 export default function App() {
   return (
     <NavigationContainer>
