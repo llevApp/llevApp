@@ -1,5 +1,6 @@
 //GET
 const get = async (url) => {
+    console.log(url);
     try {
      const response = await fetch(url);
      const json = await response.json();

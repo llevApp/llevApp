@@ -11,6 +11,8 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigation = useNavigation()
+  const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 /* State radio button */
 const [value, setValue] = useState("driver");
 
@@ -18,6 +20,39 @@ const [value, setValue] = useState("driver");
     navigation.replace("Register")
   }
 
+  //
+  const getUserInfoAsync = async () => {
+    try {
+      const response = await fetch(
+        'http://localhost:10000/api-llevapp/user/ssp013@alumnos.ucn.cl'
+      );
+      const json = await response.json();
+      return json.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getUserInfo = async () => {
+/*     return fetch('http://localhost:10000/api-llevapp/user/ssp013@alumnos.ucn.cl')
+      .then((response) => response.json())
+      .then((json) => {
+        return json.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      }); */
+      const response = await fetch(
+        'http://localhost:10000/api-llevapp/user/ssp013@alumnos.ucn.cl'
+      );
+      const jsonData =  response.json();
+      console.log(jsonData);
+  };
+
+  
+
+  
+//
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
@@ -27,6 +62,20 @@ const [value, setValue] = useState("driver");
       })
       .catch(error => Alert.alert('Creedenciales incorrectas'))
   }
+
+  const getMovies = async () => {
+    try {
+     const response = await fetch('http://localhost:10000/api-llevapp/user/ssp013@alumnos.ucn.cl');
+     const json = await response.json();
+     setData(json);
+   } catch (error) {
+     console.error(error);
+   } finally {
+     setLoading(false);
+   }
+ }
+
+
 /* Use Effect unsuscribe */
   useEffect(() => {
  
@@ -36,6 +85,8 @@ const [value, setValue] = useState("driver");
         useLoginStore.getState().setEmail(user.email);
         console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
+          //ACA LA MAGIAAAAA
+          getMovies();
           navigation.replace("Driver") 
         }
       }
@@ -43,7 +94,9 @@ const [value, setValue] = useState("driver");
 
     return unsubscribe
   }, [email])
-
+  useEffect(()=>{
+    console.log(data)
+  },[data]);
   return (
     <NativeBaseProvider>
     <KeyboardAvoidingView

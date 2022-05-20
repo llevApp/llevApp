@@ -17,7 +17,7 @@ export default function App() {
     <NativeBaseProvider>
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen options={{ headerShown: false }} name="Splash" component={SplashScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="Splash" component={SplashScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
         <Stack.Screen  options={{ headerShown: false }} name="Register" component={RegisterScene} />
