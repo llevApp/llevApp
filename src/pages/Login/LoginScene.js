@@ -6,6 +6,7 @@ import styles from './StyleLogin'
 import logoLogin from '../../../img/logoLogin.png'
 import { Radio, NativeBaseProvider } from "native-base";
 import useLoginStore from './Store/storeLogin';
+import { useUserStore } from '../Home/Store/StoreHome'
 const LoginScreen = () => {
   //Guardamos los correos
   const [email, setEmail] = useState('')
@@ -20,39 +21,9 @@ const [value, setValue] = useState("driver");
     navigation.replace("Register")
   }
 
-  //
-  const getUserInfoAsync = async () => {
-    try {
-      const response = await fetch(
-        'http://localhost:10000/api-llevapp/user/ssp013@alumnos.ucn.cl'
-      );
-      const json = await response.json();
-      return json.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getUserInfo = async () => {
-/*     return fetch('http://localhost:10000/api-llevapp/user/ssp013@alumnos.ucn.cl')
-      .then((response) => response.json())
-      .then((json) => {
-        return json.data;
-      })
-      .catch((error) => {
-        console.error(error);
-      }); */
-      const response = await fetch(
-        'http://localhost:10000/api-llevapp/user/ssp013@alumnos.ucn.cl'
-      );
-      const jsonData =  response.json();
-      console.log(jsonData);
-  };
-
-  
-
-  
-//
+const { userData } = useUserStore(({ userData }) => ({
+  userData
+}));
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
@@ -62,41 +33,24 @@ const [value, setValue] = useState("driver");
       })
       .catch(error => Alert.alert('Creedenciales incorrectas'))
   }
-
-  const getMovies = async () => {
-    try {
-     const response = await fetch('http://localhost:10000/api-llevapp/user/ssp013@alumnos.ucn.cl');
-     const json = await response.json();
-     setData(json);
-   } catch (error) {
-     console.error(error);
-   } finally {
-     setLoading(false);
-   }
- }
-
-
 /* Use Effect unsuscribe */
   useEffect(() => {
- 
     useLoginStore.getState().setEmail(undefined);
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         useLoginStore.getState().setEmail(user.email);
         console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
-          //ACA LA MAGIAAAAA
-          getMovies();
+          const url =  'http://localhost:10000/api-llevapp/user/';
+          userData(url,email)
           navigation.replace("Driver") 
         }
       }
     })
-
     return unsubscribe
   }, [email])
-  useEffect(()=>{
-    console.log(data)
-  },[data]);
+
+
   return (
     <NativeBaseProvider>
     <KeyboardAvoidingView

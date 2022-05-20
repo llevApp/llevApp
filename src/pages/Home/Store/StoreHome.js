@@ -1,39 +1,36 @@
 import create from 'zustand';
-import { persist } from 'zustand/middleware';
-import {getUserData} from 'services/account';
 export const useUserStore = 
     create(
-        persist(
+        
         (set) => {
             return {
                 idUser:undefined,
-                firstName: undefined,
-                lastName: undefined,
+                name:undefined,
+                nickname:undefined,
                 email: undefined,
+                careerName:undefined,
                 loading:undefined,
                 error:undefined,
+                dataUser:undefined,
                 tripsDriver:[],
                 tripsPassenger:[],
                 setIdUser: (value) => set({ idUser: value }),
-                setFirstName: (value) => set({ firstName: value }),
-                setLastName: (value) => set({ lastName: value }),
-                setEmail: (value) => set({ email: value }),
+                setName: (value) => set({ name: value }),
+                setNickname: (value) => set({ nickname: value }),
+                setEmailUser: (value) => set({ email: value }),
+                setCarrerName: (value) => set({ careerName: value }),
                 setTripsDriver: (value) => set({ tripsDriver: value }),
                 setTripsPassenger: (value) => set({ tripsPassenger: value }),
                 setLoading: (value) => set({ loading: value }),
                 setError: (error) => set({ error }),
-                userData: ({ endpoint,email }) => {
+                userData: ( endpoint,email ) => {
                     set({ loading: true, error: null });
-                    let data = getUserData(endpoint,email);
-                    if(data){
-                        const { idUser,firstName,lastName,email,tripsDriver,tripsPassenger} = data.result;
-                        set({idUser,firstName,lastName,email,tripsDriver,tripsPassenger});
-                        set({ loading: false, error: null });
-                    } else {
-                        set({
-                            loading: false,
-                            error: { message: 'No se encuentra data del usuario.' }});
-                    }
+                   let url = endpoint+email;
+                    fetch(url)
+                        .then((response)=>response.json())
+                        .then((json)=>set({dataUser:json,setIdUser:json.user_id,email:json.email,careerName:json.carrer_name,name:json.name,nickname:json.nickname}))
+                        .catch((error)=>alert(error))
+                        .finally( set({ loading:false  }));
                 },
                 clearAll: () => {
                 localStorage.clear();
@@ -55,5 +52,5 @@ export const useUserStore =
             getStorage: () => localStorage
           }
         
-        )
+        
 );
