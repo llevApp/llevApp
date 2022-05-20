@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React, { useEffect } from 'react'
 import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack } from "native-base";
 
+export default function HomeScreen({ navigation }) { 
 
-export default function HomeScreen({ navigation }) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>

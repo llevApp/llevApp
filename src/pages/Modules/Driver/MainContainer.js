@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MaterialCommunityIcons, MaterialIcons , FontAwesome5} from "@expo/vector-icons";
-
+import { useUserStore } from '../../Home/Store/StoreHome'
 // Screens
 import HomeScreen from './Screens/HomeScreen';
 import TripScreen from './Screens/TripScreen';
@@ -17,6 +17,15 @@ const accountName = "Cuenta";
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
+  const { name} = useUserStore(({ name }) => ({
+    name
+  }));
+  useEffect(()=>{
+    if(name){
+   console.log(name);
+  }   
+
+  },[name]);
   return (
       <Tab.Navigator
         initialRouteName={homeName}
