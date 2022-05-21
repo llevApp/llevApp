@@ -11,7 +11,7 @@ export default function AccountScreen() {
         auth
           .signOut()
           .then(() => {
-            useUserStore.getState().clearAll();
+            //useUserStore.getState().clearAll();
             navigation.replace("Login")
           })
           .catch(error => alert(error.message))
