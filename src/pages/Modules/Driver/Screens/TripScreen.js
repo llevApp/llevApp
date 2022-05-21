@@ -25,10 +25,10 @@ export default function TripScreen({ navigation }) {
             return{
                 id:index,
                 driver:trip.driver,
-                start:"Punto de partida",
-                timeStamp:"2022/02/16 07:23",
-                recentText:"Propina",
-                passengerNumber:"3",
+                start:[trip.latitude,trip.longitude],
+                timeStamp:trip.init_trip_time,
+                recentText:trip.total_tips+" USD",
+                passengerNumber:trip.total_passenger,
                 avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
             }
         })
