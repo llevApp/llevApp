@@ -1,43 +1,41 @@
 import React from "react";
-import { StyleSheet, View , Text} from "react-native";
+import {View , Text} from "react-native";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import CountDown from 'react-native-countdown-component';
- 
+import styles from './TripScene.style';
+
 import {
   Button,
   Actionsheet,
   useDisclose,
   Box,
-  extendTheme,
   Avatar,
   HStack,
   VStack
 } from 'native-base';
 
-const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
-const destination = {latitude: -29.965314, longitude: -71.349513};
-const GOOGLE_MAPS_APIKEY = '';
-
-export default function TripScreen() {
+const TripScreen= () => {
   const {
     isOpen,
     onOpen,
     onClose
   } = useDisclose();
+  const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
+  const destination = {latitude: -29.965314, longitude: -71.349513};
+  const GOOGLE_MAPS_APIKEY = '';
   return (
       <View style={styles.container}>
-        {}
         <MapView
           style={styles.map}
           initialRegion={{
             latitude: -29.98131942375116,
             longitude: -71.35180660362076,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }
-          
-        }>
+            longitudeDelta: 0.0421}}
+          provider={"google"}
+        
+        >
           <MapView.Marker
             coordinate={{
               latitude: -29.98131942375116,
@@ -65,7 +63,7 @@ export default function TripScreen() {
         />
         </MapView>
         <Button onPress={onOpen}>Actionsheet</Button>
-        <Actionsheet isOpen={true} onClose={onClose} >
+       {/*  <Actionsheet isOpen={true} onClose={onClose} >
           <Actionsheet.Content justifyContent="center">
             
             <Box w="100%" h={60} px={4} justifyContent="center">
@@ -112,57 +110,9 @@ export default function TripScreen() {
               </VStack>
             </Actionsheet.Item>
           </Actionsheet.Content>
-        </Actionsheet>
+        </Actionsheet> */}
         </View>
 
   );
 }
-
-//create our styling code:
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    flex: 1, //the container will fill the whole screen.
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  H1: {
-    fontSize:22,
-    flex: 1,
-    flexDirection: 'column',
-    fontWeight: 'bold' ,
-    //backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 50,
-},
-  H2: {
-    fontSize:14,
-    fontWeight: 'bold' ,
-
-  },
-  location: {
-    fontSize:10,
-    fontStyle: 'italic',
-    fontWeight: 'bold' ,
-
-  },
-  destination: {
-    fontSize:12,
-  },
-  adress: {
-    fontSize:12,
-    fontStyle: 'italic',
-    fontWeight: '300' ,
-  },
-  map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  }
-});
+export default TripScreen;

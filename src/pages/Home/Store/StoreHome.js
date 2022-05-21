@@ -30,27 +30,27 @@ export const useUserStore =
                         .then((response)=>response.json())
                         .then((json)=>set({dataUser:json,setIdUser:json.user_id,email:json.email,careerName:json.carrer_name,name:json.name,nickname:json.nickname}))
                         .catch((error)=>alert(error))
-                        .finally( set({ loading:false  }));
+                        .finally( ()=>set({ loading:false  }));
                 },
                 clearAll: () => {
-                localStorage.clear();
                 set({
                     idUser:undefined,
-                    firstName: undefined,
-                    lastName: undefined,
+                    name:undefined,
+                    nickname:undefined,
                     email: undefined,
+                    careerName:undefined,
+                    loading:undefined,
+                    error:undefined,
+                    dataUser:undefined,
                     loading:undefined,
                     error:undefined,
                     tripsDriver:[],
-                    tripsPassenger:[],
+                    tripsPassenger:[]
                 });
                 }
             };
         }, 
-        {
-            name: 'account',
-            getStorage: () => localStorage
-          }
+       
         
         
 );
