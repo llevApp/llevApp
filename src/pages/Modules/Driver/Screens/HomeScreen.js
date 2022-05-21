@@ -16,7 +16,6 @@ const initTrip = ()=>{
 };
 useEffect(()=>{
     if(name){
-    console.log('Entramos a Home Screen');
     setNameShow(name);
   }
 }),[name];
