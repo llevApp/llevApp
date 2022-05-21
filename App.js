@@ -23,6 +23,7 @@ export default function App() {
         <Stack.Screen  options={{ headerShown: false }} name="Register" component={RegisterScene} />
         <Stack.Screen  options={{ headerShown: false }} name="Driver" component={Driver} />
         <Stack.Screen  options={{ headerShown: false }} name="TripScreen" component={TripScreen} />
+        
       </Stack.Navigator>
     </NavigationContainer>
     </NativeBaseProvider>

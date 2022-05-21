@@ -4,12 +4,14 @@ import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import styles from '../../../Home/StyleHome'
 import { auth } from '../../../../../firebase';
+import { useUserStore } from '../../../Home/Store/StoreHome';
 export default function AccountScreen() {
     const navigation = useNavigation();
     const handleSignOut = () => {
         auth
           .signOut()
           .then(() => {
+            useUserStore.getState().clearAll();
             navigation.replace("Login")
           })
           .catch(error => alert(error.message))

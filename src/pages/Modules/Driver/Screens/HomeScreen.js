@@ -1,9 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack } from "native-base";
+import { useNavigation } from '@react-navigation/core';
+import { useUserStore } from '../../../Home/Store/StoreHome';
+export default function HomeScreen() {
+const [nameShow, setNameShow] = useState(null);
+const navigation = useNavigation();
+/* Function call start trip */
+const { name} = useUserStore(({ name }) => ({
+    name
+  }));
+  
 
-export default function HomeScreen({ navigation }) { 
-
-    return (
+const initTrip = ()=>{
+    navigation.replace("TripScreen");
+};
+useEffect(()=>{
+    if(name){
+    console.log('Entramos a Home Screen');
+    setNameShow(name);
+  }
+}),[name];
+return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>
     <Center >
@@ -14,8 +31,8 @@ export default function HomeScreen({ navigation }) {
                     <Box width={"65%"}> 
                     <VStack space={4} alignItems="flex-start">
                         <Heading  style={{fontSize:15, fontStyle:"italic"}}>Ing civil en computacion e Informatica</Heading>
-                        <Heading>Sebastian Garcia</Heading>
-                        <Button rounded={"full"}>Comenzar viaje</Button>
+                        <Heading>{nameShow ? nameShow : 'No Name'}</Heading>
+                        <Button rounded={"full"} onPress={initTrip}>Comenzar viaje</Button>
                     </VStack>
                     </Box>
                     <Avatar bg="cyan.500" size={"xl"}
