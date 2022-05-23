@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from "react";
-import {View ,TouchableOpacity, Text} from "react-native";
+import React,{useState,useEffect,useRef} from "react";
+import {View ,TouchableOpacity, Text,Keyboard, Platform, KeyboardEvent } from "react-native";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import CountDown from 'react-native-countdown-component';
@@ -9,43 +9,82 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import {
   Button,
   Actionsheet,
-  useDisclose,
   Box,
-  Avatar,
-  HStack,
-  VStack
+  VStack,
+  useDisclose,
 } from 'native-base';
 import { useNavigation } from '@react-navigation/core'
+
+const useKeyboardBottomInset = () => {
+  const [bottom, setBottom] = React.useState(0);
+  const subscriptions = React.useRef([]);
+
+  React.useEffect(() => {
+    function onKeyboardChange(e) {
+      if (
+        e.startCoordinates &&
+        e.endCoordinates.screenY < e.startCoordinates.screenY
+      )
+        setBottom(e.endCoordinates.height);
+      else setBottom(0);
+    }
+
+    if (Platform.OS === 'ios') {
+      subscriptions.current = [
+        Keyboard.addListener('keyboardWillChangeFrame', onKeyboardChange),
+      ];
+    } else {
+      subscriptions.current = [
+        Keyboard.addListener('keyboardDidHide', onKeyboardChange),
+        Keyboard.addListener('keyboardDidShow', onKeyboardChange),
+      ];
+    }
+    return () => {
+      subscriptions.current.forEach((subscription) => {
+        subscription.remove();
+      });
+    };
+  }, [setBottom, subscriptions]);
+
+  return bottom;
+};
 const TripScreen= () => {
   const navigation = useNavigation();
-  const GOOGLE_MAPS_APIKEY = '';
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyAsMZa1qIKM3jalkzxNqUyvXQ1CNeS7fEs';
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
   const destination = {latitude: -29.965314, longitude: -71.349513}; */
   const [visible,setVisible] = useState(true); 
   const { setOrigin,setDestination,origin} = useStoreTripDriver(({ setOrigin,setDestination,origin }) => ({
     setOrigin,setDestination,origin
   }));
-  
+  const {
+    isOpen,
+    onOpen,
+    onClose
+  } = useDisclose();
+  const bottomInset = useKeyboardBottomInset();
   const sendDataInit = () => {
     setVisible(false);
     navigation.replace("SceneTripInit");
   }
-
   return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
           mapType="mutedStandard"
           initialRegion={{
-            latitude: origin?.location.lat,
-            longitude: origin?.location.lng,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005}}
+            latitude: -29.98131942375116,
+            longitude: -71.35180660362076,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421}}
           //provider={"google"}
         >
         </MapView>
-        <Actionsheet isOpen={visible}>
-          <Actionsheet.Content>
+        <Button style={styles.button}  onPress={() => onOpen()}>
+                Buscar Dirección
+        </Button>
+        <Actionsheet isOpen={visible} onClose={onClose}>
+        <Actionsheet.Content bottom={bottomInset}>
               <Box w="100%" style={styles.containerBox}  justifyContent="center">
               <View style={styles.textContainer}>
               <Text style={styles.H1}>Confirmar punto de partida</Text>
@@ -99,50 +138,3 @@ const TripScreen= () => {
 );
 }
 export default TripScreen;
-       {/*   <Actionsheet.Content justifyContent="center">
-            
-            <Box w="100%" h={60} px={4} justifyContent="center">
-              <Text style={styles.H1}>Confirmar punto de partida</Text>
-            </Box>
-            <Actionsheet.Item >
-              <HStack justifyContent="center" mx={{
-              base: "5",
-              md: "2"
-              }} space={2}>
-                  <Avatar bg="green.500" mr="4" Avatar size="lg" marginTop={8} marginLeft={0} ource={{
-                  uri: "https://bit.ly/broken-link"
-                  }}>
-                    NG
-                  </Avatar>
-
-                  <VStack space={2} alignItems="center">
-                      <Text style={styles.H2}>Inicio de viaje</Text>
-                      <Text style={styles.adress}>El faro 15, La Herradura</Text>
-                      <Text></Text>
-                      <Text style={styles.H2}>Destino</Text>
-                      <Text style={styles.location}>UCN Campus Guayacan</Text>
-                      <Text style={styles.adress}>Larrondo 1281, Coquimbo</Text>
-                  </VStack>
-                  <VStack space={1} alignItems="center" marginTop={10}>
-                    <CountDown
-                      until={10 * 60 +30}
-                      timeToShow={['M', 'S']}
-                      onFinish={() => alert('finished')}
-                      onPress={() => alert('hello')}
-                      digitStyle={{backgroundColor: '#FFF'}}
-                      timeLabels={{m: 'MM', s: 'SS'}}
-                      size={20}
-                    />
-                  </VStack>
-                </HStack>
-            </Actionsheet.Item>
-            <Actionsheet.Item>
-              <VStack alignItems="center">
-                <Button backgroundColor={"#002333"} w="100%"
-                 padding={5} marginTop={1} marginLeft={55} borderRadius={15}>
-                  Comenzar viaje
-                  </Button>
-              </VStack>
-            </Actionsheet.Item>
-          </Actionsheet.Content>
-        </Actionsheet> */}

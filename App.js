@@ -10,8 +10,9 @@ import Driver from './src/pages/Modules/Driver/Driver'
 import RegisterScene from './src/pages/Register/RegisterScene';
 import TripScreen from './src/pages/Modules/Driver/TripDriver/TripScene';
 import SceneTripInit from './src/pages/Modules/Driver/TripDriver/SceneTripInit/SceneTripInit';
-import { NativeBaseProvider} from 'native-base';
+import { KeyboardAvoidingView, NativeBaseProvider} from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Platform } from 'react-native-web';
 const Stack = createNativeStackNavigator();
 /* Changes */
 export default function App() {
@@ -20,6 +21,12 @@ export default function App() {
     <NativeBaseProvider>
     <NavigationContainer>
     <SafeAreaProvider>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding": "height"}
+      style={{flex:1}}
+      keyboardVerticalOffset={Platform.OS === "ios" ? -64 : 0}
+     >
+
       <Stack.Navigator>
         <Stack.Screen options={{ headerShown: false }} name="Splash" component={SplashScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
@@ -30,6 +37,7 @@ export default function App() {
         <Stack.Screen  options={{ headerShown: false }} name="SceneTripInit" component={SceneTripInit} />
         
       </Stack.Navigator>
+      </KeyboardAvoidingView>
       </SafeAreaProvider>
     </NavigationContainer>
     </NativeBaseProvider>
