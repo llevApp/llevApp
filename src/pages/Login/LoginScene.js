@@ -7,6 +7,7 @@ import logoLogin from '../../../img/logoLogin.png'
 import { Radio, NativeBaseProvider } from "native-base";
 import useLoginStore from './Store/storeLogin';
 import { useUserStore } from '../Home/Store/StoreHome'
+import {useTripsStore} from '../Modules/Driver/Screens/StoreTrip/StoreTrips';
 const LoginScreen = () => {
   //Guardamos los correos
   const [email, setEmail] = useState('')
@@ -43,12 +44,15 @@ const { userData } = useUserStore(({ userData }) => ({
         if(useLoginStore.getState().target == 'driver'){
           const url =  'http://192.168.1.103:10000/api-llevapp/user/';
           userData(url,email)
+          
           navigation.replace("Driver") 
         }
       }
     })
     return unsubscribe
-  }, [email]);
+  }, [email])
+ 
+
   return (
     <NativeBaseProvider>
     <KeyboardAvoidingView
