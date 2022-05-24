@@ -5,8 +5,7 @@ import { auth } from '../../../firebase'
 import styles from './StyleHome'
 import useLoginStore from '../Login/Store/storeLogin';
 const HomeScreen = () => {
-  const navigation = useNavigation()
-  
+  const navigation = useNavigation();
   const handleSignOut = () => {
     auth
       .signOut()
@@ -15,11 +14,11 @@ const HomeScreen = () => {
       })
       .catch(error => alert(error.message))
   }
-useEffect(()=>{console.log(useLoginStore.getState().target)},[])
+  useEffect(()=>{
+    console.log(useLoginStore.getState().target)
+  },[])
   return (
     <View style={styles.container}>
-
-     
      {/*  <Text> AQUI DIOSITO PON EL MENU {auth.currentUser?.email} !</Text> */}
      <Text>Bienvenido chaval!!</Text>
       <Text>Estas en la vista de {useLoginStore.getState().target}</Text>

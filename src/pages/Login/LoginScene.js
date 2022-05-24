@@ -42,7 +42,7 @@ const { userData } = useUserStore(({ userData }) => ({
         useLoginStore.getState().setEmail(user.email);
         console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
-          const url =  'http://localhost:10000/api-llevapp/user/';
+          const url =  'http://192.168.0.198:10000/api-llevapp/user/';
           userData(url,email)
           
           navigation.replace("Driver") 
@@ -79,7 +79,7 @@ const { userData } = useUserStore(({ userData }) => ({
         />
       </View>
       <Text>{'\n'}</Text>
-   {/* Radio button */}
+  
 <View>
 <Radio.Group name="myRadioGroup" 
     accessibilityLabel="favorite number"
