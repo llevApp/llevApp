@@ -7,7 +7,7 @@ import logoLogin from '../../../img/logoLogin.png'
 import { Radio, NativeBaseProvider } from "native-base";
 import useLoginStore from './Store/storeLogin';
 import { useUserStore } from '../Home/Store/StoreHome'
-import {useTripsStore} from '../Modules/Driver/Screens/StoreTrip/StoreTrips';
+//import {useTripsStore} from '../Modules/Driver/Screens/StoreTrip/StoreTrips';
 const LoginScreen = () => {
   //Guardamos los correos
   const [email, setEmail] = useState('')

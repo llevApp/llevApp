@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View,FlatList,Spacer,Image, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button } from "native-base";
-import {useTripsStore} from './StoreTrip/StoreTrips';
-import {useUserStore} from './../../../Home/Store/StoreHome';
+import { Text, View,FlatList,Spacer,Image, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Spinner } from "native-base";
+import { useUserStore } from './../../../Home/Store/StoreHome';
+import { useTripsStore } from './StoreTrip/StoreTrips';
 import moment from 'moment';
 export default function TripScreen({ navigation }) {
     
     const [FlatListData,setArrayList] = useState([])
-    const {arraylist,latitude,longitude,initTripTime} = useTripsStore()
+    const {arraylist, latitude, longitude, initTripTime} = useTripsStore()
+    const { idUser, name } = useUserStore();
     //useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://192.168.1.124:10000/api-llevapp/passengers/trips")},[])
-    useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://localhost:10000/api-llevapp/driver/trips/4")},[]);
+    useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://192.168.1.103:10000/api-llevapp/driver/trips/" + idUser)},[]);
    
     
     useEffect(()=>{
@@ -29,8 +30,7 @@ export default function TripScreen({ navigation }) {
         console.log(FlatListData);
     },[arraylist]);
 
-
-    const name = FlatListData?.[0]?.driver;
+    //const name = FlatListData?.[0]?.driver;
     //page desing
     return (
         <View style={{ flex: 1 }} background="#F5F8FF">
@@ -48,7 +48,9 @@ export default function TripScreen({ navigation }) {
                             </HStack>
                         </VStack>
                 </Heading>
-                <FlatList data={FlatListData} 
+                {FlatListData? 
+                    (<>
+                        <FlatList data={FlatListData} 
                     renderItem={({item}) => 
                     <Box borderWidth="0.4" margin="0.2" borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="10" pr="5" py="6" borderRadius="34">
                         <HStack space={3} justifyContent="center" >
@@ -90,6 +92,15 @@ export default function TripScreen({ navigation }) {
                         </HStack>
                     </Box>} keyExtractor={item => item.id}
                 />
+                    </>) : 
+                    (<>
+                        <HStack space={2} alignItems="center" justifyContent='center' padding={10}>
+                            <Spinner accessibilityLabel="Loading posts" />
+                            <Heading color="primary.500" fontSize="md">
+                                Cargando datos...
+                            </Heading>
+                        </HStack>
+                    </>)}
             </Box>
         </View>
     );

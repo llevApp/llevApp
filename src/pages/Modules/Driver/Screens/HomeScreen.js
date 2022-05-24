@@ -11,9 +11,7 @@ const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 /* Function call start trip */
-const { name} = useUserStore(({ name }) => ({
-    name
-  }));
+const { name } = useUserStore();
 
 const initTrip = ()=>{
     navigation.replace("TripScreen");
