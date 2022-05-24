@@ -3,6 +3,8 @@ import { Text, View,FlatList,Spacer,Image, Center, Container, Heading, Avatar, D
 import { useUserStore } from './../../../Home/Store/StoreHome';
 import { useTripsStore } from './StoreTrip/StoreTrips';
 import moment from 'moment';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+
 export default function TripScreen({ navigation }) {
     
     const [FlatListData,setArrayList] = useState([])
@@ -22,6 +24,7 @@ export default function TripScreen({ navigation }) {
                 start:[trip.latitude,trip.longitude],
                 timeStamp:date,
                 recentText:trip.total_tips,
+                address:trip.address,
                 passengerNumber:trip.total_passenger,
                 avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
             }
@@ -38,10 +41,10 @@ export default function TripScreen({ navigation }) {
                 <Heading fontSize="xl" pb="0" borderColor="black"  color="white"  pl="10" pr="50" py="0" marginTop="10" marginBottom="0" >
                         <VStack space={4} justifyContent="left" pl="4" >
                             <Text color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2"  fontStyle="italic">
-                                Viajes como conductor realizados por 
+                                Viajes como conductor realizados por: 
                             </Text>
                             <HStack pl="1">
-                                <Image size="24px" source={{uri: "https://img.icons8.com/ios/100/000000/driving.png"}} />
+                                <MaterialCommunityIcons name="card-account-details" size={24} color="black" />
                                 <Text color="coolGray.800" _dark={{color: "warmGray.200"}}  fontSize="xl" fontWeight="bold">
                                     {name}
                                 </Text>
@@ -56,14 +59,13 @@ export default function TripScreen({ navigation }) {
                         <HStack space={3} justifyContent="center" >
                             <VStack>
                                 <HStack space={0} justifyContent="left" pl="4" >
-                                    <Image size="24px" source={{uri: "https://img.icons8.com/officel/80/000000/convertible.png"}}/>
+                                    <MaterialCommunityIcons name="map-marker" size={24} color="black" />
                                     <Text fontSize="md"  _dark={{color: "warmGray.50"}} color="coolGray.800" bold  pl="2"  >
-                                        {item.start}
+                                        {item.address?.toUpperCase()}
                                     </Text>
                                 </HStack>
-                               
                                 <HStack space={0} justifyContent="left" pl="4" >
-                                <Image size="24px" source={{uri: "https://img.icons8.com/cotton/64/000000/donate--v1.png"}}/>
+                                    <MaterialCommunityIcons name="hand-coin" size={24} color="black" />
                                     <Text  fontSize="lg" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2" fontStyle="italic">
                                         $
                                     </Text>
@@ -75,7 +77,7 @@ export default function TripScreen({ navigation }) {
                                     </Text>
                                 </HStack>
                                 <HStack space={0} justifyContent="left" pl="4" >
-                                    <Image size="24px" source={{uri: "https://img.icons8.com/office/80/000000/passenger.png"}}/>
+                                    <MaterialCommunityIcons name="seat-passenger" size={24} color="black" />
                                     <Text  fontSize="sm" color="coolGray.600" _dark={{color: "warmGray.200"}}pl="2" fontStyle="italic">
                                         Numero de pasajeros: {item.passengerNumber}
                                     </Text>
@@ -84,7 +86,7 @@ export default function TripScreen({ navigation }) {
                             </VStack>
                             <Spacer />
                             <HStack space={0} justifyContent="left" >
-                                <Image size="18px" source={{uri:  "https://img.icons8.com/dusk/64/000000/clock--v1.png"}}/>
+                                <MaterialCommunityIcons name="clock-time-eight-outline" size={24} color="black" />
                                 <Text fontSize="xs" _dark={{color: "warmGray.50"}} color="coolGray.800" alignSelf="flex-start" pl="2" pr="4" >
                                     {item.timeStamp}
                                 </Text>
