@@ -11,9 +11,7 @@ const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 /* Function call start trip */
-const { name} = useUserStore(({ name }) => ({
-    name
-  }));
+const { name } = useUserStore();
 
 const initTrip = ()=>{
     navigation.replace("TripScreen");
@@ -23,6 +21,7 @@ useEffect(()=>{
     setNameShow(name);
   }
 }),[name];
+
 return (
         <View style={styles.mainContainer}>
             <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>

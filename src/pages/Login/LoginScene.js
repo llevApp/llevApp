@@ -7,6 +7,7 @@ import logoLogin from '../../../img/logoLogin.png'
 import { Radio, NativeBaseProvider } from "native-base";
 import useLoginStore from './Store/storeLogin';
 import { useUserStore } from '../Home/Store/StoreHome'
+//import {useTripsStore} from '../Modules/Driver/Screens/StoreTrip/StoreTrips';
 const LoginScreen = () => {
   //Guardamos los correos
   const [email, setEmail] = useState('')
@@ -29,7 +30,7 @@ const { userData } = useUserStore(({ userData }) => ({
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        //console.log('Login con:', user.email);
+        console.log('Login con:', user.email);
       })
       .catch(error => Alert.alert('Creedenciales incorrectas'))
   }
@@ -43,12 +44,15 @@ const { userData } = useUserStore(({ userData }) => ({
         if(useLoginStore.getState().target == 'driver'){
           const url =  'http://192.168.0.189:10000/api-llevapp/user/';
           userData(url,email)
+          
           navigation.replace("Driver") 
         }
       }
     })
     return unsubscribe
-  }, [email]);
+  }, [email])
+ 
+
   return (
     <NativeBaseProvider>
     <KeyboardAvoidingView

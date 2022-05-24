@@ -11,7 +11,7 @@ import AccountScreen from './Screens/AccountScreen';
 
 //Screen names
 const homeName = "Inicio";
-const tripsName = "Viajes";
+const tripsName = "Historial de viajes";
 const accountName = "Cuenta";
 
 const Tab = createBottomTabNavigator();
@@ -22,7 +22,7 @@ function MainContainer() {
   }));
   useEffect(()=>{
     if(name){
-   //console.log(name);
+   console.log(name);
   }   
 
   },[name]);
