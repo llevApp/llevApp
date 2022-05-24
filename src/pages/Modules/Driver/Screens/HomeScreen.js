@@ -23,6 +23,7 @@ useEffect(()=>{
     setNameShow(name);
   }
 }),[name];
+
 return (
         <View style={styles.mainContainer}>
             <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>
