@@ -29,7 +29,7 @@ const { userData } = useUserStore(({ userData }) => ({
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log('Login con:', user.email);
+        //console.log('Login con:', user.email);
       })
       .catch(error => Alert.alert('Creedenciales incorrectas'))
   }
@@ -41,7 +41,7 @@ const { userData } = useUserStore(({ userData }) => ({
         useLoginStore.getState().setEmail(user.email);
         console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
-          const url =  'http://192.168.0.198:10000/api-llevapp/user/';
+          const url =  'http://192.168.0.189:10000/api-llevapp/user/';
           userData(url,email)
           navigation.replace("Driver") 
         }
@@ -74,9 +74,8 @@ const { userData } = useUserStore(({ userData }) => ({
           secureTextEntry
         />
       </View>
-      <Text>{'\n'}</Text>
-  
-<View>
+      <Text>{'\n'}</Text> 
+      <View>
 <Radio.Group name="myRadioGroup" 
     accessibilityLabel="favorite number"
     value={value} 
