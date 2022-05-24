@@ -4,18 +4,11 @@ import {useTripsStore} from './StoreTrip/StoreTrips';
 import {useUserStore} from './../../../Home/Store/StoreHome';
 import moment from 'moment';
 export default function TripScreen({ navigation }) {
+    
     const [FlatListData,setArrayList] = useState([])
-    let data = [{
-        id: "",
-        start:"sin datos" ,
-        timeStamp:"sin datos" ,
-        recentText: "sin datos" ,
-        avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
-    }]
-
     const {arraylist,latitude,longitude,initTripTime} = useTripsStore()
     //useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://192.168.1.124:10000/api-llevapp/passengers/trips")},[])
-    useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://localhost:10000/api-llevapp/driver/trips/4")},[])
+    useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://localhost:10000/api-llevapp/driver/trips/4")},[]);
    
     
     useEffect(()=>{
@@ -31,14 +24,13 @@ export default function TripScreen({ navigation }) {
                 passengerNumber:trip.total_passenger,
                 avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
             }
-        })
+        });
         setArrayList(FlatListData);
-        console.log(FlatListData)
-    },[arraylist])
-    
+        console.log(FlatListData);
+    },[arraylist]);
 
 
-    const name = FlatListData[0]?.driver
+    const name = FlatListData?.[0]?.driver;
     //page desing
     return (
         <View style={{ flex: 1 }} background="#F5F8FF">
