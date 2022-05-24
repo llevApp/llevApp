@@ -80,9 +80,6 @@ const TripScreen= () => {
           //provider={"google"}
         >
         </MapView>
-        <Button style={styles.button}  onPress={() => onOpen()}>
-                Buscar Dirección
-        </Button>
         <Actionsheet isOpen={visible} onClose={onClose}>
         <Actionsheet.Content bottom={bottomInset}>
               <Box w="100%" style={styles.containerBox}  justifyContent="center">

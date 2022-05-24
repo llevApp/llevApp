@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
       button: {
         backgroundColor: 'transparent',
         width: '100%',
-        borderRadius: 10,
-        marginTop:1
+        borderRadius: 10
        
       },
       buttonOff: {
