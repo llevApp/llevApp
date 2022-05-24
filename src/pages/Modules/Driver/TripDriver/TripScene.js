@@ -87,7 +87,7 @@ const TripScreen= () => {
         <Actionsheet.Content bottom={bottomInset}>
               <Box w="100%" style={styles.containerBox}  justifyContent="center">
               <View style={styles.textContainer}>
-              <Text style={styles.H1}>Confirmar punto de partida</Text>
+              <Text style={styles.H1}>Seleccionar punto de partida</Text>
               </View>
               <GooglePlacesAutocomplete
                   placeholder='Seleccionar punto de partida'

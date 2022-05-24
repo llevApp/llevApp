@@ -25,11 +25,10 @@ const styles = StyleSheet.create({
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 30,
     },
     containerBox: {
       width: '100%',
-      height:400
+      height:380
     },
       H2: {
         fontSize:14,
@@ -64,11 +63,23 @@ const styles = StyleSheet.create({
         marginTop: 40
       },
       button: {
-        backgroundColor: '#002333',
-        width: '80%',
+        backgroundColor: 'transparent',
+        width: '100%',
         borderRadius: 10,
         marginTop:1
        
+      },
+      buttonOff: {
+        backgroundColor: '#FF5B5B',
+        width: '100%',
+        borderRadius: 10,
+        marginTop:1
+      },
+      buttonOk: {
+        backgroundColor: '#4FC0B3',
+        width: '100%',
+        borderRadius: 10,
+        marginTop:1
       },
       buttonOutline: {
         backgroundColor: 'white',
@@ -80,6 +91,13 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: '700',
         fontSize: 16,
+       
+      },
+      buttonText2: {
+        color: '#002333',
+        fontWeight: '700',
+        fontSize: 16,
+       marginBottom:20
       },
       buttonOutlineText: {
         color: '#002333',

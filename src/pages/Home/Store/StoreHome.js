@@ -25,6 +25,7 @@ export const useUserStore =
                 userData: ( endpoint,email ) => {
                     set({ loading: true, error: null });
                    let url = endpoint+email;
+                   console.log(url);
                     fetch(url)
                         .then((response)=>response.json())
                         .then((json)=>set({dataUser:json,idUser:json.user_id,email:json.email,careerName:json.career_name,name:json.name,nickname:json.nickname}))

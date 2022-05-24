@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold' ,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 40,
+        padding: 10,
+        margin:10
     },
     input: {
       paddingHorizontal: 15,
