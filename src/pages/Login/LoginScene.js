@@ -42,7 +42,7 @@ const { userData } = useUserStore(({ userData }) => ({
         useLoginStore.getState().setEmail(user.email);
         console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
-          const url =  'http://10.72.112.243:10000/api-llevapp/user/';
+          const url =  'http://192.168.0.196:10000/api-llevapp/user/';
           userData(url,email) 
           navigation.replace("Driver") 
         }
