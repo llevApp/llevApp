@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, AspectRatio } from "native-base";
 
-export default function HomeDriver() {
+export default function HomePassenger() {
     //create our styling code:
 
     return <>

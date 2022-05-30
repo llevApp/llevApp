@@ -2,8 +2,8 @@ import React, { useEffect,useState } from 'react'
 import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, Flex } from "native-base";
 import { useNavigation } from '@react-navigation/core';
 import { useUserStore } from '../../../Home/Store/StoreHome';
-import WidgetUserInfo from '../HomeDriver/Widgets/WidgetUserInfo';
-import WidgetUserTrips from '../HomeDriver/Widgets/WidgetUserTrips';
+import WidgetUserInfo from '../HomePassenger/Widgets/WidgetUserInfo';
+import WidgetUserTrips from '../HomePassenger/Widgets/WidgetUserTrips';
 import { StyleSheet } from 'react-native';
 
 
@@ -19,6 +19,8 @@ const initTrip = ()=>{
 useEffect(()=>{
     if(name){
     setNameShow(name);
+    /*  */
+    console.log('Estamos en vista Pasajero');
   }
 }),[name];
 

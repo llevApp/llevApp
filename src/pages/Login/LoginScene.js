@@ -47,6 +47,10 @@ const { userData } = useUserStore(({ userData }) => ({
           const url =  URL_API+GET_DATA_USER;
           userData(url,email) 
           navigation.replace("Driver") 
+        }else if(useLoginStore.getState().target == 'passenger'){
+          const url =  URL_API+GET_DATA_USER;
+          userData(url,email);
+          navigation.replace("Passenger");
         }
       }
     })
@@ -93,7 +97,7 @@ const { userData } = useUserStore(({ userData }) => ({
     }
     >
       <Radio shadow={2} value="driver" my="2">Conductor</Radio>
-      <Radio shadow={2} value="passanger" my="2">
+      <Radio shadow={2} value="passenger" my="2">
         Pasajero
       </Radio>
     </Radio.Group>
