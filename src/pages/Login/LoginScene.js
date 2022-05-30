@@ -83,6 +83,7 @@ const { userData } = useUserStore(({ userData }) => ({
     accessibilityLabel="favorite number"
     value={value} 
     onChange={nextValue => {
+      console.log(nextValue);
       setValue(nextValue);
       useLoginStore.getState().setTarget(nextValue);
 
