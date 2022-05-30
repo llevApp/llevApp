@@ -10,6 +10,9 @@ import Driver from './src/pages/Modules/Driver/Driver'
 import RegisterScene from './src/pages/Register/RegisterScene';
 import TripScreen from './src/pages/Modules/Driver/TripDriver/TripScene';
 import SceneTripInit from './src/pages/Modules/Driver/TripDriver/SceneTripInit/SceneTripInit';
+/* PASSENGER */
+import Passenger from './src/pages/Modules/Passenger/Passenger';
+/* ------- */
 import { KeyboardAvoidingView, NativeBaseProvider} from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Platform } from 'react-native-web';
@@ -35,6 +38,8 @@ export default function App() {
         <Stack.Screen  options={{ headerShown: false }} name="Driver" component={Driver} />
         <Stack.Screen  options={{ headerShown: false }} name="TripScreen" component={TripScreen} />
         <Stack.Screen  options={{ headerShown: false }} name="SceneTripInit" component={SceneTripInit} />
+
+        <Stack.Screen  options={{ headerShown: false }} name="Passenger" component={Passenger} />
         
       </Stack.Navigator>
       </KeyboardAvoidingView>
