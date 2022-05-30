@@ -11,7 +11,7 @@ export default function TripScreen({ navigation }) {
     const {arraylist, latitude, longitude, initTripTime} = useTripsStore()
     const { idUser, name } = useUserStore();
     //useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://192.168.1.124:10000/api-llevapp/passengers/trips")},[])
-    useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://192.168.0.189:10000/api-llevapp/driver/trips/" + idUser)},[]);
+    useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://192.168.21.99:10000/api-llevapp/driver/trips/" + idUser)},[]);
    
     
     useEffect(()=>{

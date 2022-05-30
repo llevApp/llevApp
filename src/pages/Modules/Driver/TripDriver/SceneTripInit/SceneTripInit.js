@@ -92,7 +92,7 @@ useEffect( ()=>{
  if(isOpen){
   //SEND POST
   const today = new Date();
-  fetch('http://192.168.0.189:10000/api-llevapp/driver/new-trip', {
+  fetch('http://192.168.21.99:10000/api-llevapp/driver/new-trip', {
   method: 'POST',
   headers: {
     Accept: 'application/json',
