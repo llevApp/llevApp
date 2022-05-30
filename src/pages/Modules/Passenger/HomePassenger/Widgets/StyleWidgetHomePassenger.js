@@ -17,11 +17,6 @@ const styles = StyleSheet.create({
         borderColor:'#B4BEC9', 
         borderRadius:10,
         borderWidth:1,
-
-        /* shadowOffset:10,
-        shadowRadius:5,
-        shadow:5, */
-        
         scroll: {
            space: '10px', 
         }
