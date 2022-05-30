@@ -51,7 +51,6 @@ const useKeyboardBottomInset = () => {
 };
 const TripScreen= () => {
   const navigation = useNavigation();
-  //const GOOGLE_MAPS_APIKEY = 'AIzaSyAsMZa1qIKM3jalkzxNqUyvXQ1CNeS7fEs';
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
   const destination = {latitude: -29.965314, longitude: -71.349513}; */
   const [visible,setVisible] = useState(true); 

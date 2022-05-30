@@ -4,16 +4,16 @@ import { useUserStore } from './../../../Home/Store/StoreHome';
 import { useTripsStore } from './StoreTrip/StoreTrips';
 import moment from 'moment';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-
+import {URL_API,TRIPS_DRIVER} from "@env";
 export default function TripScreen({ navigation }) {
-    
+
     const [FlatListData,setArrayList] = useState([])
     const {arraylist, latitude, longitude, initTripTime} = useTripsStore()
     const { idUser, name } = useUserStore();
-    //useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://192.168.1.124:10000/api-llevapp/passengers/trips")},[])
-    useEffect(()=>{useTripsStore.getState().setTripsPassenger("http://192.168.0.196:10000/api-llevapp/driver/trips/" + idUser)},[]);
-   
-    
+    useEffect(()=>{
+      
+        useTripsStore.getState().setTripsPassenger(URL_API+TRIPS_DRIVER+idUser)
+    },[]); 
     useEffect(()=>{
 
         const FlatListData = arraylist?.map((trip,index)=>{

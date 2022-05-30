@@ -6,7 +6,7 @@ import CountDown from 'react-native-countdown-component';
 import styles from './SceneTripInit.style';
 import {useStoreTripDriver} from '../Store/StoreScene';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import {GOOGLE_MAPS_APIKEY} from "@env";
+import {GOOGLE_MAPS_APIKEY,URL_API,DRIVER_NEW_TRIP} from "@env";
 import { useNavigation } from '@react-navigation/core';
 import {
   Button,
@@ -92,7 +92,7 @@ useEffect( ()=>{
  if(isOpen){
   //SEND POST
   const today = new Date();
-  fetch('http://192.168.0.196:10000/api-llevapp/driver/new-trip', {
+  fetch(URL_API+DRIVER_NEW_TRIP, {
   method: 'POST',
   headers: {
     Accept: 'application/json',
