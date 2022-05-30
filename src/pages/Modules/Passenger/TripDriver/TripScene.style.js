@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold' ,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 40,
+        padding: 10,
+        margin:10
     },
     input: {
       paddingHorizontal: 15,
@@ -25,10 +26,11 @@ const styles = StyleSheet.create({
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      marginTop: 30,
     },
     containerBox: {
       width: '100%',
-      height:380
+      height:400
     },
       H2: {
         fontSize:14,
@@ -63,22 +65,11 @@ const styles = StyleSheet.create({
         marginTop: 40
       },
       button: {
-        backgroundColor: 'transparent',
-        width: '100%',
-        borderRadius: 10
+        backgroundColor: '#002333',
+        width: '80%',
+        borderRadius: 10,
+        marginTop:1
        
-      },
-      buttonOff: {
-        backgroundColor: '#FF5B5B',
-        width: '100%',
-        borderRadius: 10,
-        marginTop:1
-      },
-      buttonOk: {
-        backgroundColor: '#4FC0B3',
-        width: '100%',
-        borderRadius: 10,
-        marginTop:1
       },
       buttonOutline: {
         backgroundColor: 'white',
@@ -90,13 +81,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: '700',
         fontSize: 16,
-       
-      },
-      buttonText2: {
-        color: '#002333',
-        fontWeight: '700',
-        fontSize: 16,
-       marginBottom:20
       },
       buttonOutlineText: {
         color: '#002333',

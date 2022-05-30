@@ -6,14 +6,13 @@ import moment from 'moment';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import {URL_API,TRIPS_DRIVER} from "@env";
 export default function TripScreen({ navigation }) {
-
+    
     const [FlatListData,setArrayList] = useState([])
     const {arraylist, latitude, longitude, initTripTime} = useTripsStore()
     const { idUser, name } = useUserStore();
-    useEffect(()=>{
-      
-        useTripsStore.getState().setTripsPassenger(URL_API+TRIPS_DRIVER+idUser)
-    },[]); 
+    useEffect(()=>{useTripsStore.getState().setTripsPassenger(URL_API+TRIPS_DRIVER+idUser)},[]);
+   
+    
     useEffect(()=>{
 
         const FlatListData = arraylist?.map((trip,index)=>{

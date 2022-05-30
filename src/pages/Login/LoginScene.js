@@ -8,6 +8,7 @@ import { Radio, NativeBaseProvider } from "native-base";
 import useLoginStore from './Store/storeLogin';
 import { useUserStore } from '../Home/Store/StoreHome'
 //import {useTripsStore} from '../Modules/Driver/Screens/StoreTrip/StoreTrips';
+import {URL_API,GET_DATA_USER} from "@env";
 const LoginScreen = () => {
   //Guardamos los correos
   const [email, setEmail] = useState('')
@@ -42,9 +43,9 @@ const { userData } = useUserStore(({ userData }) => ({
         useLoginStore.getState().setEmail(user.email);
         console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
-          const url =  'http://192.168.21.99:10000/api-llevapp/user/';
-          userData(url,email)
-          
+       
+          const url =  URL_API+GET_DATA_USER;
+          userData(url,email) 
           navigation.replace("Driver") 
         }
       }
@@ -84,6 +85,7 @@ const { userData } = useUserStore(({ userData }) => ({
     accessibilityLabel="favorite number"
     value={value} 
     onChange={nextValue => {
+      console.log(nextValue);
       setValue(nextValue);
       useLoginStore.getState().setTarget(nextValue);
 
