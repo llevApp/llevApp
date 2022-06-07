@@ -4,36 +4,13 @@ import { useUserStore } from './../../../Home/Store/StoreHome';
 import { useTripsStore } from './StoreTrip/StoreTrips';
 import moment from 'moment';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import {URL_API,TRIPS_DRIVER} from "@env";
 export default function TripScreen({ navigation }) {
 
-    const [FlatListData,setArrayList] = useState([])
-    const {arraylist, latitude, longitude, initTripTime} = useTripsStore()
+    const {tripsArray} = useTripsStore()
+    //console.log("array ", tripsArray);
     const { idUser, name } = useUserStore();
-    useEffect(()=>{
-      
-        useTripsStore.getState().setTripsPassenger(URL_API+TRIPS_DRIVER+idUser)
-    },[]); 
-    useEffect(()=>{
-        const FlatListData = arraylist?.map((trip,index)=>{
-            let date = moment(trip.init_trip_time).format('MM/DD/YY HH:MM')
-            return{
-                id:index,
-                driver:trip.name,
-                start:[trip.latitude,trip.longitude],
-                timeStamp:date,
-                recentText:trip.total_tips,
-                address:trip.address,
-                passengerNumber:trip.total_passenger,
-                avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
-            }
-        });
-        setArrayList(FlatListData);
-        console.log(FlatListData);
-    },[arraylist]);
-
-    //const name = FlatListData?.[0]?.driver;
-    //page desing
+    useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
+   
     return (
         <View style={{ flex: 1 }} background="#F5F8FF">
             <Box >
@@ -50,10 +27,9 @@ export default function TripScreen({ navigation }) {
                             </HStack>
                         </VStack>
                 </Heading>
-                {FlatListData? 
-
+                {tripsArray? 
                     (<>
-                    <FlatList data={FlatListData} 
+                        <FlatList data={tripsArray} 
                     renderItem={({item}) => 
                     <Box borderWidth="0.4" margin="0.2" borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="110" pr="5" py="6" borderRadius="34">
                         <HStack space={3} justifyContent="center" >
@@ -81,7 +57,6 @@ export default function TripScreen({ navigation }) {
                                     <Text  fontSize="sm" color="coolGray.600" _dark={{color: "warmGray.200"}}pl="2" fontStyle="italic">
                                         Numero de pasajeros: {item.passengerNumber}
                                     </Text>
-                                   
                                 </HStack>
                             </VStack>
                             <Spacer />

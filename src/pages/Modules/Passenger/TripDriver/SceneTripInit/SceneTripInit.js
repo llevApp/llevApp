@@ -55,7 +55,7 @@ const useKeyboardBottomInset = () => {
 };
 
 
-const SceneTripInit= () => {
+export const SceneTripInit= () => {
   const navigation = useNavigation();
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
   const destination = {latitude: -29.965314, longitude: -71.349513}; */

@@ -14,7 +14,7 @@ const navigation = useNavigation();
 const { name } = useUserStore();
 
 const initTrip = ()=>{
-    navigation.replace("TripScreen");
+    navigation.replace("TripScreenPassenger");
 };
 useEffect(()=>{
     if(name){
