@@ -24,13 +24,13 @@ export default function App() {
   return (
    
     <NativeBaseProvider>
-    <NavigationContainer>
-    <SafeAreaProvider>
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding": "height"}
-      style={{flex:1}}
-      keyboardVerticalOffset={Platform.OS === "ios" ? -64 : 0}
-     >
+      <NavigationContainer>
+      <SafeAreaProvider>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding": "height"}
+        style={{flex:1}}
+        keyboardVerticalOffset={Platform.OS === "ios" ? -64 : 0}
+      >
 
       <Stack.Navigator>
         <Stack.Screen options={{ headerShown: false }} name="Splash" component={SplashScreen} />
@@ -48,7 +48,7 @@ export default function App() {
       </Stack.Navigator>
       </KeyboardAvoidingView>
       </SafeAreaProvider>
-    </NavigationContainer>
+      </NavigationContainer>
     </NativeBaseProvider>
     
   );

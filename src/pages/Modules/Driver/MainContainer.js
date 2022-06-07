@@ -30,6 +30,19 @@ function MainContainer() {
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
+          tabBarActiveTintColor: "#159A9C",
+          tabBarInactiveTintColor: "grey",
+          tabBarLabelStyle: {
+            "paddingBottom": 5,
+            "fontSize": 15
+          },
+          tabBarStyle: [
+              {
+                "display": "flex"
+              },
+              null
+            ]
+          ,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             let rn = route.name;
@@ -47,13 +60,7 @@ function MainContainer() {
             return <MaterialCommunityIcons name={iconName} size={size} color={color}/>;
           },
         })}
-        tabBarOptions={{
-          activeTintColor: '#159A9C',
-          inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 5, fontSize: 15 },
-          style: { padding: 10, height: 40}
-        }}>
-
+        >
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={tripsName} component={TripScreen} />
         <Tab.Screen name={accountName} component={AccountScreen} />
