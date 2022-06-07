@@ -1,17 +1,22 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, Flex } from "native-base";
 import { useNavigation } from '@react-navigation/core';
 import { useUserStore } from '../../../Home/Store/StoreHome';
+import { useTripsStore } from './StoreTrip/StoreTrips';
 import WidgetUserInfo from '../HomeDriver/Widgets/WidgetUserInfo';
 import WidgetUserTrips from '../HomeDriver/Widgets/WidgetUserTrips';
 import { StyleSheet } from 'react-native';
-
+import { hubWebSocket } from '../../../../services/common/hubWebSocket';
+import { Alert, Modal } from 'react-native-web';
 
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 /* Function call start trip */
-const { name } = useUserStore();
+const {idUser, name } = useUserStore();
+const { messages } = hubWebSocket();
+
+useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
 
 const initTrip = ()=>{
     navigation.replace("TripScreen");
@@ -22,8 +27,28 @@ useEffect(()=>{
   }
 }),[name];
 
+
+
+useEffect(()=>{
+    console.log('Mensaje WS: ', messages);
+    //hubWebSocket.getState().clearMessages();
+}),[messages];
+
+//console.log('store: ',hubWebSocket.getState());
+
+const [modalVisible, setModalVisible] = useState(true);
+
 return (
         <View style={styles.mainContainer}>
+            <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      ><Text>Hide Modal</Text></Modal>
             <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>
     <Flex >
         <VStack style={styles.widgets} space={5}>

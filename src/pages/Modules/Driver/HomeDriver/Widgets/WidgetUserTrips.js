@@ -1,23 +1,30 @@
 import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, ScrollView } from "native-base";
 import { StyleSheet } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
+import { useTripsStore } from './../../Screens/StoreTrip/StoreTrips';
 
 const WidgetUserTrips = () => {
 
     const {name} = useUserStore();
-    const TripCard = () => {
+    const {tripsArray} = useTripsStore()
+
+    const TripCard = (trip) => {
         return (
             <>
                 <Box width={"100%"} style={styles.tripCard.container}> 
                     <Box style={styles.tripCard.header} >
                         <Heading fontSize={15}>Aporte </Heading>
-                        <Text style={{fontSize:15, fontStyle:"italic"}}>$ 1.000</Text>
+                        <Text style={{fontSize:15, fontStyle:"italic"}}>{trip.recentText}</Text>
                     </Box>
                     <Box /* bg="#DEEFE7" */ rounded="md" width="100%" alignContent="space-between">
                         <VStack padding={3} alignContent="space-between" alignItems={"stretch"} justifyContent="space-between">
                             <Box>
                                 <Heading style={styles.tripCard.text.title}>Pasajero</Heading>
-                                <Heading style={styles.tripCard.text.value}>{name}</Heading>
+                                <Heading style={styles.tripCard.text.value}>{trip.driver}</Heading>
+                            </Box>
+                            <Box>
+                                <Heading style={styles.tripCard.text.title}>Ubicación</Heading>
+                                <Heading style={styles.tripCard.text.value}>{trip.address?.toUpperCase()}</Heading>
                             </Box>
                         </VStack>
                     </Box>
@@ -37,10 +44,7 @@ const WidgetUserTrips = () => {
                     </HStack>
                     <ScrollView >
                         <Box style={styles.mainBox.scroll}>
-                        <TripCard></TripCard>
-                        <TripCard></TripCard>
-                        <TripCard></TripCard>
-                        <TripCard></TripCard>
+                        {tripsArray?.map((trip)=>{return (<TripCard {...trip}></TripCard>)})}
                         </Box>
                     </ScrollView>
                     
