@@ -9,7 +9,7 @@ import useLoginStore from './Store/storeLogin';
 import { useUserStore } from '../Home/Store/StoreHome'
 import {hubWebSocket} from '../../services/common/hubWebSocket'
 //import {useTripsStore} from '../Modules/Driver/Screens/StoreTrip/StoreTrips';
-import {URL_API,GET_DATA_USER} from "@env";
+import {URL_API,GET_DATA_USER,WEB_SOCKET_CHANNEL} from "@env";
 const LoginScreen = () => {
   //Guardamos los correos
   const [email, setEmail] = useState('')
@@ -43,7 +43,7 @@ const { userData } = useUserStore(({ userData }) => ({
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         useLoginStore.getState().setEmail(user.email);
-        let ws = new WebSocket('ws://192.168.1.106:10000/websocket/request');
+        let ws = new WebSocket(WEB_SOCKET_CHANNEL);
         hubWebSocket.getState().setConection(ws);
         console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){

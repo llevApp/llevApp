@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from "react";
-import {View ,TouchableOpacity, Text,Keyboard, Platform, KeyboardEvent,TouchableHighlight } from "react-native";
+import {View ,TouchableOpacity, Text,Keyboard, Platform, KeyboardEvent,TouchableHighlight,TextInput } from "react-native";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import CountDown from 'react-native-countdown-component';
@@ -86,6 +86,7 @@ const ModalInstrucction = () => {
 export const TripScreen= () => {
   const navigation = useNavigation();
   const[trips,setTrips]=useState([]);
+  const [contribution, setContribution] = useState('');
   const mapRef = useRef(null);
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
   const destination = {latitude: -29.965314, longitude: -71.349513}; */
@@ -124,6 +125,7 @@ useEffect(()=>{
     navigation.replace("SceneTripInitPassenger");
   }
   const openModal = (t) => {
+    setVisible(true);
     console.log('*******************');
     console.log(origin);
     console.log(t)
@@ -233,53 +235,24 @@ useEffect(()=>{
 
         </MapView>
         <Center flex={1} px="3">
-                <ModalInstrucction />
+                {/* <ModalInstrucction /> */}
         </Center>
         <Actionsheet isOpen={visible} onClose={onClose}>
         <Actionsheet.Content bottom={bottomInset}>
               <Box w="100%" style={styles.containerBox}  justifyContent="center">
               <View style={styles.textContainer}>
-              <Text style={styles.H1}>Seleccionar punto de partida</Text>
+              <Text style={styles.H1}>Iniciar oferta de viaje</Text>
               </View>
-              <GooglePlacesAutocomplete
-                  placeholder='Seleccionar punto de partida'
-                  nearbyPlacesApi="GooglePlacesSearch"
-                  fetchDetails={true}
-                  onPress={(data, details = null) => {
-                    // 'details' is provided when fetchDetails = true
-                    setOrigin({
-                      location:details.geometry.location,
-                      description:data.description
-                    })
-                    setDestination({
-                      location:{
-                          lat: -29.965314,
-                           lng: -71.34951
-                      },
-                      description:'UCN Coquimbo'
-                    });
-                    //SET DATA ORIGIN DESTINATION
-                  }}
-                  query={{
-                    key: GOOGLE_MAPS_APIKEY,
-                    language: 'es',
-                  }}
-                  styles={{
-                    textInput:{
-                      fontSize:16,
-                      margin:10
-                    }
-                  }}
-                  returnKeyType={"search"}
-                  enablePoweredByContainer={false}
-                  minLength={2}
-                  debounce={400}
-                  
+            
+                <TextInput
+                placeholder="contribution"
+                value={contribution}
+                onChangeText={text => setContribution(text)}
+                style={styles.input}
                 />
-               
                 <VStack alignItems="center">
                     <Button onPress={sendDataInit} style={styles.button} padding={5}>
-                        <Text style={styles.buttonText}>Confirmar punto de partida</Text>
+                        <Text style={styles.buttonText}>Enviar oferta</Text>
                       </Button>
                   </VStack>
               </Box>    
