@@ -9,7 +9,9 @@ import SplashScreen from './src/pages/Home/SplashScreen'
 import Driver from './src/pages/Modules/Driver/Driver' 
 import RegisterScene from './src/pages/Register/RegisterScene';
 import TripScreen from './src/pages/Modules/Driver/TripDriver/TripScene';
+import {TripScreen as TripsScreenPassenger} from './src/pages/Modules/Passenger/TripDriver/TripScene';
 import SceneTripInit from './src/pages/Modules/Driver/TripDriver/SceneTripInit/SceneTripInit';
+import {SceneTripInit as SceneTripInitPassenger} from './src/pages/Modules/Passenger/TripDriver/SceneTripInit/SceneTripInit';
 /* PASSENGER */
 import Passenger from './src/pages/Modules/Passenger/Passenger';
 /* ------- */
@@ -40,7 +42,9 @@ export default function App() {
         <Stack.Screen  options={{ headerShown: false }} name="SceneTripInit" component={SceneTripInit} />
 
         <Stack.Screen  options={{ headerShown: false }} name="Passenger" component={Passenger} />
-        
+        {/* passenger */}
+        <Stack.Screen  options={{ headerShown: false }} name="TripScreenPassenger" component={TripsScreenPassenger} />
+        <Stack.Screen  options={{ headerShown: false }} name="SceneTripInitPassenger" component={SceneTripInitPassenger} />
       </Stack.Navigator>
       </KeyboardAvoidingView>
       </SafeAreaProvider>

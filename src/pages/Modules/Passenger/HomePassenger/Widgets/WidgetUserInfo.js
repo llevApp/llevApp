@@ -8,7 +8,7 @@ const WidgetUserInfo = () => {
     const navigation = useNavigation();
     const {name, careerName} = useUserStore();
     const onClick= ()=>{
-        navigation.replace("TripScreen")
+        navigation.replace("TripScreenPassenger")
     }
     return(
         <>
@@ -21,7 +21,7 @@ const WidgetUserInfo = () => {
                                 <VStack style={styles.info.content} space={1} >
                                     <Heading style={styles.text.career}>{careerName}</Heading>
                                     <Heading style={styles.text.name}>{name}</Heading>
-                                    <Button rounded="full" onPress={onClick} style={styles.button}>Comenzar viaje</Button>
+                                    <Button rounded="full" onPress={onClick} style={styles.button}>Buscar viaje</Button>
                                 </VStack>
                             </Box>
                             <Avatar size={"2xl"} style={styles.image}

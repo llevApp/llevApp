@@ -87,5 +87,13 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
       },
+      colorBoxText:{
+        backgroundColor:'#fff',
+        borderRadius:6,
+        borderColor:'#ccc',
+        borderWidth:0.5,
+        padding:15,
+        width:150
+      }
 });
 export default styles;
