@@ -8,6 +8,8 @@ import moment from 'moment';
 import { useStoreTripPassanger} from './Store/StoreScene';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API} from "@env";
+import {hubWebSocket} from '../../../../services/common/hubWebSocket';
+import { useUserStore } from '../../../Home/Store/StoreHome';
 import {
   Button,
   Actionsheet,
@@ -87,7 +89,12 @@ export const TripScreen= () => {
   const navigation = useNavigation();
   const[trips,setTrips]=useState([]);
   const [contribution, setContribution] = useState('');
+  const[dataWs,setDataWs]=useState(null);
   const mapRef = useRef(null);
+  const { idUser } = useUserStore(({ idUser }) => ({
+    idUser
+  }));
+  const {conection: wsConection, isOpen:isOpenWs, setIsOpen} = hubWebSocket();
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
   const destination = {latitude: -29.965314, longitude: -71.349513}; */
   const { origin,setOrigin,destination,setDestination} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
@@ -121,15 +128,39 @@ useEffect(()=>{
   } = useDisclose();
   const bottomInset = useKeyboardBottomInset();
   const sendDataInit = () => {
+/* Send Data to Driver for ws */
+let data = dataWs;
+let contributionData = contribution;
+  console.log(isOpenWs);
+  //console.log('Connected to the server')
+  console.log(data?.trip_id);
+  console.log(idUser);
+  console.log(data?.latitude);
+  console.log(data?.longitude);
+  console.log(contributionData); 
+  console.log('*******************')
+      console.log('Connected to the server')
+      wsConection?.send(`
+        {
+          "request":{
+              "trip_id":${data?.trip_id},
+              "user_id":${idUser},
+              "latitude":${data?.latitude},
+              "longitude":${data?.longitude},
+              "contribution":${contributionData}
+          }
+        }
+    `);
     setVisible(false);
-    navigation.replace("SceneTripInitPassenger");
+    navigation.replace("Passenger");
   }
   const openModal = (t) => {
     setVisible(true);
     console.log('*******************');
     console.log(origin);
     console.log(t)
-       console.log('*******************');
+    setDataWs(t);
+    console.log('*******************');
   }
   return (
       <View style={styles.container}>

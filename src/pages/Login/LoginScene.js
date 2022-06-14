@@ -43,6 +43,7 @@ const { userData } = useUserStore(({ userData }) => ({
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         useLoginStore.getState().setEmail(user.email);
+        /* Create Connection with WS */
         let ws = new WebSocket(WEB_SOCKET_CHANNEL);
         hubWebSocket.getState().setConection(ws);
         console.log(useLoginStore.getState().target);
@@ -133,6 +134,7 @@ const { userData } = useUserStore(({ userData }) => ({
   }, [wsConection])
 
   useEffect(() => {
+    console.log('SEND FROM CLIENT');
     console.log('open ws: ', isOpen);
     wsConection?.send(`
           {
@@ -145,7 +147,7 @@ const { userData } = useUserStore(({ userData }) => ({
             }
           }
       `);
-  }, [isOpen])
+  }, [isOpen]) 
 
   return (
     <NativeBaseProvider>
