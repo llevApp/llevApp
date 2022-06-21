@@ -9,7 +9,7 @@ import useLoginStore from './Store/storeLogin';
 import { useUserStore } from '../Home/Store/StoreHome'
 import {hubWebSocket} from '../../services/common/hubWebSocket'
 //import {useTripsStore} from '../Modules/Driver/Screens/StoreTrip/StoreTrips';
-import {URL_API,GET_DATA_USER} from "@env";
+import {URL_API,GET_DATA_USER,WEB_SOCKET_CHANNEL} from "@env";
 const LoginScreen = () => {
   //Guardamos los correos
   const [email, setEmail] = useState('')
@@ -19,15 +19,15 @@ const LoginScreen = () => {
   const [isLoading, setLoading] = useState(true);
 /* State radio button */
 const [value, setValue] = useState("driver");
-  const {conection: wsConection, isOpen, setIsOpen} = hubWebSocket();
-
+/* Sign up function */
   const handleSignUp = () => {
     navigation.replace("Register")
   }
-
-const { userData } = useUserStore(({ userData }) => ({
+/* Store user data */
+ const { userData } = useUserStore(({ userData }) => ({
   userData
-}));
+})); 
+/* Handle login function */
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
@@ -43,8 +43,6 @@ const { userData } = useUserStore(({ userData }) => ({
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         useLoginStore.getState().setEmail(user.email);
-        let ws = new WebSocket('ws://192.168.1.106:10000/websocket/request');
-        hubWebSocket.getState().setConection(ws);
         console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
           const url =  URL_API+GET_DATA_USER;
@@ -59,93 +57,6 @@ const { userData } = useUserStore(({ userData }) => ({
     })
     return unsubscribe
   }, [email])
-
-
-  /* useEffect(() => {
-    console.log(ws);
-    ws.onopen = () => {
-      // connection opened
-      ws.send(`
-          {
-            "request":{
-                "trip_id":110,
-                "user_id":2,
-                "latitude":-11.2212,
-                "longitude":-12.222,
-                "contribution":90
-            }
-          }
-      `);  // send a message
-    };
-
-    ws.onmessage = (e) => {
-      // a message was received
-      console.log(e.data);
-    };
-  }, [wsConection]) */
-
-  /* wsConection.send(`
-          {
-            "request":{
-                "trip_id":110,
-                "user_id":2,
-                "latitude":-11.2212,
-                "longitude":-12.222,
-                "contribution":90
-            }
-          }
-      `);  // send a message */
-      
-
-  useEffect(() => {
-    if (wsConection) {
-      wsConection.onopen = () => {
-        setIsOpen(true);
-        console.log('Connected to the server')
-        wsConection?.send(`
-          {
-            "request":{
-                "trip_id":110,
-                "user_id":2,
-                "latitude":-11.2212,
-                "longitude":-12.222,
-                "contribution":90
-            }
-          }
-      `);
-      };
-      wsConection.onclose = (e) => {
-        setIsOpen(false);
-        console.log('Disconnected. Check internet or server.')
-        console.log(e);
-      };
-      wsConection.onerror = (e) => {
-        console.log(e.message);
-      };
-      wsConection.onmessage = (e) => {
-        console.log(e.data);
-        hubWebSocket.getState().setMessages(e.data);
-      };
-
-      console.log(isOpen)
-    }
-    
-  }, [wsConection])
-
-  useEffect(() => {
-    console.log('open ws: ', isOpen);
-    wsConection?.send(`
-          {
-            "request":{
-                "trip_id":110,
-                "user_id":2,
-                "latitude":-11.2212,
-                "longitude":-12.222,
-                "contribution":90
-            }
-          }
-      `);
-  }, [isOpen])
 
   return (
     <NativeBaseProvider>

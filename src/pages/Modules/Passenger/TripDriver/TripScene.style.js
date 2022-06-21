@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       borderRadius: 10,
       marginTop: 5,
+      color: '#002333'
+      
     },
     textContainer: {
       width: '100%',
@@ -82,10 +84,23 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
       },
+      buttonTextInput: {
+        color: '#002333',
+        fontWeight: '700',
+        fontSize: 16,
+      },
       buttonOutlineText: {
         color: '#002333',
         fontWeight: '700',
         fontSize: 16,
       },
+      colorBoxText:{
+        backgroundColor:'#fff',
+        borderRadius:6,
+        borderColor:'#ccc',
+        borderWidth:0.5,
+        padding:15,
+        width:150
+      }
 });
 export default styles;

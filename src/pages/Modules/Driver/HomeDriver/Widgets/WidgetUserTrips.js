@@ -39,12 +39,12 @@ const WidgetUserTrips = () => {
             <Box style={styles.mainBox}> 
                 <VStack space={4}>
                     <HStack justifyContent="space-between">
-                        <Heading  style={{fontSize:15, fontStyle:"italic"}}>Historial de viajes</Heading>
+                        <Heading  style={{fontSize:15, fontStyle:"italic"}}>A tu alrededor</Heading>
                         <Button size="sm" variant="ghost">Ver todos</Button>
                     </HStack>
                     <ScrollView >
                         <Box style={styles.mainBox.scroll}>
-                        {tripsArray?.map((trip)=>{return (<TripCard {...trip}></TripCard>)})}
+                        {tripsArray?.map((trip)=>{return (<TripCard key={trip?.id} {...trip}></TripCard>)})}
                         </Box>
                     </ScrollView>
                     

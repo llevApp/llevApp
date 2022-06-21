@@ -4,17 +4,18 @@ import { useNavigation } from '@react-navigation/core';
 import { useUserStore } from '../../../Home/Store/StoreHome';
 import WidgetUserInfo from '../HomePassenger/Widgets/WidgetUserInfo';
 import WidgetUserTrips from '../HomePassenger/Widgets/WidgetUserTrips';
-import { StyleSheet } from 'react-native';
-
-
+import { Alert, StyleSheet } from 'react-native';
+import {hubWebSocket} from '../../../../services/common/hubWebSocket';
+import {WEB_SOCKET_CHANNEL} from "@env";
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 /* Function call start trip */
-const { name } = useUserStore();
-
+const { name,idUser } = useUserStore();
+/* Get ws connection */
+const {conection: wsConection, isOpen, setIsOpen} = hubWebSocket();
 const initTrip = ()=>{
-    navigation.replace("TripScreen");
+    navigation.replace("TripScreenPassenger");
 };
 useEffect(()=>{
     if(name){
@@ -23,7 +24,71 @@ useEffect(()=>{
     console.log('Estamos en vista Pasajero');
   }
 }),[name];
+  /* When get the user id, open ws */
+  useEffect(()=>{
+    /* Create Connection with WS */
+    if(idUser){
+      let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
+      hubWebSocket.getState().setConection(ws);
+    }else{
+      console.log('Undefined id user');
+    }
+},[idUser]);
+useEffect(()=>{
+  if(wsConection){
+    wsConection.onopen = () => {
+      // connection opened
+      setIsOpen(true);
+    };
+    wsConection.onmessage = (e) => {
+      // a message was received
+      console.log(e.data);
+    };
+    wsConection.onerror = (e) => {
+      // an error occurred
+      Alert.alert('Error in WS, '+ e.message);
+    };
+    
+    wsConection.onclose = (e) => {
+      // connection closed
+      //console.log(e.code, e.reason);
+      Alert.alert(e.code +' ' +e.reason);
+    };
+  }
 
+},[wsConection]);
+/* useEffect(() => {
+    if (wsConection) {
+      wsConection?.onopen = () => {
+        setIsOpen(true);
+        console.log('Connected to the server')
+       wsConection?.send(`
+          {
+            "request":{
+                "trip_id":110,
+                "user_id":2,
+                "latitude":-11.2212,
+                "longitude":-12.222,
+                "contribution":90
+            }
+          }
+      `); 
+      };
+      wsConection?.onclose = (e) => {
+        setIsOpen(false);
+        console.log('Disconnected. Check internet or server.')
+        console.log(e);
+      };
+      wsConection?.onerror = (e) => {
+        console.log(e.message);
+      };
+      wsConection?.onmessage = (e) => {
+        console.log(e.data);
+        hubWebSocket.getState().setMessages(e.data);
+      };
+      console.log(isOpen)
+    }
+  }, [wsConection]); */
 return (
         <View style={styles.mainContainer}>
             <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>

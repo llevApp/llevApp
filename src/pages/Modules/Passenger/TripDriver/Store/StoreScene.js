@@ -1,5 +1,5 @@
 import create from 'zustand';
-export const useStoreTripDriver = 
+export const useStoreTripPassanger = 
     create( 
         (set) => {
             return {
