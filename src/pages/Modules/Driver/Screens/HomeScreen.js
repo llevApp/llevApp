@@ -9,14 +9,18 @@ import { StyleSheet } from 'react-native';
 import { hubWebSocket } from '../../../../services/common/hubWebSocket';
 import { Alert, Modal } from 'react-native-web';
 
+import {WEB_SOCKET_CHANNEL} from "@env";
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 /* Function call start trip */
 const {idUser, name } = useUserStore();
-const { messages } = hubWebSocket();
+/* Get ws connection */
 
-useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
+const {conection: wsConection, isOpen, setIsOpen,messages} = hubWebSocket();
+useEffect(()=>{
+    useTripsStore.getState().setTripsPassenger(idUser);
+},[idUser]);
 
 const initTrip = ()=>{
     navigation.replace("TripScreen");
@@ -27,8 +31,41 @@ useEffect(()=>{
   }
 }),[name];
 
-
-
+  /* When get the user id, open ws */
+  useEffect(()=>{
+    /* Create Connection with WS */
+    if(idUser){
+      let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
+      hubWebSocket.getState().setConection(ws);
+    }else{
+      console.log('Undefined id user');
+    }
+},[idUser]);
+useEffect(()=>{
+    
+    if(wsConection){
+      wsConection.onopen = () => {
+        // connection opened
+        setIsOpen(true);
+      };
+      wsConection.onmessage = (e) => {
+        // a message was received
+        console.log(e.data);
+        Alert.alert(e.data);
+      };
+      wsConection.onerror = (e) => {
+        // an error occurred
+        Alert.alert('Error in WS, '+ e.message);
+      };
+      
+      wsConection.onclose = (e) => {
+        // connection closed
+        //console.log(e.code, e.reason);
+        Alert.alert(e.code +' ' +e.reason);
+      };
+    }
+  
+  },[wsConection]);
 useEffect(()=>{
     console.log('Mensaje WS: ', messages);
     //hubWebSocket.getState().clearMessages();
