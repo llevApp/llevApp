@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from "react";
-import {View ,TouchableOpacity, Text,Keyboard, Platform, KeyboardEvent,TouchableHighlight,TextInput } from "react-native";
+import {Alert,View ,TouchableOpacity, Text,Keyboard, Platform, KeyboardEvent,TouchableHighlight,TextInput } from "react-native";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import CountDown from 'react-native-countdown-component';
@@ -133,26 +133,33 @@ let data = dataWs;
 let contributionData = contribution;
   console.log(isOpenWs);
   //console.log('Connected to the server')
-  console.log(data?.trip_id);
+/*   console.log(data?.trip_id);
   console.log(idUser);
   console.log(data?.latitude);
   console.log(data?.longitude);
-  console.log(contributionData); 
-  console.log('*******************')
-      console.log('Connected to the server')
-      wsConection?.send(`
-        {
-          "request":{
-              "trip_id":${data?.trip_id},
-              "user_id":${idUser},
-              "latitude":${data?.latitude},
-              "longitude":${data?.longitude},
-              "contribution":${contributionData}
-          }
+  console.log(contributionData);  */
+  //console.log('*******************')
+  console.log('Connected to the server')
+  if(isOpenWs){
+    wsConection?.send(`
+      {
+        "request":{
+            "trip_id":${data?.trip_id},
+            "user_id":${idUser},
+            "latitude":${data?.latitude},
+            "longitude":${data?.longitude},
+            "contribution":${contributionData}
         }
-    `);
+      }
+  `);
+  setVisible(false);
+  navigation.replace("Passenger");
+  }else{
+    Alert.alert('Error al conectarse con servidor WS');
     setVisible(false);
     navigation.replace("Passenger");
+  }
+ 
   }
   const openModal = (t) => {
     setVisible(true);

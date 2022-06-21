@@ -40,7 +40,7 @@ export const useTripsStore =
                             }
                         })
                         }))
-                        .catch((error)=>alert("Lo sentimos, ha ocurrido un error."))
+                        .catch((error)=>alert("Lo sentimos, ha ocurrido un error.",error))
                         .finally( ()=>set({ loading:false  }));
                     }
                     

@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       borderRadius: 10,
       marginTop: 5,
+      color: '#002333'
+      
     },
     textContainer: {
       width: '100%',
@@ -79,6 +81,11 @@ const styles = StyleSheet.create({
       },
       buttonText: {
         color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
+      },
+      buttonTextInput: {
+        color: '#002333',
         fontWeight: '700',
         fontSize: 16,
       },

@@ -44,7 +44,7 @@ const WidgetUserTrips = () => {
                     </HStack>
                     <ScrollView >
                         <Box style={styles.mainBox.scroll}>
-                        {tripsArray?.map((trip)=>{return (<TripCard {...trip}></TripCard>)})}
+                        {tripsArray?.map((trip)=>{return (<TripCard key={trip?.id} {...trip}></TripCard>)})}
                         </Box>
                     </ScrollView>
                     
