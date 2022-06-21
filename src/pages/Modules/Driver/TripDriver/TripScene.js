@@ -19,8 +19,7 @@ import {
   HStack,
 } from 'native-base';
 import { useNavigation } from '@react-navigation/core'
-import moment from "moment";
-
+import moment from 'moment/min/moment-with-locales';
 
 
 
@@ -82,16 +81,37 @@ const TripScreen= () => {
   }
 
   const [chosenDate, setChosenDate] = useState(new Date());
+  const dateMoment = moment(chosenDate).locale('Es')
   const DatePickerTrip = () => {
-    return <View>
-        <DatePickerIOS 
-        date={chosenDate}
+    return <View style={styles.input}>
+      {Platform.OS === 'ios' ? 
+      <DatePickerIOS
+      date={chosenDate}
+      onDateChange={setChosenDate}
+      //display="spinner"
+      minuteInterval={5}
+      minimumDate={new Date()}
+      locale="es"
+      //mode="datetime"
+    /> :
+    <></>}
+        
+      {/* <DatePicker
+        //modal
+        //open={true}
+        date={chosenDate} 
         onDateChange={setChosenDate}
-        minuteInterval={5}
-        //minimumDate={}
-      />
+        mode="datetime"
+      /> */}
       </View>
   }
+
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
+
+      
+
+  
 
   return (
       <View style={styles.container}>
@@ -114,12 +134,17 @@ const TripScreen= () => {
                 </View>
                 <View style={styles.container}>
                 <VStack alignItems="center">
-                  <HStack>
+                  <HStack >
                     <FontAwesome5 name="map-marked-alt" size={24} color="black" />
-                    <Text onPress={() => setShowModalPlacePicker(true)}>LUGAR DE ORIGEN</Text>
+                    <Text onPress={() => setShowModalPlacePicker(true)}>LUGAR DE ORIGEN: {origin? origin.description : ""}</Text>
                   </HStack>
+                  <HStack >
+                    <FontAwesome5 name="clock" size={24} color="black" />
+                    <Text onPress={() => setShowModalDatePicker(true)}>{dateMoment.calendar()}</Text>
+                    
+                  </HStack>
+        
                   
-                  <Text onPress={() => setShowModalDatePicker(true)}>HORARIO DE SALIDA</Text>
                 </VStack>
                   <Modal isOpen={showModalPlacePicker} onClose={() => setShowModalPlacePicker(false)}>
                     <Modal.Content maxWidth="400px">
@@ -163,8 +188,8 @@ const TripScreen= () => {
                       </Modal.Body>
                     </Modal.Content>
                   </Modal>
-                  <Modal isOpen={showModalDatePicker} onClose={() => setShowModalDatePicker(false)}>
-                    <Modal.Content maxWidth="400px">
+                  <Modal isOpen={showModalDatePicker} onClose={() => setShowModalDatePicker(false)} >
+                    <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9"}>
                       <Modal.CloseButton />
                       <Modal.Header>Define el horario de partida</Modal.Header>
                       <Modal.Body>
