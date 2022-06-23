@@ -18,6 +18,8 @@ export const hubWebSocket =
                                 latitude: message.latitude,
                                 longitude: message.longitude,
                                 contribution: message.contribution,
+                                userName:message.user_name,
+                                location:message.location
                             }
                         set({ messages: msg })
                     }
@@ -31,3 +33,4 @@ export const hubWebSocket =
                     });
                 },
         }})
+        
