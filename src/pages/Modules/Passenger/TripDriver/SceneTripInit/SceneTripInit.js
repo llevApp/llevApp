@@ -91,13 +91,16 @@ const toHome = () => {
 useEffect( ()=>{
  if(isOpen){
   //SEND POST
+  console.log(URL_API+DRIVER_NEW_TRIP);
   const today = new Date();
+  console.log(URL_API+DRIVER_NEW_TRIP);
   fetch(URL_API+DRIVER_NEW_TRIP, {
   method: 'POST',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'
   },
+  
   body: JSON.stringify({
     user_id: idUser,
     latitude: origin?.location.lat,

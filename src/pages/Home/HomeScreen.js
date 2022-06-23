@@ -17,6 +17,7 @@ const HomeScreen = () => {
   useEffect(()=>{
     console.log(useLoginStore.getState().target)
   },[])
+  
   return (
     <View style={styles.container}>
      {/*  <Text> AQUI DIOSITO PON EL MENU {auth.currentUser?.email} !</Text> */}

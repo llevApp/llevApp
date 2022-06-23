@@ -77,7 +77,7 @@ const TripScreen= () => {
             longitude: -71.35180660362076,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421}}
-          //provider={"google"}
+          //provider={"google"
         >
         </MapView>
         <Actionsheet isOpen={visible} onClose={onClose}>
@@ -103,7 +103,7 @@ const TripScreen= () => {
                       },
                       description:'UCN Coquimbo'
                     });
-                    //SET DATA ORIGIN DESTINATION
+                    //SET DATA ORIGIN DESTINATIO
                   }}
                   query={{
                     key: GOOGLE_MAPS_APIKEY,

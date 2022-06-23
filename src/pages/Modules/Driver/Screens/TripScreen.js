@@ -13,8 +13,7 @@ export default function TripScreen({ navigation }) {
   
     useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
     useEffect(()=>{
-      
-        useTripsStore.getState().setTripsPassenger(URL_API+TRIPS_DRIVER+idUser)
+        useTripsStore.getState().setTripsPassenger(idUser)
     },[]); 
     useEffect(()=>{
         const FlatListData = tripsArray?.map((trip,index)=>{
@@ -30,7 +29,6 @@ export default function TripScreen({ navigation }) {
                 avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
             }
         });
-        console.log(FlatListData);
     },[tripsArray]);
     return (
         <View style={{ flex: 1 }} background="#F5F8FF">

@@ -8,16 +8,35 @@ import WidgetUserTrips from '../HomeDriver/Widgets/WidgetUserTrips';
 import { StyleSheet } from 'react-native';
 import { hubWebSocket } from '../../../../services/common/hubWebSocket';
 import { Alert, Modal } from 'react-native-web';
+import {WEB_SOCKET_CHANNEL} from "@env";
 
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 /* Function call start trip */
 const {idUser, name } = useUserStore();
-const { messages } = hubWebSocket();
+const {conection: wsConection, isOpen, setIsOpen} = hubWebSocket();
 
-useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
 
+useEffect(()=>{
+    if(name){
+    setNameShow(name);
+    /*  */
+    console.log('Estamos en vista driver');
+  }
+}),[name];
+  /* When get the user id, open ws */
+  useEffect(()=>{
+    /* Create Connection with WS */
+    console.log(idUser);
+    if(idUser){
+      let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
+      hubWebSocket.getState().setConection(ws);
+      console.log('CACAAAAA');
+    }else{
+      console.log('Undefined id user');
+    }
+},[idUser]);
 const initTrip = ()=>{
     navigation.replace("TripScreen");
 };
@@ -26,14 +45,69 @@ useEffect(()=>{
     setNameShow(name);
   }
 }),[name];
+useEffect(()=>{
+  if(wsConection){
+    wsConection.onopen = () => {
+      // connection opened
+      setIsOpen(true);
+    };
+    wsConection.onmessage = (e) => {
+      // a message was received
+      console.log(e.data);
+      Example();
+    };
+    wsConection.onerror = (e) => {
+      // an error occurred
+      Alert.alert('Error in WS, '+ e.message);
+    };
+    
+    wsConection.onclose = (e) => {
+      // connection closed
+      //console.log(e.code, e.reason);
+      Alert.alert(e.code +' ' +e.reason);
+    };
+  }
 
+},[wsConection]);
+/* useEffect(() => {
+    if (wsConection) {
+      wsConection?.onopen = () => {
+        setIsOpen(true);
+        console.log('Connected to the server')
+       wsConection?.send(`
+          {
+            "request":{
+                "trip_id":110,
+                "user_id":2,
+                "latitude":-11.2212,
+                "longitude":-12.222,
+                "contribution":90
+            }
+          }
+      `); 
+      };
+      wsConection?.onclose = (e) => {
+        setIsOpen(false);
+        console.log('Disconnected. Check internet or server.')
+        console.log(e);
+      };
+      wsConection?.onerror = (e) => {
+        console.log(e.message);
+      };
+      wsConection?.onmessage = (e) => {
+        console.log(e.data);
+        hubWebSocket.getState().setMessages(e.data);
+      };
+      console.log(isOpen)
+    }
+  }, [wsConection]); */
 
-
+/* 
 useEffect(()=>{
     console.log('Mensaje WS: ', messages);
     //hubWebSocket.getState().clearMessages();
 }),[messages];
-
+ */
 //console.log('store: ',hubWebSocket.getState());
 
 const [modalVisible, setModalVisible] = useState(true);
@@ -86,3 +160,40 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+
+
+const Example = () => {
+    const [modalVisible, setModalVisible] = useState(false);
+    return (
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Hello World!</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+        <Pressable
+          style={[styles.button, styles.buttonOpen]}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.textStyle}>Show Modal</Text>
+        </Pressable>
+      </View>
+    );
+  };
