@@ -127,7 +127,7 @@ useEffect(()=>{
     onClose
   } = useDisclose();
   const bottomInset = useKeyboardBottomInset();
-  const sendDataInit = () => {
+const sendDataInit = () => {
 /* Send Data to Driver for ws */
 let data = dataWs;
 let contributionData = contribution;
