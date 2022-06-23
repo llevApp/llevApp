@@ -20,7 +20,6 @@ const initTrip = ()=>{
 useEffect(()=>{
     if(name){
     setNameShow(name);
-    /*  */
     console.log('Estamos en vista Pasajero');
   }
 }),[name];

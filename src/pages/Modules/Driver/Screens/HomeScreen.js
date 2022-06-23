@@ -10,13 +10,18 @@ import { hubWebSocket } from '../../../../services/common/hubWebSocket';
 import { Alert, Modal } from 'react-native-web';
 import {WEB_SOCKET_CHANNEL} from "@env";
 
+import {WEB_SOCKET_CHANNEL} from "@env";
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 /* Function call start trip */
 const {idUser, name } = useUserStore();
-const {conection: wsConection, isOpen, setIsOpen} = hubWebSocket();
+/* Get ws connection */
 
+const {conection: wsConection, isOpen, setIsOpen,messages} = hubWebSocket();
+useEffect(()=>{
+    useTripsStore.getState().setTripsPassenger(idUser);
+},[idUser]);
 
 useEffect(()=>{
     if(name){
@@ -68,41 +73,41 @@ useEffect(()=>{
     };
   }
 
-},[wsConection]);
-/* useEffect(() => {
-    if (wsConection) {
-      wsConection?.onopen = () => {
-        setIsOpen(true);
-        console.log('Connected to the server')
-       wsConection?.send(`
-          {
-            "request":{
-                "trip_id":110,
-                "user_id":2,
-                "latitude":-11.2212,
-                "longitude":-12.222,
-                "contribution":90
-            }
-          }
-      `); 
-      };
-      wsConection?.onclose = (e) => {
-        setIsOpen(false);
-        console.log('Disconnected. Check internet or server.')
-        console.log(e);
-      };
-      wsConection?.onerror = (e) => {
-        console.log(e.message);
-      };
-      wsConection?.onmessage = (e) => {
-        console.log(e.data);
-        hubWebSocket.getState().setMessages(e.data);
-      };
-      console.log(isOpen)
+  /* When get the user id, open ws */
+  useEffect(()=>{
+    /* Create Connection with WS */
+    if(idUser){
+      let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
+      hubWebSocket.getState().setConection(ws);
+    }else{
+      console.log('Undefined id user');
     }
-  }, [wsConection]); */
-
-/* 
+},[idUser]);
+useEffect(()=>{
+    
+    if(wsConection){
+      wsConection.onopen = () => {
+        // connection opened
+        setIsOpen(true);
+      };
+      wsConection.onmessage = (e) => {
+        // a message was received
+        console.log(e.data);
+        Alert.alert(e.data);
+      };
+      wsConection.onerror = (e) => {
+        // an error occurred
+        Alert.alert('Error in WS, '+ e.message);
+      };
+      
+      wsConection.onclose = (e) => {
+        // connection closed
+        //console.log(e.code, e.reason);
+        Alert.alert(e.code +' ' +e.reason);
+      };
+    }
+  
+  },[wsConection]);
 useEffect(()=>{
     console.log('Mensaje WS: ', messages);
     //hubWebSocket.getState().clearMessages();

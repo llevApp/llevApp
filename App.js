@@ -15,6 +15,8 @@ import {SceneTripInit as SceneTripInitPassenger} from './src/pages/Modules/Passe
 /* PASSENGER */
 import Passenger from './src/pages/Modules/Passenger/Passenger';
 /* ------- */
+/* Messages */
+import MessagesScreen from './src/pages/Modules/Passenger/Screens/Chat/Messages/MessagesScreen';
 import { KeyboardAvoidingView, NativeBaseProvider} from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Platform } from 'react-native-web';
@@ -45,6 +47,8 @@ export default function App() {
         {/* passenger */}
         <Stack.Screen  options={{ headerShown: false }} name="TripScreenPassenger" component={TripsScreenPassenger} />
         <Stack.Screen  options={{ headerShown: false }} name="SceneTripInitPassenger" component={SceneTripInitPassenger} />
+        {/* Messages */}
+        <Stack.Screen  options={{ headerShown: false }} name="MessagesScreen" component={MessagesScreen} />
       </Stack.Navigator>
       </KeyboardAvoidingView>
       </SafeAreaProvider>
