@@ -14,6 +14,7 @@ import SceneTripInit from './src/pages/Modules/Driver/TripDriver/SceneTripInit/S
 import {SceneTripInit as SceneTripInitPassenger} from './src/pages/Modules/Passenger/TripDriver/SceneTripInit/SceneTripInit';
 /* PASSENGER */
 import Passenger from './src/pages/Modules/Passenger/Passenger';
+import ChatScreen from './src/pages/Modules/Passenger/Screens/Chat/ChatScreen';
 /* ------- */
 /* Messages */
 import MessagesScreen from './src/pages/Modules/Passenger/Screens/Chat/Messages/MessagesScreen';
@@ -30,7 +31,6 @@ export default function App() {
     return {
         headerTransparent: true,
         headerLeft: () => (
-          //<Button name="ios-arrow-back" size={24} color="black" onPress={() => alert(nav)}/>
           <BackButton screenName={screen}/>
         ),
         headerTitle: ""
@@ -59,6 +59,7 @@ export default function App() {
         <Stack.Screen  options={{ headerShown: false }} name="SceneSelectOrigin" component={SceneSelectOrigin} />
         <Stack.Screen  options={{ headerShown: false }} name="Passenger" component={Passenger} />
         {/* passenger */}
+        <Stack.Screen  options={{ headerShown: false }} name="ChatScreen" component={ChatScreen} />
         <Stack.Screen  options= {HeaderOptions("Passenger")} name="TripScreenPassenger" component={TripsScreenPassenger} />
         <Stack.Screen  options={{ headerShown: false }} name="SceneTripInitPassenger" component={SceneTripInitPassenger} />
         {/* Messages */}

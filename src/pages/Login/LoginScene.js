@@ -33,7 +33,7 @@ const [value, setValue] = useState("driver");
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log('Login con:', user.email);
+        //console.log('Login con:', user.email);
       })
       .catch(error => Alert.alert('Creedenciales incorrectas'))
   }
@@ -43,7 +43,7 @@ const [value, setValue] = useState("driver");
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         useLoginStore.getState().setEmail(user.email);
-        console.log(useLoginStore.getState().target);
+        //console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
           const url =  URL_API+GET_DATA_USER;
           userData(url,email) 
@@ -89,7 +89,7 @@ const [value, setValue] = useState("driver");
     accessibilityLabel="favorite number"
     value={value} 
     onChange={nextValue => {
-      console.log(nextValue);
+      //console.log(nextValue);
       setValue(nextValue);
       useLoginStore.getState().setTarget(nextValue);
 

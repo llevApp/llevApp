@@ -31,7 +31,7 @@ async function getLocationPermission(){
         latitude: location.coords.latitude,
         longitude:location.coords.longitude
     }
-    console.log(current);
+    //console.log(current);
     setOrigin(current);
     originRequest(current);
 }

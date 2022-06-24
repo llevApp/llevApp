@@ -91,98 +91,107 @@ export const TripScreen= () => {
   const [contribution, setContribution] = useState('');
   const[dataWs,setDataWs]=useState(null);
   const[activeWs,setActiveWs]=useState(false);
-  const mapRef = useRef(null);
-  const { idUser } = useUserStore(({ idUser }) => ({
-    idUser
-  }));
-  const {conection: wsConection, isOpen:isOpenWs, setIsOpen} = hubWebSocket();
-/*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
-  const destination = {latitude: -29.965314, longitude: -71.349513}; */
-  const { origin,setOrigin,destination,setDestination} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
-    setOrigin,setDestination,origin,destination
-  }));
-  /* get trips passenger */
-useEffect(()=>{
-  fetch(URL_API+PASSENGER_TRIPS)
-  .then((response)=>response.json())
-  .then((json)=>setTrips(json))
-  .catch((error)=>alert(error))
-  .finally( ()=>console.log('finally'));
-  setDestination({
-    location:{
-        lat: -29.965314,
-         lng: -71.34951
-    },
-    description:'UCN Coquimbo'
-  });
- 
-}
-
-,[]);
-/* show trips  user*/
-
   const [visible,setVisible] = useState(false); 
+  /* show trips  user*/
   const {
     isOpen,
     onOpen,
     onClose
   } = useDisclose();
   const bottomInset = useKeyboardBottomInset();
-  useEffect(()=>{
-    if(wsConection && activeWs){
-      console.log('entramos al ws');
-      wsConection.onopen = () => {
-        // connection opened
-        setIsOpen(true);
-        wsConection.send(`
-          {
-            "request":{
-                "trip_id":${dataWs?.trip_id},
-                "user_id":${idUser},
-                "latitude":${dataWs?.latitude},
-                "longitude":${dataWs?.longitude},
-                "contribution":${contribution}
-            }
-          }
-      `);
-      setVisible(false);
-      navigation.replace("Passenger");
-      };
-      wsConection.onmessage = (e) => {
-        // a message was received
-        console.log(e.data);
-      };
-      wsConection.onerror = (e) => {
-        // an error occurred
-        Alert.alert('Error in WS, '+ e.message);
-      };
-      
-      wsConection.onclose = (e) => {
-        // connection closed
-        //console.log(e.code, e.reason);
-        Alert.alert(e.code +' ' +e.reason);
-      }; 
-    }
-  },[activeWs]);
+  const mapRef = useRef(null);
+  const { idUser } = useUserStore(({ idUser }) => ({
+    idUser
+  }));
 
-
-
+  const {conection: wsConection, isOpen:isOpenWs, setIsOpen,setMessagesPassenger} = hubWebSocket();
+/*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
+  const destination = {latitude: -29.965314, longitude: -71.349513}; */
+  const { origin,setOrigin,destination,setDestination} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
+    setOrigin,setDestination,origin,destination
+  }));
   const sendDataInit = () => {
-  /* Send Data to Driver for ws */
-      console.log('Connected to the server')
-      let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
-      hubWebSocket.getState().setConection(ws);
-      setActiveWs(true);
+    /* Send Data to Driver for ws */
+        console.log('Connected to the server')
+        console.log(dataWs?.driver_id);
+        let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
+        hubWebSocket.getState().setConection(ws);
+        setActiveWs(true);
+    }
+    const openModal = (t) => {
+      setActiveWs(false);
+      setVisible(true);
+      //console.log('*******************');
+      //console.log(origin);
+      //console.log(t)
+      setDataWs(t);
+      //console.log('*******************');
+    }
+  /* get trips passenger */
+  useEffect(()=>{
+    fetch(URL_API+PASSENGER_TRIPS)
+    .then((response)=>response.json())
+    .then((json)=>setTrips(json))
+    .catch((error)=>alert(error))
+    .finally( ()=>console.log('finally'));
+    setDestination({
+      location:{
+          lat: -29.965314,
+          lng: -71.34951
+      },
+      description:'UCN Coquimbo'
+    });
+  
   }
-  const openModal = (t) => {
-    setActiveWs(false);
-    setVisible(true);
-    console.log('*******************');
-    console.log(origin);
-    console.log(t)
-    setDataWs(t);
-    console.log('*******************');
-  }
+
+  ,[]);
+
+    useEffect(()=>{
+      if(wsConection && activeWs){
+        //console.log('entramos al ws');
+        wsConection.onopen = () => {
+          //console.log('ID USER '+idUser);
+          // connection opened
+          setIsOpen(true);
+          wsConection.send(`
+            {
+              "request":{
+                  "trip_id":${dataWs?.trip_id},
+                  "user_id":${idUser},
+                  "latitude":${dataWs?.latitude},
+                  "longitude":${dataWs?.longitude},
+                  "contribution":${contribution}
+              }
+            }
+        `);
+        setVisible(false);
+        navigation.replace("Passenger");
+        };
+        wsConection.onmessage = (e) => {
+          // a message was received
+          console.log('Mensaje recibvido desde WS: '+e.data);
+          const json = JSON.parse(e.data);
+          const message = json?.response;
+          if(message?.status){
+            setMessagesPassenger(e.data);
+          }else{
+            'Es la data que se envio por WS';
+          }
+          
+        };
+        wsConection.onerror = (e) => {
+          // an error occurred
+          Alert.alert('Error in WS, '+ e.message);
+        };
+        
+        wsConection.onclose = (e) => {
+          // connection closed
+          //console.log(e.code, e.reason);
+          Alert.alert(e.code +' ' +e.reason);
+        }; 
+      }
+    },[activeWs]);
+
   return (
       <View style={styles.container}>
         <MapView

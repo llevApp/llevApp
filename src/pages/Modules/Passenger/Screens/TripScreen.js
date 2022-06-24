@@ -29,7 +29,7 @@ export default function TripScreen({ navigation }) {
             }
         });
         setArrayList(FlatListData);
-        console.log(FlatListData);
+        //console.log(FlatListData);
     },[arraylist]);
 
     //const name = FlatListData?.[0]?.driver;
