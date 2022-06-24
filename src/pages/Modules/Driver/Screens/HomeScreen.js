@@ -16,7 +16,6 @@ const navigation = useNavigation();
 const [showModal, setShowModal] = useState(false);
 const {idUser, name } = useUserStore();
 const {conection: wsConection, isOpen, setIsOpen,messages,setMessages} = hubWebSocket();
-
 const ResponseRequest = () =>{
     wsConection?.send(`
       {

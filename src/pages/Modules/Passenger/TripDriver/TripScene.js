@@ -7,7 +7,7 @@ import styles from './TripScene.style';
 import moment from 'moment';
 import { useStoreTripPassanger} from './Store/StoreScene';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API} from "@env";
+import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API,WEB_SOCKET_CHANNEL} from "@env";
 import {hubWebSocket} from '../../../../services/common/hubWebSocket';
 import { useUserStore } from '../../../Home/Store/StoreHome';
 import {
@@ -90,6 +90,7 @@ export const TripScreen= () => {
   const[trips,setTrips]=useState([]);
   const [contribution, setContribution] = useState('');
   const[dataWs,setDataWs]=useState(null);
+  const[activeWs,setActiveWs]=useState(false);
   const mapRef = useRef(null);
   const { idUser } = useUserStore(({ idUser }) => ({
     idUser
@@ -127,41 +128,54 @@ useEffect(()=>{
     onClose
   } = useDisclose();
   const bottomInset = useKeyboardBottomInset();
-const sendDataInit = () => {
-/* Send Data to Driver for ws */
-let data = dataWs;
-let contributionData = contribution;
-  console.log(isOpenWs);
-  //console.log('Connected to the server')
-/*   console.log(data?.trip_id);
-  console.log(idUser);
-  console.log(data?.latitude);
-  console.log(data?.longitude);
-  console.log(contributionData);  */
-  //console.log('*******************')
-  console.log('Connected to the server')
-  if(isOpenWs){
-    wsConection?.send(`
-      {
-        "request":{
-            "trip_id":${data?.trip_id},
-            "user_id":${idUser},
-            "latitude":${data?.latitude},
-            "longitude":${data?.longitude},
-            "contribution":${contributionData}
-        }
-      }
-  `);
-  setVisible(false);
-  navigation.replace("Passenger");
-  }else{
-    Alert.alert('Error al conectarse con servidor WS');
-    setVisible(false);
-    navigation.replace("Passenger");
-  }
- 
+  useEffect(()=>{
+    if(wsConection && activeWs){
+      console.log('entramos al ws');
+      wsConection.onopen = () => {
+        // connection opened
+        setIsOpen(true);
+        wsConection.send(`
+          {
+            "request":{
+                "trip_id":${dataWs?.trip_id},
+                "user_id":${idUser},
+                "latitude":${dataWs?.latitude},
+                "longitude":${dataWs?.longitude},
+                "contribution":${contribution}
+            }
+          }
+      `);
+      setVisible(false);
+      navigation.replace("Passenger");
+      };
+      wsConection.onmessage = (e) => {
+        // a message was received
+        console.log(e.data);
+      };
+      wsConection.onerror = (e) => {
+        // an error occurred
+        Alert.alert('Error in WS, '+ e.message);
+      };
+      
+      wsConection.onclose = (e) => {
+        // connection closed
+        //console.log(e.code, e.reason);
+        Alert.alert(e.code +' ' +e.reason);
+      }; 
+    }
+  },[activeWs]);
+
+
+
+  const sendDataInit = () => {
+  /* Send Data to Driver for ws */
+      console.log('Connected to the server')
+      let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
+      hubWebSocket.getState().setConection(ws);
+      setActiveWs(true);
   }
   const openModal = (t) => {
+    setActiveWs(false);
     setVisible(true);
     console.log('*******************');
     console.log(origin);
