@@ -70,7 +70,7 @@ const TripScreen= () => {
     isOpen,
     onOpen,
     onClose
-  } = useDisclose();
+  } = useDisclose(true);
 
   const [showModalDatePicker, setShowModalDatePicker] = useState(false);
   const [showModalPlacePicker, setShowModalPlacePicker] = useState(false);
@@ -166,7 +166,7 @@ const TripScreen= () => {
           //provider={"google"}
         >
         </MapView>
-        <Actionsheet isOpen={visible} onClose={onClose}>
+        <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content bottom={bottomInset}>
               <Box w="100%" style={styles.containerBox}  justifyContent="center">
                 <View style={styles.textContainer}>
@@ -181,7 +181,7 @@ const TripScreen= () => {
                     setOrigin({
                       location:details.geometry.location,
                       description:data.description
-                    })
+                    })`
                     setDestination({
                       location:{
                           lat: -29.965314,
@@ -210,7 +210,7 @@ const TripScreen= () => {
                 <Actionsheet.Item onPress={() => goSelectOrigin()}>
                   <ModalItemPlace></ModalItemPlace>
                 </Actionsheet.Item>
-                <Actionsheet.Item onPress={() => setShowModalDatePicker(true)}>
+                <Actionsheet.Item >
                   <ModalItemDatetime></ModalItemDatetime>
                 </Actionsheet.Item>
                 {/* <Actionsheet.Item  onPress={() => goSelectOrigin()} >

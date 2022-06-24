@@ -17,13 +17,26 @@ import Passenger from './src/pages/Modules/Passenger/Passenger';
 /* ------- */
 /* Messages */
 import MessagesScreen from './src/pages/Modules/Passenger/Screens/Chat/Messages/MessagesScreen';
-import { KeyboardAvoidingView, NativeBaseProvider} from 'native-base';
+import { Button, KeyboardAvoidingView, NativeBaseProvider} from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Platform } from 'react-native-web';
 import SceneSelectOrigin from './src/pages/Modules/Driver/TripDriver/SceneSelectOrigin/SceneSelectOrigin';
+import BackButton from './src/utils/backButton'
+
 const Stack = createNativeStackNavigator();
 /* Changes */
 export default function App() {
+  const HeaderOptions= (screen) => {
+    return {
+        headerTransparent: true,
+        headerLeft: () => (
+          //<Button name="ios-arrow-back" size={24} color="black" onPress={() => alert(nav)}/>
+          <BackButton screenName={screen}/>
+        ),
+        headerTitle: ""
+      }
+    }
+
   return (
    
     <NativeBaseProvider>
@@ -41,12 +54,12 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
         <Stack.Screen  options={{ headerShown: false }} name="Register" component={RegisterScene} />
         <Stack.Screen  options={{ headerShown: false }} name="Driver" component={Driver} />
-        <Stack.Screen  options={{ headerShown: false }} name="TripScreen" component={TripScreen} />
-        <Stack.Screen  options={{ headerShown: false }} name="SceneTripInit" component={SceneTripInit} />
+        <Stack.Screen  options= {HeaderOptions("Driver")} name="TripScreen" component={TripScreen} />
+        <Stack.Screen  options= {HeaderOptions("TripScreen")} name="SceneTripInit" component={SceneTripInit} />
         <Stack.Screen  options={{ headerShown: false }} name="SceneSelectOrigin" component={SceneSelectOrigin} />
         <Stack.Screen  options={{ headerShown: false }} name="Passenger" component={Passenger} />
         {/* passenger */}
-        <Stack.Screen  options={{ headerShown: false }} name="TripScreenPassenger" component={TripsScreenPassenger} />
+        <Stack.Screen  options= {HeaderOptions("Passenger")} name="TripScreenPassenger" component={TripsScreenPassenger} />
         <Stack.Screen  options={{ headerShown: false }} name="SceneTripInitPassenger" component={SceneTripInitPassenger} />
         {/* Messages */}
         <Stack.Screen  options={{ headerShown: false }} name="MessagesScreen" component={MessagesScreen} />

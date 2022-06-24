@@ -100,6 +100,9 @@ return (
                   <WidgetUserTrips style={styles.tripsInfo}/>
               </VStack>
           </Flex>
+
+
+
           <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
                     <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
                       <Modal.CloseButton />
