@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from "react";
-import {View ,TouchableOpacity, Text,Keyboard, Platform, KeyboardEvent, DatePickerIOS} from "react-native";
+import {View ,TouchableOpacity, Text,Keyboard, Platform, KeyboardEvent, DatePickerIOS, DatePickerAndroid} from "react-native";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import CountDown from 'react-native-countdown-component';
@@ -17,9 +17,11 @@ import {
   useDisclose,
   Modal,
   HStack,
+  Heading,
 } from 'native-base';
 import { useNavigation } from '@react-navigation/core'
 import moment from 'moment/min/moment-with-locales';
+import { DatePicker } from '@react-native-community/datetimepicker';
 
 
 
@@ -79,6 +81,10 @@ const TripScreen= () => {
     setVisible(false);
     navigation.replace("SceneTripInit");
   }
+  const goSelectOrigin = () => {
+    setVisible(false);
+    navigation.replace("SceneSelectOrigin");
+  }
 
   const [chosenDate, setChosenDate] = useState(new Date());
   const dateMoment = moment(chosenDate).locale('Es')
@@ -93,17 +99,50 @@ const TripScreen= () => {
       minimumDate={new Date()}
       locale="es"
       //mode="datetime"
-    /> :
-    <></>}
-        
-      {/* <DatePicker
-        //modal
-        //open={true}
-        date={chosenDate} 
+    /> : 
+      <DatePicker
+        date={chosenDate}
         onDateChange={setChosenDate}
-        mode="datetime"
-      /> */}
+        //display="spinner"
+        minuteInterval={5}
+        minimumDate={new Date()}
+        locale="es"
+        //mode="datetime"
+      />
+      }
       </View>
+  }
+
+  const ModalItemPlace = () => {
+    return <View>
+      <Box>
+        <HStack justifyContent={"center"} alignItems={"center"}>
+          <Box padding={2}>
+            <FontAwesome5 name="map-marked-alt" size={24} color="black" />
+          </Box>
+          <Box left={5}>
+            <Heading fontSize={15} color={"#A9A9AA"}>Origen</Heading>
+            <Heading fontSize={18}>{origin? origin.description : "Sin definir"}</Heading>
+          </Box>
+        </HStack>
+      </Box>
+    </View>
+  }
+
+  const ModalItemDatetime = () => {
+    return <View>
+      <Box>
+        <HStack justifyContent={"center"} alignItems={"center"}>
+          <Box padding={2}>
+            <FontAwesome5 name="clock" size={24} color="black"/>
+          </Box>
+          <Box left={5}>
+          <Heading fontSize={15} color={"#A9A9AA"}>Hora de salida</Heading>
+          <Heading fontSize={18}>{dateMoment.calendar()}</Heading>
+          </Box>
+        </HStack>
+      </Box>
+    </View>
   }
 
   const [date, setDate] = useState(new Date())
@@ -115,6 +154,7 @@ const TripScreen= () => {
 
   return (
       <View style={styles.container}>
+       
         <MapView
           style={styles.map}
           mapType="mutedStandard"
@@ -132,71 +172,68 @@ const TripScreen= () => {
                 <View style={styles.textContainer}>
                     <Text style={styles.H1}>Seleccionar punto de partida</Text>
                 </View>
+                {/* <GooglePlacesAutocomplete 
+                  placeholder='Seleccionar punto de partida'
+                  nearbyPlacesApi="GooglePlacesSearch"
+                  fetchDetails={true}
+                  onPress={(data, details = null) => {
+                    // 'details' is provided when fetchDetails = true
+                    setOrigin({
+                      location:details.geometry.location,
+                      description:data.description
+                    })
+                    setDestination({
+                      location:{
+                          lat: -29.965314,
+                          lng: -71.34951
+                      },
+                      description:'UCN Coquimbo'
+                    });
+                    //SET DATA ORIGIN DESTINATION
+                  }}
+                  query={{
+                    key: GOOGLE_MAPS_APIKEY,
+                    language: 'es',
+                  }}
+                  styles={{
+                    textInput:{
+                      fontSize:16,
+                      margin:10
+                    }
+                  }}
+                  returnKeyType={"search"}
+                  enablePoweredByContainer={false}
+                  minLength={2}
+                  debounce={400}
+                /> */}
                 <View style={styles.container}>
-                <VStack alignItems="center">
-                  <HStack >
+                <Actionsheet.Item onPress={() => goSelectOrigin()}>
+                  <ModalItemPlace></ModalItemPlace>
+                </Actionsheet.Item>
+                <Actionsheet.Item onPress={() => setShowModalDatePicker(true)}>
+                  <ModalItemDatetime></ModalItemDatetime>
+                </Actionsheet.Item>
+                {/* <Actionsheet.Item  onPress={() => goSelectOrigin()} >
+                  <HStack justifyContent={"space-arournd"}>
                     <FontAwesome5 name="map-marked-alt" size={24} color="black" />
-                    <Text onPress={() => setShowModalPlacePicker(true)}>LUGAR DE ORIGEN: {origin? origin.description : ""}</Text>
+                    <Heading fontSize={15}>LUGAR DE ORIGEN: {origin? origin.description : ""}</Heading>
                   </HStack>
-                  <HStack >
-                    <FontAwesome5 name="clock" size={24} color="black" />
-                    <Text onPress={() => setShowModalDatePicker(true)}>{dateMoment.calendar()}</Text>
-                    
+                </Actionsheet.Item>
+                <Actionsheet.Item onPress={() => setShowModalDatePicker(true)}>
+                  <HStack justifyContent={"space-between"}>
+                    <FontAwesome5 name="clock" size={24} color="black" m={10}/>
+                    <Heading fontSize={20} >{dateMoment.calendar()}</Heading>
                   </HStack>
-        
-                  
-                </VStack>
-                  <Modal isOpen={showModalPlacePicker} onClose={() => setShowModalPlacePicker(false)}>
-                    <Modal.Content maxWidth="400px">
-                      <Modal.CloseButton />
-                      <Modal.Header>Selecciona el origen</Modal.Header>
-                      <Modal.Body>
-                      <GooglePlacesAutocomplete
-                    placeholder='Seleccionar punto de partida'
-                    nearbyPlacesApi="GooglePlacesSearch"
-                    fetchDetails={true}
-                    onPress={(data, details = null) => {
-                      // 'details' is provided when fetchDetails = true
-                      setOrigin({
-                        location:details.geometry.location,
-                        description:data.description
-                      })
-                      setDestination({
-                        location:{
-                            lat: -29.965314,
-                            lng: -71.34951
-                        },
-                        description:'UCN Coquimbo'
-                      });
-                      //SET DATA ORIGIN DESTINATION
-                    }}
-                    query={{
-                      key: GOOGLE_MAPS_APIKEY,
-                      language: 'es',
-                    }}
-                    styles={{
-                      textInput:{
-                        fontSize:16,
-                        margin:10
-                      }
-                    }}
-                    returnKeyType={"search"}
-                    enablePoweredByContainer={false}
-                    minLength={2}
-                    debounce={400}
-                />
-                      </Modal.Body>
-                    </Modal.Content>
-                  </Modal>
-                  <Modal isOpen={showModalDatePicker} onClose={() => setShowModalDatePicker(false)} >
-                    <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9"}>
-                      <Modal.CloseButton />
-                      <Modal.Header>Define el horario de partida</Modal.Header>
-                      <Modal.Body>
-                          <DatePickerTrip></DatePickerTrip>
-                      </Modal.Body>
-                    </Modal.Content>
-                  </Modal>
+                </Actionsheet.Item> */}
+                <Modal isOpen={showModalDatePicker} onClose={() => setShowModalDatePicker(false)} >
+                  <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9"}>
+                    <Modal.CloseButton />
+                    <Modal.Header>Define el horario de partida</Modal.Header>
+                    <Modal.Body _scrollview={{scrollEnabled:false}}>
+                        <DatePickerTrip></DatePickerTrip>
+                    </Modal.Body>
+                  </Modal.Content>
+                </Modal>
                 </View>
                 <VStack alignItems="center">
                     <Button onPress={sendDataInit} style={styles.button} padding={5}>

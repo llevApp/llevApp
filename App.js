@@ -18,6 +18,7 @@ import Passenger from './src/pages/Modules/Passenger/Passenger';
 import { KeyboardAvoidingView, NativeBaseProvider} from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Platform } from 'react-native-web';
+import SceneSelectOrigin from './src/pages/Modules/Driver/TripDriver/SceneSelectOrigin/SceneSelectOrigin';
 const Stack = createNativeStackNavigator();
 /* Changes */
 export default function App() {
@@ -45,6 +46,8 @@ export default function App() {
         {/* passenger */}
         <Stack.Screen  options={{ headerShown: false }} name="TripScreenPassenger" component={TripsScreenPassenger} />
         <Stack.Screen  options={{ headerShown: false }} name="SceneTripInitPassenger" component={SceneTripInitPassenger} />
+        <Stack.Screen  options={{ headerShown: false }} name="SceneSelectOrigin" component={SceneSelectOrigin} />
+        
       </Stack.Navigator>
       </KeyboardAvoidingView>
       </SafeAreaProvider>

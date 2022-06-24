@@ -168,7 +168,7 @@ useEffect( ()=>{
             description={origin?.description}
         />)}
         </MapView>
-        <Actionsheet isOpen={isOpen} onClose={onClose}>    
+        <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content justifyContent="center">
           <View style={styles.textContainer}>
           <Text style={styles.H1}>Gracias por usar LlevApp !</Text>
