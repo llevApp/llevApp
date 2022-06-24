@@ -12,7 +12,7 @@ export const useTripsStore =
                 setTripsPassenger2: (endpoint) => {
                     set({ loading: true, error: null });
                     let url = endpoint;
-                    console.log(url);
+                    //console.log(url);
                     fetch(url)
                         .then((response)=>response?.json())
                         .then((json)=>set({tripsArray:json}))
@@ -23,7 +23,7 @@ export const useTripsStore =
                     if (userID) {
                         set({ loading: true, error: null });
                     let url = URL_API+TRIPS_DRIVER+userID;
-                    console.log('Esta es la URL: '+url);
+                    //console.log('Esta es la URL: '+url);
                     fetch(url)
                         .then((response)=>response?.json())
                         .then((json)=>set({tripsArray: json?.map((trip,index)=>{

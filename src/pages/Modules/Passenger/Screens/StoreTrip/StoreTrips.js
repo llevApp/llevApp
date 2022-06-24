@@ -10,7 +10,7 @@ export const useTripsStore =
                 setTripsPassenger: (endpoint) => {
                     set({ loading: true, error: null });
                     let url = endpoint;
-                    console.log(url);
+                   // console.log(url);
                     fetch(url)
                         .then((response)=>response?.json())
                         .then((json)=>set({arraylist:json}))

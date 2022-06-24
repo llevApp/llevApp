@@ -22,7 +22,7 @@ function MainContainer() {
   }));
   useEffect(()=>{
     if(name){
-   console.log(name);
+   //console.log(name);
   }   
 
   },[name]);

@@ -10,7 +10,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API,WEB_SOCKET_CHANNEL} from "@env";
 import {hubWebSocket} from '../../../../services/common/hubWebSocket';
 import { useUserStore } from '../../../Home/Store/StoreHome';
-import {useStoreMessage} from '../TripDriver/Store/StoreConfirmTrip';
 import {
   Button,
   Actionsheet,
@@ -104,10 +103,8 @@ export const TripScreen= () => {
   const { idUser } = useUserStore(({ idUser }) => ({
     idUser
   }));
-  const{setMessage} = useStoreMessage(({ setMessage }) => ({
-    setMessage
-  }));
-  const {conection: wsConection, isOpen:isOpenWs, setIsOpen} = hubWebSocket();
+
+  const {conection: wsConection, isOpen:isOpenWs, setIsOpen,setMessagesPassenger} = hubWebSocket();
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
   const destination = {latitude: -29.965314, longitude: -71.349513}; */
   const { origin,setOrigin,destination,setDestination} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
@@ -116,6 +113,7 @@ export const TripScreen= () => {
   const sendDataInit = () => {
     /* Send Data to Driver for ws */
         console.log('Connected to the server')
+        console.log(dataWs?.driver_id);
         let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
         hubWebSocket.getState().setConection(ws);
         setActiveWs(true);
@@ -123,11 +121,11 @@ export const TripScreen= () => {
     const openModal = (t) => {
       setActiveWs(false);
       setVisible(true);
-      console.log('*******************');
-      console.log(origin);
-      console.log(t)
+      //console.log('*******************');
+      //console.log(origin);
+      //console.log(t)
       setDataWs(t);
-      console.log('*******************');
+      //console.log('*******************');
     }
   /* get trips passenger */
   useEffect(()=>{
@@ -150,15 +148,16 @@ export const TripScreen= () => {
 
     useEffect(()=>{
       if(wsConection && activeWs){
-        console.log('entramos al ws');
+        //console.log('entramos al ws');
         wsConection.onopen = () => {
+          //console.log('ID USER '+idUser);
           // connection opened
           setIsOpen(true);
           wsConection.send(`
             {
               "request":{
                   "trip_id":${dataWs?.trip_id},
-                  "user_id":${dataWs?.driver_id},
+                  "user_id":${idUser},
                   "latitude":${dataWs?.latitude},
                   "longitude":${dataWs?.longitude},
                   "contribution":${contribution}
@@ -170,8 +169,15 @@ export const TripScreen= () => {
         };
         wsConection.onmessage = (e) => {
           // a message was received
-          console.log(e.data);
-          setMessage(e.data);
+          console.log('Mensaje recibvido desde WS: '+e.data);
+          const json = JSON.parse(e.data);
+          const message = json?.response;
+          if(message?.status){
+            setMessagesPassenger(e.data);
+          }else{
+            'Es la data que se envio por WS';
+          }
+          
         };
         wsConection.onerror = (e) => {
           // an error occurred
