@@ -6,6 +6,7 @@ import WidgetUserInfo from '../HomePassenger/Widgets/WidgetUserInfo';
 import WidgetUserTrips from '../HomePassenger/Widgets/WidgetUserTrips';
 import { Alert, StyleSheet } from 'react-native';
 import {hubWebSocket} from '../../../../services/common/hubWebSocket';
+import {useStoreMessage} from '../TripDriver/Store/StoreConfirmTrip';
 
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
@@ -14,6 +15,9 @@ const navigation = useNavigation();
 const { name,idUser } = useUserStore();
 /* Get ws connection */
 const {conection: wsConection, isOpen, setIsOpen} = hubWebSocket();
+const{message} = useStoreMessage(({ message }) => ({
+    message
+  }));
 const initTrip = ()=>{
     navigation.replace("TripScreenPassenger");
 };
@@ -33,7 +37,9 @@ useEffect(()=>{
       console.log('Undefined id user');
     }
 },[idUser]);
-
+useEffect(()=>{
+    console.log(message);
+},[message])
 
 return (
         <View style={styles.mainContainer}>
