@@ -24,9 +24,7 @@ const [value, setValue] = useState("driver");
     navigation.replace("Register")
   }
 /* Store user data */
- const { userData } = useUserStore(({ userData }) => ({
-  userData
-})); 
+ const { userData, setAvatarUrl } = useUserStore(); 
 /* Handle login function */
   const handleLogin = () => {
     auth
@@ -42,6 +40,7 @@ const [value, setValue] = useState("driver");
     useLoginStore.getState().setEmail(undefined);
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
+        setAvatarUrl(user.photoURL);
         useLoginStore.getState().setEmail(user.email);
         //console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){

@@ -148,6 +148,8 @@ const TripScreen= () => {
   const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
 
+  const isDisabledButton =  origin? false : true;
+
       
 
   
@@ -172,59 +174,13 @@ const TripScreen= () => {
                 <View style={styles.textContainer}>
                     <Text style={styles.H1}>Seleccionar punto de partida</Text>
                 </View>
-                {/* <GooglePlacesAutocomplete 
-                  placeholder='Seleccionar punto de partida'
-                  nearbyPlacesApi="GooglePlacesSearch"
-                  fetchDetails={true}
-                  onPress={(data, details = null) => {
-                    // 'details' is provided when fetchDetails = true
-                    setOrigin({
-                      location:details.geometry.location,
-                      description:data.description
-                    })`
-                    setDestination({
-                      location:{
-                          lat: -29.965314,
-                          lng: -71.34951
-                      },
-                      description:'UCN Coquimbo'
-                    });
-                    //SET DATA ORIGIN DESTINATION
-                  }}
-                  query={{
-                    key: GOOGLE_MAPS_APIKEY,
-                    language: 'es',
-                  }}
-                  styles={{
-                    textInput:{
-                      fontSize:16,
-                      margin:10
-                    }
-                  }}
-                  returnKeyType={"search"}
-                  enablePoweredByContainer={false}
-                  minLength={2}
-                  debounce={400}
-                /> */}
                 <View style={styles.container}>
                 <Actionsheet.Item onPress={() => goSelectOrigin()}>
                   <ModalItemPlace></ModalItemPlace>
                 </Actionsheet.Item>
-                <Actionsheet.Item >
+                <Actionsheet.Item onPress={() => setShowModalDatePicker(true)}>
                   <ModalItemDatetime></ModalItemDatetime>
                 </Actionsheet.Item>
-                {/* <Actionsheet.Item  onPress={() => goSelectOrigin()} >
-                  <HStack justifyContent={"space-arournd"}>
-                    <FontAwesome5 name="map-marked-alt" size={24} color="black" />
-                    <Heading fontSize={15}>LUGAR DE ORIGEN: {origin? origin.description : ""}</Heading>
-                  </HStack>
-                </Actionsheet.Item>
-                <Actionsheet.Item onPress={() => setShowModalDatePicker(true)}>
-                  <HStack justifyContent={"space-between"}>
-                    <FontAwesome5 name="clock" size={24} color="black" m={10}/>
-                    <Heading fontSize={20} >{dateMoment.calendar()}</Heading>
-                  </HStack>
-                </Actionsheet.Item> */}
                 <Modal isOpen={showModalDatePicker} onClose={() => setShowModalDatePicker(false)} >
                   <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9"}>
                     <Modal.CloseButton />
@@ -235,8 +191,8 @@ const TripScreen= () => {
                   </Modal.Content>
                 </Modal>
                 </View>
-                <VStack alignItems="center">
-                    <Button onPress={sendDataInit} style={styles.button} padding={5}>
+                <VStack alignItems="center" marginTop={10}>
+                    <Button onPress={sendDataInit} style={styles.button} padding={5} isDisabled={isDisabledButton}>
                         <Text style={styles.buttonText}>Comenzar viaje</Text>
                       </Button>
                 </VStack>

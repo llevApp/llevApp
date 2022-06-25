@@ -1,12 +1,40 @@
-import * as React from 'react';
-import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button } from "native-base";
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button2 } from "native-base";
+import { TouchableOpacity, StyleSheet, Image, Platform, Button, DevSettings } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { auth } from '../../../../../firebase';
+import { auth, useAuth, upload } from '../../../../../firebase';
 import { useUserStore } from '../../../Home/Store/StoreHome';
 import { useTripsStore } from './StoreTrip/StoreTrips';
+import * as ImagePicker from 'expo-image-picker';
+import {ref, uploadBytes} from 'firebase/storage';
 
 const AccountScreen = () => {
+
+    const [image, setImage] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [editing, setEditing] = useState(false);
+    const currentUser = useAuth();
+
+
+
+    useEffect(() => {
+      if (currentUser?.photoURL) {
+        setAvatarUrl(currentUser.photoURL);
+      }
+    }, [currentUser])
+
+    const submitData = async () => {
+      if (image != null ){
+        const img = await fetch(image);
+        const bytes = await img.blob();
+        setLoadingChangeAvatar(true)
+        await upload(bytes,currentUser,setLoading);
+        setEditing(false)
+        setLoadingChangeAvatar(false)
+      }
+      
+    }
+
     const navigation = useNavigation();
     const handleSignOut = () => {
       auth
@@ -19,19 +47,52 @@ const AccountScreen = () => {
         .catch(error => alert(error.message))
     };
 
-    const userImg = "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
-    const {name} = useUserStore();
+    const defaultUserImg = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
+    const {name, avatarUrl, setAvatarUrl, setLoadingChangeAvatar} = useUserStore();
+
+    
+
+    const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.cancelled) {
+        setImage(result.uri);
+        setEditing(true)
+      }
+    };
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Avatar size={"2xl"} style={styles.image}
-              source={{uri: userImg}}>
-          </Avatar>
+          {loading? (
+              <>
+              </>
+          ):(
+            <Avatar size={"2xl"} style={styles.image}
+              source={{uri: avatarUrl || defaultUserImg}}>
+            </Avatar>
+          )}
+          <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
+            <Button title="Editar imagen" onPress={pickImage} />
+          </View>
           <Center style={styles.infoContainer}>
             <Heading style={styles.text.username}>{name}</Heading>
           </Center>
           
-          <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+          {
+            editing && (
+            <TouchableOpacity onPress={submitData} style={styles.button}>
+              <Text style={styles.buttonText}>Guardar</Text>
+            </TouchableOpacity>
+            )
+          }
+          
+          <TouchableOpacity onPress={handleSignOut} style={styles.button} disabled={loading}>
             <Text style={styles.buttonText}>Sign out</Text>
           </TouchableOpacity>
         </View>
@@ -41,11 +102,6 @@ const AccountScreen = () => {
 const styles = StyleSheet.create({
   mainContainer: {
       minWidth:'100%', 
-      //height:'container',
-      //flex: 0,
-    /* backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center', */
   },
   mainBox: {
       padding:20, 
@@ -101,3 +157,6 @@ const styles = StyleSheet.create({
 });
 
 export default AccountScreen;
+
+
+
