@@ -9,6 +9,7 @@ import {useStoreMessage} from "../../../../Passenger/TripDriver/Store/StoreConfi
 import {HUB_CHAT} from "@env";
 const MessagesScreen = (data) => {
   const [messages, setMessages] = useState([]);
+  const[idUser,setIdUser]=useState(messagesPassenger?.user_id);
   const[messageWs,setMessageWs]=useState(null);
   const {messagesPassenger} = hubWebSocket();
   const[activeWs,setActiveWs]=useState(false);
@@ -60,23 +61,24 @@ const MessagesScreen = (data) => {
   }
 /* Ws connection */
 useEffect(() => {
-  let idUser = messagesPassenger?.user_id;
   /* Create ws chat */
-  let wsChat = new WebSocket(HUB_CHAT+useStoreMessage.getState().message +'/'+ idUser);
-  hubChat.getState().setConnection(wsChat);
-  setActiveWs(true); 
-   setMessages([
-    {
-      _id: useStoreMessage.getState().message,/* ReceiverId */
-      text: '',
-      createdAt: new Date(),
-      user: {
-        _id: idUser,/* sender ID */
-        name: '',
-        avatar: require('../assets/users/user-1.jpg'),
-      },
-    }
-  ]);
+  if(idUser && useStoreMessage.getState().message){
+    let wsChat = new WebSocket(HUB_CHAT+useStoreMessage.getState().message +'/'+ idUser);
+    hubChat.getState().setConnection(wsChat);
+    setActiveWs(true); 
+     setMessages([
+      {
+        _id: useStoreMessage.getState().message,/* ReceiverId */
+        text: '',
+        createdAt: new Date(),
+        user: {
+          _id: idUser,/* sender ID */
+          name: '',
+          avatar: require('../assets/users/user-1.jpg'),
+        },
+      }
+    ]);
+  }
 }, []);
 useEffect(()=>{
   console.log(wsConection+' '+activeWs);

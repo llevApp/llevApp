@@ -64,7 +64,7 @@ export default function App() {
         <Stack.Screen   options= {HeaderOptionsBack("TripScreen")} name="SceneSelectOrigin" component={SceneSelectOrigin} />
         <Stack.Screen  options={{ headerShown: false }} name="Passenger" component={Passenger} />
         {/* Driver */}
-        <Stack.Screen  options= {HeaderOptions("Driver")} name="ActiveTrips" component={ActiveTripScene} />
+        <Stack.Screen  options= {HeaderOptionsBack("Driver")} name="ActiveTrips" component={ActiveTripScene} />
         {/* passenger */}
         <Stack.Screen  options={{ headerShown: false }} name="ChatScreen" component={ChatScreen} />
         <Stack.Screen  options= {HeaderOptionsBack("Passenger")} name="TripScreenPassenger" component={TripsScreenPassenger} />
