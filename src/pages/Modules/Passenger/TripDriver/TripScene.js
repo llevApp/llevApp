@@ -18,7 +18,7 @@ import {
   useDisclose,
 } from 'native-base';
 import { AlertDialog, Center } from "native-base";
-
+import {useStoreMessage}  from './Store/StoreConfirmTrip';
 import { useNavigation } from '@react-navigation/core'
 import { Marker } from "react-native-svg";
 export const colorsPolilynes = ['#00FFFF','#F0F8FF','#7FFFD4','#000000','#A52A2A','#6495ED','#00008B','#FF8C00','#9932CC','#A9A9A9','#006400']
@@ -92,6 +92,7 @@ export const TripScreen= () => {
   const[dataWs,setDataWs]=useState(null);
   const[activeWs,setActiveWs]=useState(false);
   const [visible,setVisible] = useState(false); 
+  const {setMessage} =useStoreMessage();
   /* show trips  user*/
   const {
     isOpen,
@@ -113,7 +114,10 @@ export const TripScreen= () => {
   const sendDataInit = () => {
     /* Send Data to Driver for ws */
         console.log('Connected to the server')
-        console.log(dataWs?.driver_id);
+        if(dataWs?.driver_id){
+          console.log(dataWs?.driver_id);
+          useStoreMessage.getState().setMessage(dataWs?.driver_id);
+        }
         let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
         hubWebSocket.getState().setConection(ws);
         setActiveWs(true);
@@ -152,7 +156,7 @@ export const TripScreen= () => {
         wsConection.onopen = () => {
           //console.log('ID USER '+idUser);
           // connection opened
-          setIsOpen(true);
+          setIsOpen(true);         
           wsConection.send(`
             {
               "request":{

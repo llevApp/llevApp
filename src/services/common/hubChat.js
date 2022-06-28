@@ -7,7 +7,7 @@ export const hubChat =
                 isOpen: false,
                 messages: [],
                 messagesPassenger:null,
-                setConnection: (value) => set({ conection: value }),
+                setConnection: (value) => set({ connection: value }),
                 setIsOpen: (value) => set({ isOpen: value }),
                 setMessages: (value) => 
                     {

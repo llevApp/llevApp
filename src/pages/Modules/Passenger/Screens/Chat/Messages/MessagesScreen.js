@@ -5,29 +5,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {hubChat} from '../../../../../../services/common/hubChat';
 import {hubWebSocket} from '../../../../../../services/common/hubWebSocket';
+import {useStoreMessage} from "../../../../Passenger/TripDriver/Store/StoreConfirmTrip";
 import {HUB_CHAT} from "@env";
 const MessagesScreen = (data) => {
   const [messages, setMessages] = useState([]);
-  const[messageWs,setmMessageWs]=useState(null);
+  const[messageWs,setMessageWs]=useState(null);
   const {messagesPassenger} = hubWebSocket();
-console.log(data?.params);
-  useEffect(() => {
-    let idUser = messagesPassenger?.user_id;
-    console.log(idUser);
- 
-    setMessages([
-      {
-        _id: 1,
-        text: 'Wena ctm',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: require('../assets/users/user-1.jpg'),
-        },
-      }
-    ]);
-  }, []);
+  const[activeWs,setActiveWs]=useState(false);
+  const{connection:wsConection}=hubChat();
 
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
@@ -73,15 +58,91 @@ console.log(data?.params);
       <FontAwesome name='angle-double-down' size={22} color='#333' />
     );
   }
+/* Ws connection */
+useEffect(() => {
+  let idUser = messagesPassenger?.user_id;
+  /* Create ws chat */
+  let wsChat = new WebSocket(HUB_CHAT+useStoreMessage.getState().message +'/'+ idUser);
+  hubChat.getState().setConnection(wsChat);
+  setActiveWs(true); 
+   setMessages([
+    {
+      _id: useStoreMessage.getState().message,/* ReceiverId */
+      text: '',
+      createdAt: new Date(),
+      user: {
+        _id: idUser,/* sender ID */
+        name: '',
+        avatar: require('../assets/users/user-1.jpg'),
+      },
+    }
+  ]);
+}, []);
+useEffect(()=>{
+  console.log(wsConection+' '+activeWs);
+  if(wsConection && activeWs){
+    console.log('entramos al ws');
+    wsConection.onopen = () => {
+    console.log('Open Connection');
+    };
+    wsConection.onmessage = (e) => {
+      //console.log('Mensaje recibvido desde WS: '+e.data);
+  /*     const json = JSON.parse(e.data);
+      const message = json?.response;
+      if(message?.status){
+        setMessagesPassenger(e.data);
+      }else{
+        'Es la data que se envio por WS';
+      } */
+      const response = JSON.parse(e.data);
+      console.log(response);
+    var sentMessages =  
+        {
+          _id: response.receiverId,/* ReceiverId */
+          text: response.message,
+          createdAt: new Date(),
+          user: {
+            _id: response.senderId,/* sender ID */
+            name: '',
+            avatar: require('../assets/users/user-1.jpg'),
+          },
+        };
+        setMessages((previousMessages) =>
+        GiftedChat.append(previousMessages, sentMessages),
+      );
+    };
+    wsConection.onerror = (e) => {
+      // an error occurred
+      Alert.alert('Error in WS, '+ e.message);
+    };
+    wsConection.onclose = (e) => {
+      // connection closed
+      //console.log(e.code, e.reason);
+      Alert.alert(e.code +' ' +e.reason);
+    }; 
+  }
+},[activeWs]);
+useEffect(() => {
+  if(wsConection){
+    let obj={
+      "senderId":idUser,
+      "receiverId":useStoreMessage.getState().message,
+      "message":messageWs,
+      "action":"message"
+    }
+    wsConection.send(JSON.stringify(obj));
+  }
+}, [messageWs]);
+
 
   return (
     <GiftedChat
       messages={messages}
       onSend={(messages) => {
-        console.log(messages[0]?.text)
+        setMessageWs(messages[0]?.text)
         onSend(messages)}}
         user={{
-        _id: 1,
+        _id: idUser,
       }}
       renderBubble={renderBubble}
       alwaysShowSend

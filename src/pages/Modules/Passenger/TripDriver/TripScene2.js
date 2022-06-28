@@ -24,6 +24,7 @@ import { AlertDialog, Center } from "native-base";
 import { useNavigation } from '@react-navigation/core'
 import { Marker } from "react-native-svg";
 import AvatarUser from "../../../../ui/avatarUser";
+import {useStoreMessage} from "./Store/StoreConfirmTrip";
 export const colorsPolilynes = ['#00FFFF','#F0F8FF','#7FFFD4','#000000','#A52A2A','#6495ED','#00008B','#FF8C00','#9932CC','#A9A9A9','#006400']
 const useKeyboardBottomInset = () => {
   const [bottom, setBottom] = React.useState(0);
@@ -108,6 +109,7 @@ export const TripScreen= () => {
   }));
 
   const {conection: wsConection, isOpen:isOpenWs, setIsOpen,setMessagesPassenger} = hubWebSocket();
+  const {setMessage:setMessageIdDriver}=useStoreMessage();
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
   const destination = {latitude: -29.965314, longitude: -71.349513}; */
   const { origin,setOrigin,destination,setDestination} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
@@ -117,6 +119,7 @@ export const TripScreen= () => {
     /* Send Data to Driver for ws */
         console.log('Connected to the server')
         console.log(dataWs?.driver_id);
+        setMessageIdDriver(dataWs?.driver_id);
         let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
         hubWebSocket.getState().setConection(ws);
         setActiveWs(true);
@@ -172,7 +175,7 @@ export const TripScreen= () => {
         };
         wsConection.onmessage = (e) => {
           // a message was received
-          console.log('Mensaje recibvido desde WS: '+e.data);
+          //console.log('Mensaje recibvido desde WS: '+e.data);
           const json = JSON.parse(e.data);
           const message = json?.response;
           if(message?.status){

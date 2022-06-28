@@ -86,7 +86,7 @@ useEffect(()=>{
 },[wsConection]);
 
 useEffect(()=>{
-    console.log('Mensaje WS: ', messages);
+    //console.log('Mensaje WS: ', messages);
     //hubWebSocket.getState().clearMessages();
 }),[messages];
 

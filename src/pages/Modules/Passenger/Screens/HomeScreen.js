@@ -19,7 +19,7 @@ const initTrip = ()=>{
     navigation.replace("TripScreenPassenger");
 };
 const pushToChat = ()=>{
-    console.log('Send to Chat');
+    //console.log('Send to Chat');
     //navigation.replace("ChatScreen");
     navigation.navigate('MessagesScreen');
 }
@@ -41,7 +41,7 @@ useEffect(()=>{
 },[idUser]);
 useEffect(()=>{
   if(messagesPassenger!=null){
-    console.log('Mensaje desde el store:');
+    //console.log('Mensaje desde el store:');
     console.log(messagesPassenger);
     setShowModal(true);
   }
