@@ -4,7 +4,7 @@ import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
 const WidgetUserInfo = () => {
     const backgrounImg = "https://media.istockphoto.com/photos/colorful-background-picture-id170094323?k=20&m=170094323&s=612x612&w=0&h=YEerCprCW1d4n0-XjGVxzQhAqfKmwluXLVJHhMpWAgs=";
-    const userImg = "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
+    const defaultUserImg = "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
     const navigation = useNavigation();
     const {name, careerName, avatarUrl, loadingChangeAvatar} = useUserStore();
     const onClick= ()=>{

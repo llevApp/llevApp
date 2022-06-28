@@ -43,7 +43,7 @@ const RegisterScene = () => {
         marginTop:250
     }}>
         <View style={styles.imageContainer}>
-        <Image  style={styles.logoContainer}  source={logoLogin} />
+        <Image  style={styles.logoContainer} source={logoLogin} />
         </View>
         <Text>{'\n'}</Text>
         <Text>{'\n'}</Text>

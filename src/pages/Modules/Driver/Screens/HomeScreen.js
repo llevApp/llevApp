@@ -10,12 +10,14 @@ import { hubWebSocket } from '../../../../services/common/hubWebSocket';
 import { Alert } from 'react-native-web';
 import {WEB_SOCKET_CHANNEL} from "@env";
 
+
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 const [showModal, setShowModal] = useState(false);
-const {idUser, name } = useUserStore();
+const {idUser, name} = useUserStore();
 const {conection: wsConection, isOpen, setIsOpen,messages,setMessages} = hubWebSocket();
+
 const ResponseRequest = () =>{
     wsConection?.send(`
       {

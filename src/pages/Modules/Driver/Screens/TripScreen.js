@@ -14,7 +14,7 @@ export default function TripScreen({ navigation }) {
     useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
     useEffect(()=>{
       
-        useTripsStore.getState().setTripsPassenger(URL_API+TRIPS_DRIVER+idUser)
+        useTripsStore.getState().setTripsPassenger(idUser)
     },[]); 
     useEffect(()=>{
         const FlatListData = tripsArray?.map((trip,index)=>{
@@ -96,7 +96,7 @@ export default function TripScreen({ navigation }) {
                             <Heading color="primary.500" fontSize="md">
                                 <Center>
                                     <Text>Sin viajes Disponibles</Text>
-                                    <Image size={400} resizeMode={"contain"} borderRadius={0} 
+                                    <Image size={400} resizeMode={"contain"} borderRadius={0} alt=" "
                                         source={{
                                             uri: "https://stories.freepiklabs.com/storage/18539/no-data-pana-1440.png"
                                         }}

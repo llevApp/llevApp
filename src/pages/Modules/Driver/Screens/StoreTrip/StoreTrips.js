@@ -26,7 +26,7 @@ export const useTripsStore =
                     //console.log('Esta es la URL: '+url);
                     fetch(url)
                         .then((response)=>response?.json())
-                        .then((json)=>set({tripsArray: json?.map((trip,index)=>{
+                        .then((json)=>set({tripsArray: json?.trip?.map((trip,index)=>{
                             let date = moment(trip.init_trip_time).format('MMM DD, YYYY HH:MM')
                             return{
                                 id:index,

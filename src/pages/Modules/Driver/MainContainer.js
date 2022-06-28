@@ -18,9 +18,7 @@ const accountName = "Cuenta";
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
-  const { name} = useUserStore(({ name }) => ({
-    name
-  }));
+  const { name } = useUserStore();
   useEffect(()=>{
     if(name){
    //console.log(name);

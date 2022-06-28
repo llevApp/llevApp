@@ -52,7 +52,7 @@ const WidgetUserTrips = () => {
                             :
                                 <Center>
                                     <Text>Sin viajes Disponibles</Text>
-                                    <Image size={400} resizeMode={"contain"} borderRadius={0} 
+                                    <Image size={400} resizeMode={"contain"} borderRadius={0} alt=" "
                                         source={{
                                             uri: "https://stories.freepiklabs.com/storage/18539/no-data-pana-1440.png"
                                         }}

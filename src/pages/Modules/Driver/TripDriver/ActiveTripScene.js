@@ -24,7 +24,7 @@ export const ActiveTripScreen= () => {
   const [tripID,setTripID] = useState(0) 
   const [openModal,setOpenModal] = useState(false) 
   const mapRef = useRef(null);
-  const{idUser} = useUserStore();
+  const{idUser, hasActiveTrip, setHasActiveTrip} = useUserStore();
   const { origin,destination} = useStoreTripDriver(({ setOrigin,setDestination,origin,destination }) => ({
     setOrigin,setDestination,origin,destination
   }));
@@ -44,15 +44,16 @@ export const ActiveTripScreen= () => {
   };
 
   useEffect(()=>{
-    console.log(URL_API+TRIPS_DRIVER+idUser)
+    console.log("TripActive: ",URL_API+TRIPS_DRIVER+idUser)
     fetch(URL_API+TRIPS_DRIVER+idUser , {
         method: 'GET',})
     .then((response)=>response.json())
-    .then((json)=> (setTripID(json[0].trip_id),
-                    console.log(json)))
+    .then((json)=> (setTripID(json.trip?.[0]?.trip_id),
+                    console.log(json)),
+                    setHasActiveTrip(true))
     .catch((error)=>alert(error))
   }
-  ,[]);
+  ,[hasActiveTrip]);
   return (
     <View style={styles.container}>
             <HStack w="90%" py="5" alignItems="center" >
@@ -61,7 +62,7 @@ export const ActiveTripScreen= () => {
             </HStack>
             <HStack w="90%" py="5" alignItems="center" >
                 <Center>
-                    <Image size={100} resizeMode={"contain"} borderRadius={100} 
+                    <Image size={100} resizeMode={"contain"} borderRadius={100} alt=" "
                         source={{
                             uri: "https://cdn-icons-png.flaticon.com/512/4668/4668400.png"
                         }}

@@ -15,6 +15,7 @@ export const useUserStore =
                 dataUser:undefined,
                 tripsDriver:[],
                 tripsPassenger:[],
+                hasActiveTrip: false,
                 setIdUser: (value) => set({ idUser: value }),
                 setName: (value) => set({ name: value }),
                 setNickname: (value) => set({ nickname: value }),
@@ -23,6 +24,7 @@ export const useUserStore =
                 setAvatarUrl: (value) => set({ avatarUrl: value }),
                 setLoadingChangeAvatar: (value) => set({ loadingChangeAvatar: value }),
                 setTripsDriver: (value) => set({ tripsDriver: value }),
+                setHasActiveTrip: (value) => set({ hasActiveTrip: value }),
                 setTripsPassenger: (value) => set({ tripsPassenger: value }),
                 setLoading: (value) => set({ loading: value }),
                 setError: (error) => set({ error }),
@@ -50,6 +52,7 @@ export const useUserStore =
                     dataUser:undefined,
                     loading:undefined,
                     error:undefined,
+                    hasActiveTrip:false,
                     tripsDriver:[],
                     tripsPassenger:[]
                 });
