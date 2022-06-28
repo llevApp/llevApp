@@ -25,6 +25,9 @@ import { Platform } from 'react-native-web';
 import SceneSelectOrigin from './src/pages/Modules/Driver/TripDriver/SceneSelectOrigin/SceneSelectOrigin';
 import BackButton from './src/utils/backButton'
 
+/* Driver */
+import ActiveTripScene from './src/pages/Modules/Driver/TripDriver/ActiveTripScene';
+
 const Stack = createNativeStackNavigator();
 /* Changes */
 export default function App() {
@@ -59,6 +62,8 @@ export default function App() {
         <Stack.Screen  options= {HeaderOptions("TripScreen")} name="SceneTripInit" component={SceneTripInit} />
         <Stack.Screen   options= {HeaderOptions("TripScreen")} name="SceneSelectOrigin" component={SceneSelectOrigin} />
         <Stack.Screen  options={{ headerShown: false }} name="Passenger" component={Passenger} />
+        {/* Driver */}
+        <Stack.Screen  options= {HeaderOptions("Driver")} name="ActiveTrips" component={ActiveTripScene} />
         {/* passenger */}
         <Stack.Screen  options={{ headerShown: false }} name="ChatScreen" component={ChatScreen} />
         <Stack.Screen  options= {HeaderOptions("Passenger")} name="TripScreenPassenger" component={TripsScreenPassenger} />
