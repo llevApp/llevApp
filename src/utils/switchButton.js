@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
-import SwitchWithIcons from "react-native-switch-with-icons";
 import { HStack, Switch } from 'native-base';
 import useLoginStore from './../pages/Login/Store/storeLogin';
 import { FontAwesome5 } from '@expo/vector-icons'; 
