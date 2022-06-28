@@ -2,6 +2,7 @@ import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, N
 import { ImageBackground, StyleSheet } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
+import AvatarUser from "../../../../../ui/avatarUser";
 const WidgetUserInfo = () => {
     const backgrounImg = "https://media.istockphoto.com/photos/colorful-background-picture-id170094323?k=20&m=170094323&s=612x612&w=0&h=YEerCprCW1d4n0-XjGVxzQhAqfKmwluXLVJHhMpWAgs=";
     const defaultUserImg = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";    
@@ -24,9 +25,13 @@ const WidgetUserInfo = () => {
                                     <Button rounded="full" onPress={onClick} style={styles.button}>Comenzar viaje</Button>
                                 </VStack>
                             </Box>
-                            <Avatar size={"2xl"} style={styles.image}
+                            <Box size={"150px"}>
+                                 <AvatarUser avatarURL={avatarUrl} size={"100%"}></AvatarUser>
+                            </Box>
+                           
+                            {/* <Avatar size={"2xl"} style={styles.image}
                                 source={{uri: loadingChangeAvatar? defaultUserImg : avatarUrl || defaultUserImg}}>
-                            </Avatar>
+                            </Avatar> */}
                         </HStack>
                     </Center>
                 </Box>

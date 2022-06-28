@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button } from "native-base";
+import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Image } from "native-base";
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { auth } from '../../../../../firebase';
 import { useUserStore } from '../../../Home/Store/StoreHome';
 import { useTripsStore } from './StoreTrip/StoreTrips';
+import AvatarUser from '../../../../ui/avatarUser';
 
 const AccountScreen = () => {
     const navigation = useNavigation();
@@ -24,9 +25,7 @@ const AccountScreen = () => {
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Avatar size={"2xl"} style={styles.image}
-              source={{uri: userImg}}>
-          </Avatar>
+          <AvatarUser avatarURL={userImg}></AvatarUser>
           <Center style={styles.infoContainer}>
             <Heading style={styles.text.username}>{name}</Heading>
           </Center>

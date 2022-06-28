@@ -31,7 +31,7 @@ export function useAuth() {
 }
 
 export async function upload(file, currentUser, setLoading) {
-  const fileRef = ref(storage, `images/avatars/${currentUser.uid}` + '1.png');
+  const fileRef = ref(storage, `images/avatars/${currentUser.uid}` + '.png');
 
   setLoading(true);
   

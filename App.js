@@ -9,7 +9,8 @@ import SplashScreen from './src/pages/Home/SplashScreen'
 import Driver from './src/pages/Modules/Driver/Driver' 
 import RegisterScene from './src/pages/Register/RegisterScene';
 import TripScreen from './src/pages/Modules/Driver/TripDriver/TripScene';
-import {TripScreen as TripsScreenPassenger} from './src/pages/Modules/Passenger/TripDriver/TripScene';
+//import {TripScreen as TripsScreenPassenger} from './src/pages/Modules/Passenger/TripDriver/TripScene';
+import {TripScreen as TripsScreenPassenger} from './src/pages/Modules/Passenger/TripDriver/TripScene2';
 import SceneTripInit from './src/pages/Modules/Driver/TripDriver/SceneTripInit/SceneTripInit';
 import {SceneTripInit as SceneTripInitPassenger} from './src/pages/Modules/Passenger/TripDriver/SceneTripInit/SceneTripInit';
 /* PASSENGER */

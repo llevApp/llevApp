@@ -7,6 +7,7 @@ import { useUserStore } from '../../../Home/Store/StoreHome';
 import { useTripsStore } from './StoreTrip/StoreTrips';
 import * as ImagePicker from 'expo-image-picker';
 import {ref, uploadBytes} from 'firebase/storage';
+import AvatarUser from '../../../../ui/avatarUser';
 
 const AccountScreen = () => {
 
@@ -73,9 +74,10 @@ const AccountScreen = () => {
               <>
               </>
           ):(
-            <Avatar size={"2xl"} style={styles.image}
-              source={{uri: avatarUrl || defaultUserImg}}>
-            </Avatar>
+            <Box size={250} alignContent="flex-start" justifyContent={"flex-start"}>
+               <AvatarUser avatarURL={avatarUrl} size={"100%"}/>
+            </Box>
+           
           )}
           <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
             <Button title="Editar imagen" onPress={pickImage} />
