@@ -3,11 +3,18 @@ import {View, ScrollView, Text, Button, StyleSheet} from 'react-native';
 import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import {hubChat} from '../../../../../../services/common/hubChat';
+import {hubWebSocket} from '../../../../../../services/common/hubWebSocket';
+import {HUB_CHAT} from "@env";
 const MessagesScreen = (data) => {
   const [messages, setMessages] = useState([]);
+  const[messageWs,setmMessageWs]=useState(null);
+  const {messagesPassenger} = hubWebSocket();
 console.log(data?.params);
   useEffect(() => {
+    let idUser = messagesPassenger?.user_id;
+    console.log(idUser);
+ 
     setMessages([
       {
         _id: 1,
@@ -70,8 +77,10 @@ console.log(data?.params);
   return (
     <GiftedChat
       messages={messages}
-      onSend={(messages) => onSend(messages)}
-      user={{
+      onSend={(messages) => {
+        console.log(messages[0]?.text)
+        onSend(messages)}}
+        user={{
         _id: 1,
       }}
       renderBubble={renderBubble}
@@ -84,11 +93,3 @@ console.log(data?.params);
 };
 
 export default MessagesScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
