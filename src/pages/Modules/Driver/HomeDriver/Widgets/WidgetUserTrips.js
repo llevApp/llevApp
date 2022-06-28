@@ -1,4 +1,4 @@
-import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, ScrollView } from "native-base";
+import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, ScrollView, Image } from "native-base";
 import { StyleSheet } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useTripsStore } from './../../Screens/StoreTrip/StoreTrips';
@@ -44,7 +44,22 @@ const WidgetUserTrips = () => {
                     </HStack>
                     <ScrollView >
                         <Box style={styles.mainBox.scroll}>
-                        {tripsArray?.map((trip)=>{return (<TripCard key={trip?.id} {...trip}></TripCard>)})}
+                        {tripsArray?.lenght > 0 ? (tripsArray?.map((trip)=>{
+                            return (
+                                <TripCard 
+                                    key={trip?.id} {...trip}>
+                                </TripCard>)}))
+                            :
+                                <Center>
+                                    <Text>Sin viajes Disponibles</Text>
+                                    <Image size={400} resizeMode={"contain"} borderRadius={0} 
+                                        source={{
+                                            uri: "https://stories.freepiklabs.com/storage/18539/no-data-pana-1440.png"
+                                        }}
+                                    >
+                                    </Image>
+                                </Center>
+                        }
                         </Box>
                     </ScrollView>
                     

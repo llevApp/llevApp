@@ -51,51 +51,58 @@ export default function TripScreen({ navigation }) {
                 {tripsArray? 
                     (<>
                         <FlatList data={tripsArray} 
-                    renderItem={({item}) => 
-                    <Box borderWidth="0.4" margin="0.2" borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="110" pr="5" py="6" borderRadius="34">
-                        <HStack space={3} justifyContent="center" >
-                            <VStack>
-                                <HStack space={2} justifyContent="left" pl="4"  >
-                                    <MaterialCommunityIcons name="map-marker" size={24} color="red"  />
-                                    <Text fontSize="sm"  _dark={{color: "warmGray.50"}} color="#159A9C" bold  pl="3" py="0"  >
-                                        {item.address?.toUpperCase()}
-                                    </Text>
+                        renderItem={({item}) => 
+                            <Box borderWidth="0.4" margin="0.2" borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="110" pr="5" py="6" borderRadius="34">
+                                <HStack space={3} justifyContent="center" >
+                                    <VStack>
+                                        <HStack space={2} justifyContent="left" pl="4"  >
+                                            <MaterialCommunityIcons name="map-marker" size={24} color="red"  />
+                                            <Text fontSize="sm"  _dark={{color: "warmGray.50"}} color="#159A9C" bold  pl="3" py="0"  >
+                                                {item.address?.toUpperCase()}
+                                            </Text>
+                                        </HStack>
+                                        <HStack space={3} justifyContent="left" pl="4" >
+                                            <MaterialCommunityIcons name="hand-coin" size={24} color="black" />
+                                            <Text  fontSize="lg" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2" fontStyle="italic">
+                                                $
+                                            </Text>
+                                            <Text  fontSize="lg" color="#6AC18A" _dark={{color: "warmGray.200"}} fontStyle="italic">
+                                                {item.recentText}
+                                            </Text>
+                                            <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="1" py="1.5" fontStyle="italic">
+                                                USD
+                                            </Text>
+                                        </HStack>
+                                        <HStack space={3} justifyContent="left" pl="4" >
+                                            <MaterialCommunityIcons name="seat-passenger" size={24} color="black" />
+                                            <Text  fontSize="sm" color="coolGray.600" _dark={{color: "warmGray.200"}}pl="2" fontStyle="italic">
+                                                Numero de pasajeros: {item.passengerNumber}
+                                            </Text>
+                                        </HStack>
+                                    </VStack>
+                                    <Spacer />
+                                    <HStack space={1} justifyContent="center" >
+                                        <MaterialCommunityIcons name="clock-time-eight-outline" size={24} color="black"/>
+                                        <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800"  pl="0" pr="70" py="1" >
+                                            {item.timeStamp}
+                                        </Text>
+                                    </HStack>
                                 </HStack>
-                                <HStack space={3} justifyContent="left" pl="4" >
-                                    <MaterialCommunityIcons name="hand-coin" size={24} color="black" />
-                                    <Text  fontSize="lg" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2" fontStyle="italic">
-                                        $
-                                    </Text>
-                                    <Text  fontSize="lg" color="#6AC18A" _dark={{color: "warmGray.200"}} fontStyle="italic">
-                                        {item.recentText}
-                                    </Text>
-                                    <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="1" py="1.5" fontStyle="italic">
-                                        USD
-                                    </Text>
-                                </HStack>
-                                <HStack space={3} justifyContent="left" pl="4" >
-                                    <MaterialCommunityIcons name="seat-passenger" size={24} color="black" />
-                                    <Text  fontSize="sm" color="coolGray.600" _dark={{color: "warmGray.200"}}pl="2" fontStyle="italic">
-                                        Numero de pasajeros: {item.passengerNumber}
-                                    </Text>
-                                </HStack>
-                            </VStack>
-                            <Spacer />
-                            <HStack space={1} justifyContent="center" >
-                                <MaterialCommunityIcons name="clock-time-eight-outline" size={24} color="black"/>
-                                <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800"  pl="0" pr="70" py="1" >
-                                    {item.timeStamp}
-                                </Text>
-                            </HStack>
-                        </HStack>
-                    </Box>} keyExtractor={item => item.id}
-                />
+                            </Box>} keyExtractor={item => item.id}
+                        />
                     </>) : 
                     (<>
                         <HStack space={2} alignItems="center" justifyContent='center' padding={10}>
-                            <Spinner accessibilityLabel="Loading posts" />
                             <Heading color="primary.500" fontSize="md">
-                                Cargando datos...
+                                <Center>
+                                    <Text>Sin viajes Disponibles</Text>
+                                    <Image size={400} resizeMode={"contain"} borderRadius={0} 
+                                        source={{
+                                            uri: "https://stories.freepiklabs.com/storage/18539/no-data-pana-1440.png"
+                                        }}
+                                    >
+                                    </Image>
+                                </Center>
                             </Heading>
                         </HStack>
                     </>)}
