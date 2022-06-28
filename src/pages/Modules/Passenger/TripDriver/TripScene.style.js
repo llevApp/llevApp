@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
         borderColor:'#ccc',
         borderWidth:0.5,
         padding:15,
-        minWidth:200,
-        maxWidth:250
+        minWidth:220,
+        maxWidth:280
       }
 });
 export default styles;

@@ -225,15 +225,6 @@ export const TripScreen= () => {
           >
                   <MapView.Callout tooltip>
                                       <TouchableHighlight onPress= {()=>openModal(t)}>
-                                      {/* "address": "condominio las vilcas",
-                                          "career": "Ingenieria Civil en Computacion e Informatica",
-                                          "init_trip_time": "2022-05-05T19:07:04.937Z",
-                                          "latitude": -11.1111,
-                                          "longitude": -12.222,
-                                          "name": "Dionisio Alejandro Olivares Astudillo",
-                                          "total_passenger": 0,
-                                          "total_tips": 0,
-                                          "trip_id": "20",*/}
                                           <View style={styles.colorBoxText}>
                                               <Text>{'Conductor: '}</Text>
                                               <Text style={{color:'#A9A9A9'}}>{t?.name}</Text>

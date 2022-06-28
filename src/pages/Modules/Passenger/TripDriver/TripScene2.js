@@ -23,7 +23,7 @@ import { AlertDialog, Center } from "native-base";
 
 import { useNavigation } from '@react-navigation/core'
 import { Marker } from "react-native-svg";
-import AvatarUser from "../../../../ui/avatarUser";
+import {AvatarUser, AvatarUserMap} from "../../../../ui/avatarUser";
 import {useStoreMessage} from "./Store/StoreConfirmTrip";
 export const colorsPolilynes = ['#00FFFF','#F0F8FF','#7FFFD4','#000000','#A52A2A','#6495ED','#00008B','#FF8C00','#9932CC','#A9A9A9','#006400']
 const useKeyboardBottomInset = () => {
@@ -224,7 +224,8 @@ export const TripScreen= () => {
           
                 title={"Esto es un marker de los viajes"}
                 >
-                  <AvatarUser  avatarURL="https://ajisenramenpanama.com/wp-content/uploads/2020/07/user_icon.png" size={8} isUseMap></AvatarUser>
+                  <AvatarUserMap avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`}
+ size={8} isUseMap></AvatarUserMap>
                   <MapView.Callout tooltip>
                                       <TouchableHighlight onPress= {()=>openModal(t)}>
                                       {/* "address": "condominio las vilcas",
@@ -237,8 +238,8 @@ export const TripScreen= () => {
                                           "total_tips": 0,
                                           "trip_id": "20",*/}
                                           <View style={styles.colorBoxText}>
-                                            <HStack>
-                                              <View width={"60%"} >
+                                            <HStack space={1}>
+                                              <View width={"55%"} >
                                                   <Text>{'Conductor: '}</Text>
                                                   <Text style={{color:'#A9A9A9'}}>{t?.name}</Text>
                                                   <Text>{'Inicio de viaje: '}</Text>
@@ -246,8 +247,8 @@ export const TripScreen= () => {
                                                     moment(t?.init_trip_time).format('DD MMM YYYY HH:MM')
                                                   }</Text>
                                               </View>
-                                              <View width={"40%"} justifyContent='center' padding={1}>
-                                                <AvatarUser avatarURL="https://ajisenramenpanama.com/wp-content/uploads/2020/07/user_icon.png" size={"20"}></AvatarUser>
+                                              <View width={"45%"} justifyContent='center' padding={1}>
+                                                <AvatarUser avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`} size={"20"}></AvatarUser>
                                               </View>
                                           </HStack>
                                           </View>

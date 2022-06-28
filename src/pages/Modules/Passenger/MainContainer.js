@@ -9,9 +9,10 @@ import HomeScreen from './Screens/HomeScreen';
 import TripScreen from './Screens/TripScreen';
 import AccountScreen from './Screens/AccountScreen';
 import ChatScreen from './Screens/Chat/ChatScreen';
+import SwitchButton from '../../../utils/switchButton';
 
 //Screen names
-const homeName = "Inicio";
+const homeName = "Pasajero";
 const tripsName = "Historial de viajes";
 const chatName = "Chat";
 const accountName = "Cuenta";
@@ -28,6 +29,14 @@ function MainContainer() {
   }   
 
   },[name]);
+
+  const HeaderOptionsSwitch= () => {
+    return {
+        headerRight: () => (
+          <SwitchButton/>
+        ),
+      }
+    }
   return (
       <Tab.Navigator
         initialRouteName={homeName}
@@ -59,7 +68,7 @@ function MainContainer() {
           style: { padding: 10, height: 40}
         }}>
 
-        <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen options={HeaderOptionsSwitch} name={homeName} component={HomeScreen} />
         <Tab.Screen name={tripsName} component={TripScreen} />
         <Tab.Screen name={chatName} component={ChatScreen} />
         <Tab.Screen name={accountName} component={AccountScreen} />
