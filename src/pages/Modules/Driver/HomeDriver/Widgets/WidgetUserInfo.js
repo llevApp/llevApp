@@ -14,7 +14,7 @@ const WidgetUserInfo = () => {
     return(
         <>
             <Container style={styles.mainContainer} >
-                <ImageBackground imageStyle={{ borderRadius: 10}} source={{uri: backgrounImg}} >
+                <ImageBackground source={{uri: backgrounImg}} >
                     <Box style={styles.mainBox}>
                     <Center>
                         <HStack style={styles.info}>
