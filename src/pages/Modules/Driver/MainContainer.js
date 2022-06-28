@@ -8,6 +8,7 @@ import { useUserStore } from '../../Home/Store/StoreHome'
 import HomeScreen from './Screens/HomeScreen';
 import TripScreen from './Screens/TripScreen';
 import AccountScreen from './Screens/AccountScreen';
+import SwitchButton from '../../../utils/switchButton';
 
 //Screen names
 const homeName = "Inicio";
@@ -26,6 +27,15 @@ function MainContainer() {
   }   
 
   },[name]);
+
+  const HeaderOptionsSwitch= () => {
+    return {
+        headerRight: () => (
+          <SwitchButton/>
+        ),
+      }
+    }
+
   return (
       <Tab.Navigator
         initialRouteName={homeName}
@@ -61,7 +71,7 @@ function MainContainer() {
           },
         })}
         >
-        <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen options={HeaderOptionsSwitch} name={homeName} component={HomeScreen} />
         <Tab.Screen name={tripsName} component={TripScreen} />
         <Tab.Screen name={accountName} component={AccountScreen} />
       </Tab.Navigator>

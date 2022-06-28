@@ -51,8 +51,6 @@ const AccountScreen = () => {
     const defaultUserImg = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
     const {name, avatarUrl, setAvatarUrl, setLoadingChangeAvatar} = useUserStore();
 
-    
-
     const pickImage = async () => {
       // No permissions request is necessary for launching the image library
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -77,7 +75,6 @@ const AccountScreen = () => {
             <Box size={250} alignContent="flex-start" justifyContent={"flex-start"}>
                <AvatarUser avatarURL={avatarUrl} size={"100%"}/>
             </Box>
-           
           )}
           <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
             <Button title="Editar imagen" onPress={pickImage} />
@@ -93,7 +90,6 @@ const AccountScreen = () => {
             </TouchableOpacity>
             )
           }
-          
           <TouchableOpacity onPress={handleSignOut} style={styles.button} disabled={loading}>
             <Text style={styles.buttonText}>Sign out</Text>
           </TouchableOpacity>

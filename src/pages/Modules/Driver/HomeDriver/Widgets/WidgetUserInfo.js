@@ -25,13 +25,13 @@ const WidgetUserInfo = () => {
                                     <Button rounded="full" onPress={onClick} style={styles.button}>Comenzar viaje</Button>
                                 </VStack>
                             </Box>
-                            <Box size={"150px"}>
+                            {/* <Box size={"150px"}>
                                  <AvatarUser avatarURL={avatarUrl} size={"100%"}></AvatarUser>
-                            </Box>
+                            </Box> */}
                            
-                            {/* <Avatar size={"2xl"} style={styles.image}
+                            <Avatar size={"2xl"} style={styles.image}
                                 source={{uri: loadingChangeAvatar? defaultUserImg : avatarUrl || defaultUserImg}}>
-                            </Avatar> */}
+                            </Avatar>
                         </HStack>
                     </Center>
                 </Box>

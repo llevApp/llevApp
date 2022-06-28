@@ -2,11 +2,23 @@ import { Image } from 'native-base'
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-const AvatarUser = ({avatarURL, size, isUseMap}) => {
+export const AvatarUser = ({avatarURL, size, isUseMap}) => {
   const alternativeAvatarUrl = "https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360"
   return (
     <View style={styles.container}>
       <Image alt="Ha ocurrido un error." source={{uri: avatarURL? avatarURL : alternativeAvatarUrl}} fallbackSource={{uri: alternativeAvatarUrl}} size={size} style={styles.image}></Image>
+      {/* <Avatar size={"2xl"}
+        source={{uri: avatarURL }}>
+      </Avatar> */}
+    </View>
+  )
+}
+
+export const AvatarUserMap = ({avatarURL, size, isUseMap}) => {
+  const alternativeAvatarUrl = "https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360"
+  return (
+    <View>
+      <Image alt="Ha ocurrido un error." source={{uri: avatarURL? avatarURL : alternativeAvatarUrl}} fallbackSource={{uri: alternativeAvatarUrl}} size={size}></Image>
       {/* <Avatar size={"2xl"}
         source={{uri: avatarURL }}>
       </Avatar> */}
@@ -26,7 +38,6 @@ const styles = StyleSheet.create({
   image: {
     borderRadius: 10000,
   }
-
 })
 
 export default AvatarUser

@@ -18,13 +18,13 @@ const LoginScreen = () => {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
 /* State radio button */
-const [value, setValue] = useState("driver");
 /* Sign up function */
   const handleSignUp = () => {
     navigation.replace("Register")
   }
 /* Store user data */
  const { userData, setAvatarUrl } = useUserStore(); 
+ const { target } = useLoginStore();
 /* Handle login function */
   const handleLogin = () => {
     auth
@@ -40,6 +40,7 @@ const [value, setValue] = useState("driver");
     useLoginStore.getState().setEmail(undefined);
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
+        console.log(user.photoURL)
         setAvatarUrl(user.photoURL);
         useLoginStore.getState().setEmail(user.email);
         //console.log(useLoginStore.getState().target);
@@ -86,19 +87,14 @@ const [value, setValue] = useState("driver");
       <View>
 <Radio.Group name="myRadioGroup" 
     accessibilityLabel="favorite number"
-    value={value} 
+    value={target} 
     onChange={nextValue => {
       //console.log(nextValue);
-      setValue(nextValue);
-      useLoginStore.getState().setTarget(nextValue);
-
-    }
+      useLoginStore.getState().setTarget(nextValue);}
     }
     >
       <Radio shadow={2} value="driver" my="2">Conductor</Radio>
-      <Radio shadow={2} value="passenger" my="2">
-        Pasajero
-      </Radio>
+      <Radio shadow={2} value="passenger" my="2">Pasajero</Radio>
     </Radio.Group>
 </View>
 {/*  */}

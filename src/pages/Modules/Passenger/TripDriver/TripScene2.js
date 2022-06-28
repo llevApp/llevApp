@@ -23,7 +23,7 @@ import { AlertDialog, Center } from "native-base";
 
 import { useNavigation } from '@react-navigation/core'
 import { Marker } from "react-native-svg";
-import AvatarUser from "../../../../ui/avatarUser";
+import {AvatarUser, AvatarUserMap} from "../../../../ui/avatarUser";
 export const colorsPolilynes = ['#00FFFF','#F0F8FF','#7FFFD4','#000000','#A52A2A','#6495ED','#00008B','#FF8C00','#9932CC','#A9A9A9','#006400']
 const useKeyboardBottomInset = () => {
   const [bottom, setBottom] = React.useState(0);
@@ -221,7 +221,7 @@ export const TripScreen= () => {
           
                 title={"Esto es un marker de los viajes"}
                 >
-                  <AvatarUser  avatarURL="https://ajisenramenpanama.com/wp-content/uploads/2020/07/user_icon.png" size={8} isUseMap></AvatarUser>
+                  <AvatarUserMap avatarURL="https://ajisenramenpanama.com/wp-content/uploads/2020/07/user_icon.png" size={8} isUseMap></AvatarUserMap>
                   <MapView.Callout tooltip>
                                       <TouchableHighlight onPress= {()=>openModal(t)}>
                                       {/* "address": "condominio las vilcas",
@@ -244,7 +244,7 @@ export const TripScreen= () => {
                                                   }</Text>
                                               </View>
                                               <View width={"40%"} justifyContent='center' padding={1}>
-                                                <AvatarUser avatarURL="https://ajisenramenpanama.com/wp-content/uploads/2020/07/user_icon.png" size={"20"}></AvatarUser>
+                                                <AvatarUser avatarURL={t?.uuid_fb} size={"20"}></AvatarUser>
                                               </View>
                                           </HStack>
                                           </View>
