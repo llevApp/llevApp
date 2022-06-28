@@ -7,6 +7,9 @@ import logoLogin from '../../../img/logoLogin.png'
 import { Radio, NativeBaseProvider } from "native-base";
 import useLoginStore from './Store/storeLogin';
 import { useUserStore } from '../Home/Store/StoreHome'
+import {hubWebSocket} from '../../services/common/hubWebSocket'
+//import {useTripsStore} from '../Modules/Driver/Screens/StoreTrip/StoreTrips';
+import {URL_API,GET_DATA_USER,WEB_SOCKET_CHANNEL} from "@env";
 const LoginScreen = () => {
   //Guardamos los correos
   const [email, setEmail] = useState('')
@@ -16,20 +19,19 @@ const LoginScreen = () => {
   const [isLoading, setLoading] = useState(true);
 /* State radio button */
 const [value, setValue] = useState("driver");
-
+/* Sign up function */
   const handleSignUp = () => {
     navigation.replace("Register")
   }
-
-const { userData } = useUserStore(({ userData }) => ({
-  userData
-}));
+/* Store user data */
+ const { userData, setAvatarUrl } = useUserStore(); 
+/* Handle login function */
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log('Login con:', user.email);
+        //console.log('Login con:', user.email);
       })
       .catch(error => Alert.alert('Creedenciales incorrectas'))
   }
@@ -38,17 +40,23 @@ const { userData } = useUserStore(({ userData }) => ({
     useLoginStore.getState().setEmail(undefined);
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
+        setAvatarUrl(user.photoURL);
         useLoginStore.getState().setEmail(user.email);
-        console.log(useLoginStore.getState().target);
+        //console.log(useLoginStore.getState().target);
         if(useLoginStore.getState().target == 'driver'){
-          const url =  'http://192.168.0.185:10000/api-llevapp/user/';
-          userData(url,email)
+          const url =  URL_API+GET_DATA_USER;
+          userData(url,email) 
           navigation.replace("Driver") 
+        }else if(useLoginStore.getState().target == 'passenger'){
+          const url =  URL_API+GET_DATA_USER;
+          userData(url,email);
+          navigation.replace("Passenger");
         }
       }
     })
     return unsubscribe
-  }, [email]);
+  }, [email])
+
   return (
     <NativeBaseProvider>
     <KeyboardAvoidingView
@@ -74,13 +82,13 @@ const { userData } = useUserStore(({ userData }) => ({
           secureTextEntry
         />
       </View>
-      <Text>{'\n'}</Text>
-  
-<View>
+      <Text>{'\n'}</Text> 
+      <View>
 <Radio.Group name="myRadioGroup" 
     accessibilityLabel="favorite number"
     value={value} 
     onChange={nextValue => {
+      //console.log(nextValue);
       setValue(nextValue);
       useLoginStore.getState().setTarget(nextValue);
 
@@ -88,7 +96,7 @@ const { userData } = useUserStore(({ userData }) => ({
     }
     >
       <Radio shadow={2} value="driver" my="2">Conductor</Radio>
-      <Radio shadow={2} value="passanger" my="2">
+      <Radio shadow={2} value="passenger" my="2">
         Pasajero
       </Radio>
     </Radio.Group>

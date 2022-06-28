@@ -8,6 +8,8 @@ export const useUserStore =
                 nickname:undefined,
                 email: undefined,
                 careerName:undefined,
+                avatarUrl:undefined,
+                loadingChangeAvatar: false,
                 loading:undefined,
                 error:undefined,
                 dataUser:undefined,
@@ -18,6 +20,8 @@ export const useUserStore =
                 setNickname: (value) => set({ nickname: value }),
                 setEmailUser: (value) => set({ email: value }),
                 setCarrerName: (value) => set({ careerName: value }),
+                setAvatarUrl: (value) => set({ avatarUrl: value }),
+                setLoadingChangeAvatar: (value) => set({ loadingChangeAvatar: value }),
                 setTripsDriver: (value) => set({ tripsDriver: value }),
                 setTripsPassenger: (value) => set({ tripsPassenger: value }),
                 setLoading: (value) => set({ loading: value }),
@@ -25,9 +29,10 @@ export const useUserStore =
                 userData: ( endpoint,email ) => {
                     set({ loading: true, error: null });
                    let url = endpoint+email;
+                   //console.log(url);
                     fetch(url)
                         .then((response)=>response.json())
-                        .then((json)=>set({dataUser:json,setIdUser:json.user_id,email:json.email,careerName:json.carrer_name,name:json.name,nickname:json.nickname}))
+                        .then((json)=>set({dataUser:json,idUser:json.user_id,email:json.email,careerName:json.career_name,name:json.name,nickname:json.nickname}))
                         .catch((error)=>alert(error))
                         .finally( ()=>set({ loading:false  }));
                 },
@@ -38,6 +43,8 @@ export const useUserStore =
                     nickname:undefined,
                     email: undefined,
                     careerName:undefined,
+                    avatarUrl:undefined,
+                    loadingChangeAvatar: false,
                     loading:undefined,
                     error:undefined,
                     dataUser:undefined,

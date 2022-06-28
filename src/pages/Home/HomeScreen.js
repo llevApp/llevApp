@@ -15,7 +15,7 @@ const HomeScreen = () => {
       .catch(error => alert(error.message))
   }
   useEffect(()=>{
-    console.log(useLoginStore.getState().target)
+    //console.log(useLoginStore.getState().target)
   },[])
   return (
     <View style={styles.container}>
