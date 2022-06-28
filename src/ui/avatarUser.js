@@ -18,7 +18,7 @@ export const AvatarUserMap = ({avatarURL, size, isUseMap}) => {
   const alternativeAvatarUrl = "https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360"
   return (
     <View>
-      <Image alt="Ha ocurrido un error." source={{uri: avatarURL? avatarURL : alternativeAvatarUrl}} fallbackSource={{uri: alternativeAvatarUrl}} size={size}></Image>
+      <Image alt="Ha ocurrido un error." source={{uri: avatarURL? avatarURL : alternativeAvatarUrl}} fallbackSource={{uri: alternativeAvatarUrl}} size={size} style={styles.image}></Image>
       {/* <Avatar size={"2xl"}
         source={{uri: avatarURL }}>
       </Avatar> */}

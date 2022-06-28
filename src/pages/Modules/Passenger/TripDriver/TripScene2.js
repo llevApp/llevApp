@@ -221,7 +221,8 @@ export const TripScreen= () => {
           
                 title={"Esto es un marker de los viajes"}
                 >
-                  <AvatarUserMap avatarURL="https://ajisenramenpanama.com/wp-content/uploads/2020/07/user_icon.png" size={8} isUseMap></AvatarUserMap>
+                  <AvatarUserMap avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`}
+ size={8} isUseMap></AvatarUserMap>
                   <MapView.Callout tooltip>
                                       <TouchableHighlight onPress= {()=>openModal(t)}>
                                       {/* "address": "condominio las vilcas",
@@ -234,8 +235,8 @@ export const TripScreen= () => {
                                           "total_tips": 0,
                                           "trip_id": "20",*/}
                                           <View style={styles.colorBoxText}>
-                                            <HStack>
-                                              <View width={"60%"} >
+                                            <HStack space={1}>
+                                              <View width={"55%"} >
                                                   <Text>{'Conductor: '}</Text>
                                                   <Text style={{color:'#A9A9A9'}}>{t?.name}</Text>
                                                   <Text>{'Inicio de viaje: '}</Text>
@@ -243,8 +244,8 @@ export const TripScreen= () => {
                                                     moment(t?.init_trip_time).format('DD MMM YYYY HH:MM')
                                                   }</Text>
                                               </View>
-                                              <View width={"40%"} justifyContent='center' padding={1}>
-                                                <AvatarUser avatarURL={t?.uuid_fb} size={"20"}></AvatarUser>
+                                              <View width={"45%"} justifyContent='center' padding={1}>
+                                                <AvatarUser avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`} size={"20"}></AvatarUser>
                                               </View>
                                           </HStack>
                                           </View>

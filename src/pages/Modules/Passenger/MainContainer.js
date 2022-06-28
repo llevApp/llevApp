@@ -12,7 +12,7 @@ import ChatScreen from './Screens/Chat/ChatScreen';
 import SwitchButton from '../../../utils/switchButton';
 
 //Screen names
-const homeName = "Inicio";
+const homeName = "Pasajero";
 const tripsName = "Historial de viajes";
 const chatName = "Chat";
 const accountName = "Cuenta";

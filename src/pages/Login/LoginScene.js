@@ -40,7 +40,6 @@ const LoginScreen = () => {
     useLoginStore.getState().setEmail(undefined);
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        console.log(user.photoURL)
         setAvatarUrl(user.photoURL);
         useLoginStore.getState().setEmail(user.email);
         //console.log(useLoginStore.getState().target);

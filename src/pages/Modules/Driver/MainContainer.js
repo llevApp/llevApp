@@ -11,7 +11,7 @@ import AccountScreen from './Screens/AccountScreen';
 import SwitchButton from '../../../utils/switchButton';
 
 //Screen names
-const homeName = "Inicio";
+const homeName = "Conductor";
 const tripsName = "Historial de viajes";
 const accountName = "Cuenta";
 
