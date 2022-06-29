@@ -18,7 +18,7 @@ console.log(data?.params);
     setMessages([
       {
         _id: 1,
-        text: 'Wena ctm',
+        text: 'Hola, en un segundo te respondo',
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -86,8 +86,11 @@ console.log(data?.params);
       renderBubble={renderBubble}
       alwaysShowSend
       renderSend={renderSend}
-      scrollToBottom
+     scrollToBottom
       scrollToBottomComponent={scrollToBottomComponent}
+      placeholder='Escribir un mensaje'
+      locale={"es-ES"}
+
     />
   );
 };

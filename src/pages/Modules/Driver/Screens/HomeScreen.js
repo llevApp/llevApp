@@ -112,7 +112,7 @@ return (
                       <Modal.Body _scrollview={{scrollEnabled:false}}>
                       <VStack style={styles.widgets} space={2}>
                         <VStack direction="row" space={3}>
-                          <Text>{messages.userName}</Text>
+                          <Text>{messages.name}</Text>
                         </VStack>
                         <VStack direction="row" space={3}>
                           <Text>Ubicación:</Text>
