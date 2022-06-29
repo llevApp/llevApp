@@ -149,8 +149,11 @@ useEffect(() => {
       renderBubble={renderBubble}
       alwaysShowSend
       renderSend={renderSend}
-      scrollToBottom
+     scrollToBottom
       scrollToBottomComponent={scrollToBottomComponent}
+      placeholder='Escribir un mensaje'
+      locale={"es-ES"}
+
     />
   );
 };

@@ -19,6 +19,7 @@ export const hubWebSocket =
                                 latitude: message.latitude,
                                 longitude: message.longitude,
                                 contribution: message.contribution,
+                                name:message.user_name
                             }
                         set({ messages: msg })
                     }

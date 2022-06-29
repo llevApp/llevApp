@@ -10,12 +10,14 @@ import { hubWebSocket } from '../../../../services/common/hubWebSocket';
 import { Alert } from 'react-native-web';
 import {WEB_SOCKET_CHANNEL} from "@env";
 
+
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
 const navigation = useNavigation();
 const [showModal, setShowModal] = useState(false);
-const {idUser, name } = useUserStore();
+const {idUser, name} = useUserStore();
 const {conection: wsConection, isOpen, setIsOpen,messages,setMessages} = hubWebSocket();
+
 const ResponseRequest = () =>{
     wsConection?.send(`
       {
@@ -110,7 +112,7 @@ return (
                       <Modal.Body _scrollview={{scrollEnabled:false}}>
                       <VStack style={styles.widgets} space={2}>
                         <VStack direction="row" space={3}>
-                          <Text>{messages.userName}</Text>
+                          <Text>{messages.name}</Text>
                         </VStack>
                         <VStack direction="row" space={3}>
                           <Text>Ubicación:</Text>

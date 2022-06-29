@@ -43,7 +43,7 @@ export default function SplashScreen(){
         ]
     }}>
         <View style={styles.imageContainer}>
-        <Image  style={styles.logoContainer}  source={Logo} />
+        <Image  style={styles.logoContainer} source={Logo} />
         </View>
         </Animated.View>
         </ImageBackground>

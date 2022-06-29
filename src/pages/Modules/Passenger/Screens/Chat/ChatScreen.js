@@ -23,7 +23,7 @@ const Messages = [
       userImg: require('./assets/users/user-1.jpg'),
       messageTime: '4 mins ago',
       messageText:
-        'Wena ctm',
+        'Hola, en un segundo te respondo',
     }
   ];
 const ChatScreen = () => {
