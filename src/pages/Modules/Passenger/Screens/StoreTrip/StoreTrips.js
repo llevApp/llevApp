@@ -1,6 +1,6 @@
 import create from 'zustand';
 import moment from 'moment';
-import {URL_API,TRIPS_DRIVER} from "@env";
+import {URL_API,PASSENGER_TRIPS} from "@env";
 
 export const useTripsStore = 
     create(
@@ -13,7 +13,7 @@ export const useTripsStore =
                 setTripsPassenger: (userID) => {
                     if (userID) {
                         set({ loading: true, error: null });
-                    let url = URL_API+TRIPS_DRIVER+userID;
+                    let url = URL_API+PASSENGER_TRIPS+userID;
                     //console.log('Esta es la URL: '+url);
                     fetch(url)
                         .then((response)=>response?.json())

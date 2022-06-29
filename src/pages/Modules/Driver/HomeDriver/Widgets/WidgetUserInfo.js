@@ -4,25 +4,35 @@ import { ImageBackground, StyleSheet } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
 import {URL_API,TRIPS_DRIVER} from "@env";
-
+import {useStoreTripDriver} from '../../TripDriver/Store/StoreScene';
 import AvatarUser from "../../../../../ui/avatarUser";
 const WidgetUserInfo = () => {
     const backgrounImg = "https://media.istockphoto.com/photos/colorful-background-picture-id170094323?k=20&m=170094323&s=612x612&w=0&h=YEerCprCW1d4n0-XjGVxzQhAqfKmwluXLVJHhMpWAgs=";
     const defaultUserImg = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";    
     const navigation = useNavigation();
     const {name, idUser, careerName, avatarUrl, loadingChangeAvatar, hasActiveTrip, setHasActiveTrip} = useUserStore();
-    console.log("hastrip: ",hasActiveTrip)
+  
 
     useEffect(()=>{
+        console.log('Comprobar si tiene viajes activos',useUserStore.getState().hasActiveTrip);
         if(idUser){
         console.log("endpoint: ",URL_API+TRIPS_DRIVER+idUser)
         fetch(URL_API+TRIPS_DRIVER+idUser , {
             method: 'GET',})
         .then((response)=>response.json())
-        .then((json)=> (setHasActiveTrip(json?.has_data), console.log(json)))
+        .then((json)=> (setHasActiveTrip(json?.has_data),
+        useStoreTripDriver.getState().setOrigin({location:{'lat':json?.trip[0]?.latitude,'lng':json?.trip[0]?.longitude},'description':json?.trip[0]?.address}),
+        useStoreTripDriver.getState().setDestination({
+            location:{
+                lat: -29.965314,
+                lng: -71.34951
+            },
+            description:'UCN Coquimbo'
+          })
+        ))
         .catch((error)=>alert(error))
       } 
-    },[hasActiveTrip]);
+    },[useUserStore.getState().idUser,useUserStore.getState().hasActiveTrip]);
 
     const goToTripScreen= ()=>{
         navigation.replace("TripScreen")
