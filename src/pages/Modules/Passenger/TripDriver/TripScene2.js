@@ -222,7 +222,7 @@ export const TripScreen= () => {
                 title={"Esto es un marker de los viajes"}
                 >
                   <AvatarUserMap avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`}
- size={8} isUseMap></AvatarUserMap>
+ size={12} isUseMap></AvatarUserMap>
                   <MapView.Callout tooltip>
                                       <TouchableHighlight onPress= {()=>openModal(t)}>
                                       {/* "address": "condominio las vilcas",

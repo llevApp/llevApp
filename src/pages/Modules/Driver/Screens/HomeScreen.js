@@ -9,6 +9,7 @@ import { StyleSheet } from 'react-native';
 import { hubWebSocket } from '../../../../services/common/hubWebSocket';
 import { Alert } from 'react-native-web';
 import {WEB_SOCKET_CHANNEL} from "@env";
+import RefreshControl from '../../../../utils/refreshControl';
 
 
 const HomeScreen = () => {
@@ -95,6 +96,8 @@ useEffect(()=>{
 
 return (
         <View style={styles.mainContainer}> 
+          <RefreshControl>
+
           <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>
           <Flex >
               <VStack style={styles.widgets} space={5}>
@@ -139,6 +142,7 @@ return (
                     </Modal.Content>
           </Modal>
           </NativeBaseProvider>
+          </RefreshControl>
         </View>
     );
     
