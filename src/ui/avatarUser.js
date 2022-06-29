@@ -1,27 +1,28 @@
-import { Image } from 'native-base'
+import { Box, Image } from 'native-base'
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 
-export const AvatarUser = ({avatarURL, size, isUseMap}) => {
-  const alternativeAvatarUrl = "https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360"
+const alternativeAvatarUrl = "https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360"
+const loadingAvatarUrl = "https://fondosmil.com/fondo/4923.jpg"
+const loadingAvatarMapUrl = "https://fondosmil.com/fondo/4923.jpg"
+
+export const AvatarUser = ({avatarURL, size: avatarSize}) => {
+  
   return (
     <View style={styles.container}>
-      <Image alt="Ha ocurrido un error." source={{uri: avatarURL? avatarURL : alternativeAvatarUrl}} fallbackSource={{uri: alternativeAvatarUrl}} size={size} style={styles.image}></Image>
-      {/* <Avatar size={"2xl"}
-        source={{uri: avatarURL }}>
-      </Avatar> */}
+      <ImageBackground source={{uri: loadingAvatarUrl}} borderRadius={100000}>
+        <Image alt="Ha ocurrido un error." source={{uri: avatarURL? avatarURL : alternativeAvatarUrl}} fallbackSource={{uri: alternativeAvatarUrl}} size={avatarSize?  avatarSize : 200} style={styles.image}/>
+      </ImageBackground>
     </View>
   )
 }
 
-export const AvatarUserMap = ({avatarURL, size, isUseMap}) => {
-  const alternativeAvatarUrl = "https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360"
+export const AvatarUserMap = ({avatarURL, size: avatarSize}) => {
   return (
     <View>
-      <Image alt="Ha ocurrido un error." source={{uri: avatarURL? avatarURL : alternativeAvatarUrl}} fallbackSource={{uri: alternativeAvatarUrl}} size={size} style={styles.image}></Image>
-      {/* <Avatar size={"2xl"}
-        source={{uri: avatarURL }}>
-      </Avatar> */}
+      <ImageBackground source={{uri: loadingAvatarMapUrl}} borderRadius={100000}>
+        <Image alt="Ha ocurrido un error." source={{uri: avatarURL? avatarURL : alternativeAvatarUrl}} fallbackSource={{uri: alternativeAvatarUrl}} size={avatarSize?  avatarSize : 10} style={styles.image}/>
+      </ImageBackground>
     </View>
   )
 }
@@ -29,11 +30,16 @@ export const AvatarUserMap = ({avatarURL, size, isUseMap}) => {
 const styles = StyleSheet.create({
   container: {
     /* padding:20,  */
-    minWidth: '100%', 
+    //minWidth: '100%', 
+    //height: 'auto',
+    //width: 'auto',
+    
     shadow:'20', 
     /* justifyContent:'center', */
     alignItems:'center',
     /* alignSelf:'center', */
+    borderRadius: 10000,
+
   },
   image: {
     borderRadius: 10000,
