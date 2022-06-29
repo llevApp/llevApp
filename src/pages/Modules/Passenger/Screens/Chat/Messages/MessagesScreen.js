@@ -135,8 +135,6 @@ useEffect(() => {
     wsConection.send(JSON.stringify(obj));
   }
 }, [messageWs]);
-
-
   return (
     <GiftedChat
       messages={messages}
