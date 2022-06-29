@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import {Animated,ImageBackground,Alert,Image,KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {Animated,ImageBackground,Alert,Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { auth } from '../../../firebase.js'
 import styles from './StyleRegister'
 import logoLogin from '../../../img/logo.png'

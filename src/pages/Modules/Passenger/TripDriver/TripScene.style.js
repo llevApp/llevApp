@@ -102,6 +102,15 @@ const styles = StyleSheet.create({
         padding:15,
         minWidth:220,
         maxWidth:280
-      }
+      },
+      titleHeader:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height:120
+      },
+      titleContent:{
+        marginBottom:30
+       }
+
 });
 export default styles;

@@ -61,7 +61,8 @@ const LoginScreen = () => {
     <NativeBaseProvider>
     <KeyboardAvoidingView
       style={styles.container}
-      behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding": "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? -64 : 0}
     >
     <View style={styles.imageContainer}>
         <Image  style={styles.logoContainer}  source={logoLogin} />

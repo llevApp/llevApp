@@ -1,5 +1,6 @@
 import React,{useState,useEffect,useRef} from "react";
-import {Alert,View ,TouchableOpacity, Text,Keyboard, Platform, KeyboardEvent,TouchableHighlight,TextInput } from "react-native";
+import {Alert,View, Text,Keyboard, Platform,TouchableHighlight,TextInput } from "react-native";
+import {  NativeBaseProvider, Flex,Spinner,Modal,Heading} from "native-base";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import CountDown from 'react-native-countdown-component';
@@ -95,6 +96,8 @@ export const TripScreen= () => {
   const[dataWs,setDataWs]=useState(null);
   const[activeWs,setActiveWs]=useState(false);
   const [visible,setVisible] = useState(false); 
+  const [showModal, setShowModal] = useState(true);
+  const[titleChange,setTitleChange]=useState('Cargando Datos');
   /* show trips  user*/
   const {
     isOpen,
@@ -130,13 +133,28 @@ export const TripScreen= () => {
       setDataWs(t);
       //console.log('*******************');
     }
+    const backHome = ()=>{
+      navigation.replace("Passenger");
+    }
   /* get trips passenger */
   useEffect(()=>{
     fetch(URL_API+PASSENGER_TRIPS)
     .then((response)=>response.json())
-    .then((json)=>setTrips(json))
+    .then((json)=>{
+      let response = json?.map((t)=>{
+          if( t?.driver_id != idUser){
+          return t;
+        }
+    });
+      let filter = response.filter((v)=>v!=undefined);
+      console.log(filter);
+      if(filter?.length == 0){
+        setTitleChange('Ups.. no hay viajes disponibles');
+      }
+      setTrips(filter)
+    })
     .catch((error)=>alert(error))
-    .finally( ()=>console.log('finally'));
+    .finally( ()=>console.log(''));
     setDestination({
       location:{
           lat: -29.965314,
@@ -172,7 +190,7 @@ export const TripScreen= () => {
         };
         wsConection.onmessage = (e) => {
           // a message was received
-          console.log('Mensaje recibvido desde WS: '+e.data);
+          console.log('Mensaje recibido desde WS: '+e.data);
           const json = JSON.parse(e.data);
           const message = json?.response;
           if(message?.status){
@@ -209,7 +227,8 @@ export const TripScreen= () => {
           //provider={"google"}
         >
 
-      {trips?.map((t,index) => (
+      { trips?.length>0 ?
+        trips?.map((t,index) => (
         
         <>
           <MapView.Marker 
@@ -225,15 +244,6 @@ export const TripScreen= () => {
  size={8} isUseMap></AvatarUserMap>
                   <MapView.Callout tooltip>
                                       <TouchableHighlight onPress= {()=>openModal(t)}>
-                                      {/* "address": "condominio las vilcas",
-                                          "career": "Ingenieria Civil en Computacion e Informatica",
-                                          "init_trip_time": "2022-05-05T19:07:04.937Z",
-                                          "latitude": -11.1111,
-                                          "longitude": -12.222,
-                                          "name": "Dionisio Alejandro Olivares Astudillo",
-                                          "total_passenger": 0,
-                                          "total_tips": 0,
-                                          "trip_id": "20",*/}
                                           <View style={styles.colorBoxText}>
                                             <HStack space={1}>
                                               <View width={"55%"} >
@@ -264,10 +274,47 @@ export const TripScreen= () => {
             apikey={GOOGLE_MAPS_APIKEY}
             strokeWidth={5}
             strokeColor={colorsPolilynes[ Math.floor(Math.random() * 10)]}></MapViewDirections>
-            </>
-        ))}
-       
- 
+        </> 
+        )) :   <Modal   isOpen={showModal} onClose={() => setShowModal(false)}  >
+                    <Modal.Content    maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
+                      <Modal.Body _scrollview={{scrollEnabled:false}}>
+                      <VStack style={styles.titleHeader}>
+                       <Heading style={styles.titleContent} color="primary.500" fontSize="xl">
+                        {titleChange}
+                        </Heading>
+                        {titleChange == 'Cargando Datos' ? 
+                        (<Spinner accessibilityLabel="Loading posts"  size="lg"/>):
+                        (null)
+                        }
+                      </VStack>
+                  {/*     <Button flex="1" colorScheme="green" onPress={() => {
+                        backHome();
+                        setShowModal(false);
+                      }}>
+                        Volver
+                      </Button>
+                      <Button variant="ghost" colorScheme="red" onPress={() => {
+                        backHome();
+                        setShowModal(false);
+                      }}>
+                        Cancelar
+                      </Button> */}
+                      </Modal.Body>
+                      {titleChange == 'Cargando Datos' ? 
+                        (null):
+                        ( <Modal.Footer>
+                          <Button flex="1" colorScheme="red" onPress={() => {
+                        backHome();
+                        setShowModal(false);
+                      }}>
+                        Volver
+                      </Button>
+           </Modal.Footer>)
+                        }
+                     
+                    </Modal.Content>
+          </Modal>
+      }
         {
          origin && (
            <>
@@ -317,7 +364,6 @@ export const TripScreen= () => {
               <View style={styles.textContainer}>
               <Text style={styles.H1}>Iniciar oferta de viaje</Text>
               </View>
-            
                 <TextInput
                 placeholder="contribution"
                 value={contribution}
@@ -325,9 +371,9 @@ export const TripScreen= () => {
                 style={styles.input}
                 />
                 <VStack alignItems="center">
-                    <Button onPress={sendDataInit} style={styles.button} padding={5}>
+                  <Button onPress={sendDataInit} style={styles.button} padding={5}>
                         <Text style={styles.buttonText}>Enviar oferta</Text>
-                      </Button>
+                  </Button>
                   </VStack>
               </Box>    
           </Actionsheet.Content>
