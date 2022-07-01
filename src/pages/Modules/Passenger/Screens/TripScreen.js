@@ -50,9 +50,9 @@ export default function TripScreen({ navigation }) {
                             </HStack>
                         </VStack>
                 </Heading>
-                {FlatListData? 
+                {FlatListData ? 
                     (<>
-                        <FlatList data={FlatListData} 
+                    <FlatList data={FlatListData} 
                     renderItem={({item}) => 
                     <Box borderWidth="0.4" margin="0.2" borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="10" pr="5" py="6" borderRadius="34">
                         <HStack space={3} justifyContent="center" >

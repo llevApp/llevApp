@@ -15,7 +15,7 @@ const navigation = useNavigation();
 const { name,idUser } = useUserStore();
 const [showModal, setShowModal] = useState(false);
 /* Get ws connection */
-const {conection: wsConection, isOpen, setIsOpen,messagesPassenger} = hubWebSocket();
+const {conection: wsConection, isOpen, setIsOpen,setMessagesPassenger,messagesPassenger,setMessages} = hubWebSocket();
 const initTrip = ()=>{
     navigation.replace("TripScreenPassenger");
 };
@@ -74,11 +74,15 @@ return (
                       <Button flex="1" colorScheme="green" onPress={() => {
                         pushToChat();
                         setShowModal(false);
+                        setMessages(null);
+                        setMessagesPassenger(null);
                       }}>
                         Chatear
                       </Button>
                       <Button variant="ghost" colorScheme="blue" onPress={() => {
                         setShowModal(false);
+                        setMessages(null);
+                        setMessagesPassenger(null);
                       }}>
                         Todo ok
                       </Button>
@@ -94,6 +98,8 @@ return (
                       </VStack>
                       <Button flex="1" colorScheme="green" onPress={() => {
                         setShowModal(false);
+                        setMessages(null);
+                        setMessagesPassenger(null);
                       }}>
                         Cerrar
                       </Button>

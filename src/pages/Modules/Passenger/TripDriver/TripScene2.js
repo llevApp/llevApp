@@ -116,102 +116,105 @@ export const TripScreen= () => {
   const { origin,setOrigin,destination,setDestination} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
     setOrigin,setDestination,origin,destination
   }));
-  const sendDataInit = () => {
-    /* Send Data to Driver for ws */
-        console.log('Connected to the server')
-        console.log(dataWs?.driver_id);
-        let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
-        hubWebSocket.getState().setConection(ws);
-        setActiveWs(true);
-    }
-    const openModal = (t) => {
-      setActiveWs(false);
-      setVisible(true);
-      //console.log('*******************');
-      //console.log(origin);
-      //console.log(t)
-      setDataWs(t);
-      //console.log('*******************');
-    }
-    const backHome = ()=>{
-      navigation.replace("Passenger");
-    }
-  /* get trips passenger */
-  useEffect(()=>{
-    fetch(URL_API+PASSENGER_TRIPS)
-    .then((response)=>response.json())
-    .then((json)=>{
-      let response = json?.map((t)=>{
-          if( t?.driver_id != idUser){
-          return t;
-        }
-    });
-      let filter = response.filter((v)=>v!=undefined);
-      console.log(filter);
-      if(filter?.length == 0){
-        setTitleChange('Ups.. no hay viajes disponibles');
-      }
-      setTrips(filter)
-    })
-    .catch((error)=>alert(error))
-    .finally( ()=>console.log(''));
-    setDestination({
-      location:{
-          lat: -29.965314,
-          lng: -71.34951
-      },
-      description:'UCN Coquimbo'
-    });
-  
+const sendDataInit = () => {
+  /* Send Data to Driver for ws */
+      console.log('Connected to the server')
+      console.log(dataWs?.driver_id);
+      let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
+      hubWebSocket.getState().setConection(ws);
+      setActiveWs(true);
   }
-
-  ,[]);
-
-    useEffect(()=>{
-      if(wsConection && activeWs){
-        //console.log('entramos al ws');
-        wsConection.onopen = () => {
-          //console.log('ID USER '+idUser);
-          // connection opened
-          setIsOpen(true);
-          wsConection.send(`
-            {
-              "request":{
-                  "trip_id":${dataWs?.trip_id},
-                  "user_id":${idUser},
-                  "latitude":${dataWs?.latitude},
-                  "longitude":${dataWs?.longitude},
-                  "contribution":${contribution}
-              }
-            }
-        `);
-        setVisible(false);
-        navigation.replace("Passenger");
-        };
-        wsConection.onmessage = (e) => {
-          // a message was received
-          console.log('Mensaje recibido desde WS: '+e.data);
-          const json = JSON.parse(e.data);
-          const message = json?.response;
-          if(message?.status){
-            setMessagesPassenger(e.data);
-          }else{
-            'Es la data que se envio por WS';
-          }
-          
-        };
-        wsConection.onerror = (e) => {
-          // an error occurred
-          Alert.alert('Error in WS, '+ e.message);
-        };
-        
-        wsConection.onclose = (e) => {
-          // connection closed
-          //console.log(e.code, e.reason);
-          Alert.alert(e.code +' ' +e.reason);
-        }; 
+  const openModal = (t) => {
+    setActiveWs(false);
+    setVisible(true);
+    //console.log('*******************');
+    //console.log(origin);
+    //console.log(t)
+    setDataWs(t);
+    //console.log('*******************');
+  }
+  const backHome = ()=>{
+    navigation.replace("Passenger");
+  }
+  /* get trips passenger */
+useEffect(()=>{
+  fetch(URL_API+PASSENGER_TRIPS)
+  .then((response)=>response.json())
+  .then((json)=>{
+    if(json){
+      let response = json?.map((t)=>{
+        if( t?.driver_id != idUser){
+        return t;
       }
-    },[activeWs]);
+    });
+    let filter = response.filter((v)=>v!=undefined);
+    console.log(filter);
+    if(filter?.length == 0){
+      setTitleChange('Ups.. no hay viajes disponibles');
+    }
+    setTrips(filter)
+    }else{
+      setTitleChange('Ups.. no hay viajes disponibles');
+    }
+  })
+  .catch((error)=>alert(error))
+  .finally( ()=>console.log(''));
+  setDestination({
+    location:{
+        lat: -29.965314,
+        lng: -71.34951
+    },
+    description:'UCN Coquimbo'
+  });
+
+}
+
+,[]);
+
+useEffect(()=>{
+  if(wsConection && activeWs){
+    //console.log('entramos al ws');
+    wsConection.onopen = () => {
+      //console.log('ID USER '+idUser);
+      // connection opened
+      setIsOpen(true);
+      wsConection.send(`
+        {
+          "request":{
+              "trip_id":${dataWs?.trip_id},
+              "user_id":${idUser},
+              "latitude":${dataWs?.latitude},
+              "longitude":${dataWs?.longitude},
+              "contribution":${contribution}
+          }
+        }
+    `);
+    setVisible(false);
+    navigation.replace("Passenger");
+    };
+    wsConection.onmessage = (e) => {
+      // a message was received
+      const json = JSON.parse(e.data);
+      const message = json?.response;
+      if(message?.status){
+        setMessagesPassenger(e.data);
+      }else{
+        console.log('NOTIFICAR '+e.data);
+      }
+      
+    };
+    wsConection.onerror = (e) => {
+      // an error occurred
+      Alert.alert('Error in WS, '+ e.message);
+    };
+    
+    wsConection.onclose = (e) => {
+      // connection closed
+      //console.log(e.code, e.reason);
+      Alert.alert(e.code +' ' +e.reason);
+    }; 
+  }
+},[activeWs]);
 
   return (
       <View style={styles.container}>

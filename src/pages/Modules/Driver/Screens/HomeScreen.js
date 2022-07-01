@@ -65,7 +65,7 @@ useEffect(()=>{
       let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
       hubWebSocket.getState().setConection(ws);
     }else{
-      console.log('Undefined id user');
+      //console.log('Undefined id user');
     }
 },[idUser]);
 
@@ -78,6 +78,7 @@ useEffect(()=>{
       };
       wsConection.onmessage = (e) => {
         // a message was received
+        console.log('VIENE DESDE CONDUCTOR',e.data)
         setMessages(e.data);
         setShowModal(true);
       };
@@ -96,7 +97,7 @@ useEffect(()=>{
 },[wsConection]);
 
 useEffect(()=>{
-    console.log('Mensaje WS: ', messages);
+    //console.log('Mensaje WS: ', messages);
     //hubWebSocket.getState().clearMessages();
 }),[messages];
 
@@ -123,15 +124,15 @@ return (
                       <Modal.Body _scrollview={{scrollEnabled:false}}>
                       <VStack style={styles.widgets} space={2}>
                         <VStack direction="row" space={3}>
-                          <Text>{messages.name}</Text>
+                          <Text>{messages?.name}</Text>
                         </VStack>
                         <VStack direction="row" space={3}>
                           <Text>Ubicación:</Text>
-                          <Text>{messages.location}</Text>
+                          <Text>{messages?.location}</Text>
                         </VStack>
                         <VStack direction="row" space={1} >
                           <Text>Contribución:</Text>
-                          <Text>{messages.contribution}</Text>
+                          <Text>{messages?.contribution}</Text>
                         </VStack>
                       </VStack>
                       <Button flex="1" colorScheme="green" onPress={() => {

@@ -31,9 +31,11 @@ export const ActiveTripScreen= () => {
   }));
   const navigation = useNavigation();
   const toHome = () => {
+    //useUserStore.getState().setHasActiveTrip(false);
     navigation.replace("Driver");
   }
   const endTrip = ()=>{
+    //useUserStore.getState().setHasActiveTrip(false);
     console.log(tripID)
     console.log(URL_API+DRIVER_END_TRIP+tripID )
     fetch(URL_API+DRIVER_END_TRIP+tripID , {

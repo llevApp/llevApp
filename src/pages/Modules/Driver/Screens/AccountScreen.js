@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/core';
 import { auth, useAuth, upload } from '../../../../../firebase';
 import { useUserStore } from '../../../Home/Store/StoreHome';
 import { useTripsStore } from './StoreTrip/StoreTrips';
+import { hubWebSocket } from '../../../../services/common/hubWebSocket';
+import { hubChat } from '../../../../services/common/hubChat';
 import * as ImagePicker from 'expo-image-picker';
 import AvatarUser from '../../../../ui/avatarUser';
 
