@@ -276,10 +276,10 @@ export const TripScreen= () => {
             strokeColor={colorsPolilynes[ Math.floor(Math.random() * 10)]}></MapViewDirections>
         </> 
         )) :   <Modal   isOpen={showModal} onClose={() => setShowModal(false)}  >
-                    <Modal.Content    maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
+                    <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
                       <Modal.Body _scrollview={{scrollEnabled:false}}>
                       <VStack style={styles.titleHeader}>
-                       <Heading style={styles.titleContent} color="primary.500" fontSize="xl">
+                       <Heading style={styles.titleContent} color="#159A9C" fontSize="xl">
                         {titleChange}
                         </Heading>
                         {titleChange == 'Cargando Datos' ? 

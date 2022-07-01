@@ -6,6 +6,7 @@ import WidgetUserInfo from '../HomePassenger/Widgets/WidgetUserInfo';
 import WidgetUserTrips from '../HomePassenger/Widgets/WidgetUserTrips';
 import { Alert, StyleSheet } from 'react-native';
 import {hubWebSocket} from '../../../../services/common/hubWebSocket';
+import WidgetTripStatus from '../TripDriver/WidgetTripStatus/WidgetTripStatus';
 
 const HomeScreen = () => {
 const [nameShow, setNameShow] = useState(null);
@@ -51,8 +52,9 @@ return (
         <View style={styles.mainContainer}>
             <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>
     <Flex >
-        <VStack style={styles.widgets} space={5}>
+        <VStack style={styles.widgets} space={2}>
             <WidgetUserInfo style={styles.userInfo}/>
+            <WidgetTripStatus></WidgetTripStatus>
             <WidgetUserTrips style={styles.tripsInfo}/>
         </VStack>
       

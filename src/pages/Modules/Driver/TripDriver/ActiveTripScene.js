@@ -13,7 +13,8 @@ import {
   Text,
   Button,
   Alert,
-  Modal
+  Modal,
+  Heading
 } from 'native-base';
 import { Center } from "native-base";
 import { useUserStore } from '../../../Home/Store/StoreHome';
@@ -115,10 +116,10 @@ export const ActiveTripScreen= () => {
                 </MapView>
             </Box>
             <HStack w="90%" h="15%" alignItems="center" py="5" >
-                <Button w="100%" h="80%" px="50" size="xl" colorScheme="secondary" alignItems="center" borderRadius={80} 
-                    onPress ={endTrip}
-                >
-                   TERMINAR VIAJE
+                <Button w="70%" h="80%" px="50" size="xl" colorScheme="primary" alignItems="center" borderRadius={80} margin="auto"
+                    onPress ={endTrip}>
+                  <Heading color="#FFFFF9" fontSize={20}>Terminar viaje</Heading>
+                   
                 </Button>
                 <Modal isOpen={openModal} onClose={() => toHome()} >
                     <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>

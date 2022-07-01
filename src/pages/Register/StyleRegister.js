@@ -7,14 +7,26 @@ const styles = StyleSheet.create({
     width: '80%'
   },
   input: {
-    backgroundColor: 'white',
+    color:"white",
     paddingHorizontal: 15,
-    height:55,
-    paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
-    marginBottom: 15,
-    color:'#002333'
+    marginBottom: 5,
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    alignContent: 'center',
+    textAlignVertical: 'center'
+  },
+  select: {
+    paddingHorizontal: 10,
+    color:"white",
+    borderRadius: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    alignContent: 'center',
+    textAlignVertical: 'center'
   },
   buttonContainer: {
     width: '60%',

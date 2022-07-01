@@ -9,6 +9,7 @@ import HomeScreen from './Screens/HomeScreen';
 import TripScreen from './Screens/TripScreen';
 import AccountScreen from './Screens/AccountScreen';
 import SwitchButton from '../../../utils/switchButton';
+import { StatusBar } from 'native-base';
 
 //Screen names
 const homeName = "Conductor";
@@ -35,6 +36,8 @@ function MainContainer() {
     }
 
   return (
+      <>
+      <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
@@ -46,7 +49,8 @@ function MainContainer() {
           },
           tabBarStyle: [
               {
-                "display": "flex"
+                "display": "flex",
+                "height": 90
               },
               null
             ]
@@ -72,7 +76,8 @@ function MainContainer() {
         <Tab.Screen options={HeaderOptionsSwitch} name={homeName} component={HomeScreen} />
         <Tab.Screen name={tripsName} component={TripScreen} />
         <Tab.Screen name={accountName} component={AccountScreen} />
-      </Tab.Navigator>
+      </Tab.Navigator></>
+      
 
   );
 }

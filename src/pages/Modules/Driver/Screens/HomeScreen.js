@@ -10,6 +10,7 @@ import { hubWebSocket } from '../../../../services/common/hubWebSocket';
 import { Alert } from 'react-native-web';
 import {WEB_SOCKET_CHANNEL} from "@env";
 import RefreshControl from '../../../../utils/refreshControl';
+import Loader from 'react-native-modal-loader';
 
 
 const HomeScreen = () => {
@@ -18,6 +19,7 @@ const navigation = useNavigation();
 const [showModal, setShowModal] = useState(false);
 const {idUser, name} = useUserStore();
 const {conection: wsConection, isOpen, setIsOpen,messages,setMessages} = hubWebSocket();
+const [disableTouchView, setDisableTouchView] = useState(true)
 
 const ResponseRequest = () =>{
     wsConection?.send(`
@@ -44,6 +46,11 @@ const ResponseDeclinedRequest = () =>{
 
 useEffect(()=>{
     useTripsStore.getState().setTripsPassenger(idUser);
+    if (idUser) {
+      setDisableTouchView(false)
+    } else {
+      setDisableTouchView(true)
+    }
 },[idUser]);
 
 useEffect(()=>{
@@ -95,7 +102,8 @@ useEffect(()=>{
 
 
 return (
-        <View style={styles.mainContainer}> 
+        <View style={styles.mainContainer} pointerEvents= {disableTouchView ? "none" : "auto"}> 
+          <Loader loading={disableTouchView} color="#159A9C" opacity={"0.5"} size={"large"} title={"Cargando..."}/>
           <RefreshControl>
 
           <NativeBaseProvider bg="#FFF" style={{flex: 1, justifyContent: "space-evenly", alignItems: "center", }}>
