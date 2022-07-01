@@ -25,7 +25,7 @@ function SwitchButton({ screenName }) {
        replace = "Passenger"
     }
 
-    console.log(replace,value)
+    //console.log(replace,value)
     setTarget(newTarget);
     navigation.replace(replace);
   }

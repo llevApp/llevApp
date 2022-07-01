@@ -24,7 +24,7 @@ create(
             {
                 const json = JSON.parse(value);
                 const message = json.response;
-                console.log('Estamos desde el HUB : '+message);
+                //console.log('Estamos desde el HUB : '+message);
                 let msg = {
                         status:message?.status,
                         trip_id:message?.trip_id,

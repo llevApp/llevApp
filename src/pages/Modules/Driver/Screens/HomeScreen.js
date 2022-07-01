@@ -78,7 +78,7 @@ useEffect(()=>{
       };
       wsConection.onmessage = (e) => {
         // a message was received
-        console.log('VIENE DESDE CONDUCTOR',e.data)
+        //console.log('VIENE DESDE CONDUCTOR',e.data)
         setMessages(e.data);
         setShowModal(true);
       };
