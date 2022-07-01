@@ -36,27 +36,26 @@ export const ActiveTripScreen= () => {
   }
   const endTrip = ()=>{
     //useUserStore.getState().setHasActiveTrip(false);
-    console.log(tripID)
-    console.log(URL_API+DRIVER_END_TRIP+tripID )
+    //console.log(tripID)
+    //console.log(URL_API+DRIVER_END_TRIP+tripID )
     fetch(URL_API+DRIVER_END_TRIP+tripID , {
         method: 'PUT',
         })
     .then((response)=>response.json())
-    .catch((error)=>alert(error))
+    //.catch((error)=>alert(error))
     setOpenModal(true)
   };
 
   useEffect(()=>{
-    console.log("TripActive: ",URL_API+TRIPS_DRIVER+idUser)
-    fetch(URL_API+TRIPS_DRIVER+idUser , {
+    if(idUser){
+      fetch(URL_API+TRIPS_DRIVER+idUser , {
         method: 'GET',})
     .then((response)=>response.json())
-    .then((json)=> (setTripID(json.trip?.[0]?.trip_id),
-                    console.log(json)),
-                    setHasActiveTrip(true))
-    .catch((error)=>alert(error))
+    .then((json)=> (setTripID(json.trip?.[0]?.trip_id)),setHasActiveTrip(true))
+    .catch((error)=>console.log(error))
+    }
   }
-  ,[hasActiveTrip]);
+  ,[hasActiveTrip,idUser]);
   return (
     <View style={styles.container}>
             <HStack w="90%" py="5" alignItems="center" >

@@ -21,7 +21,7 @@ const RegisterScene = () => {
       .createUserWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log('Registrado con:', user.email);
+        //console.log('Registrado con:', user.email);
       })
       .catch(error => Alert.alert('Error al registrar'))
   }
@@ -71,7 +71,7 @@ const RegisterScene = () => {
         _selectedItem={{
         bg: "teal.600",
         endIcon: <CheckIcon size="5" />
-        }} mt={1} onValueChange={itemValue =>console.log(itemValue)}>
+        }} mt={1} onValueChange={itemValue =>console.log('')}>
           <Select.Item label="UX Research" value="ux" />
           <Select.Item label="Web Development" value="web" />
           <Select.Item label="Cross Platform Development" value="cross" />

@@ -118,8 +118,8 @@ export const TripScreen= () => {
   }));
 const sendDataInit = () => {
   /* Send Data to Driver for ws */
-      console.log('Connected to the server')
-      console.log(dataWs?.driver_id);
+      //console.log('Connected to the server')
+     // console.log(dataWs?.driver_id);
       let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
       hubWebSocket.getState().setConection(ws);
       setActiveWs(true);
@@ -148,7 +148,6 @@ useEffect(()=>{
       }
     });
     let filter = response.filter((v)=>v!=undefined);
-    console.log(filter);
     if(filter?.length == 0){
       setTitleChange('Ups.. no hay viajes disponibles');
     }
@@ -199,7 +198,7 @@ useEffect(()=>{
       if(message?.status){
         setMessagesPassenger(e.data);
       }else{
-        console.log('NOTIFICAR '+e.data);
+        //console.log('NOTIFICAR '+e.data);
       }
       
     };
