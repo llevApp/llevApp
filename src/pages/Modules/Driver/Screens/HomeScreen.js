@@ -65,7 +65,7 @@ useEffect(()=>{
       let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
       hubWebSocket.getState().setConection(ws);
     }else{
-      console.log('Undefined id user');
+      //console.log('Undefined id user');
     }
 },[idUser]);
 
