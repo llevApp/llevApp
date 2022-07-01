@@ -11,25 +11,33 @@ const WidgetUserInfo = () => {
     const defaultUserImg = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";    
     const navigation = useNavigation();
     const {name, idUser, careerName, avatarUrl, loadingChangeAvatar, hasActiveTrip, setHasActiveTrip} = useUserStore();
-  
+  const [textButton,setTextButton]=useState(null);
 
     useEffect(()=>{
-        console.log('Comprobar si tiene viajes activos',useUserStore.getState().hasActiveTrip);
+        //console.log('Comprobar si tiene viajes activos',useUserStore.getState().hasActiveTrip);
         if(idUser){
-        console.log("endpoint: ",URL_API+TRIPS_DRIVER+idUser)
+        //console.log("endpoint: ",URL_API+TRIPS_DRIVER+idUser)
         fetch(URL_API+TRIPS_DRIVER+idUser , {
             method: 'GET',})
         .then((response)=>response.json())
-        .then((json)=> (setHasActiveTrip(json?.has_data),
-        useStoreTripDriver.getState().setOrigin({location:{'lat':json?.trip[0]?.latitude,'lng':json?.trip[0]?.longitude},'description':json?.trip[0]?.address}),
+        .then((json)=> {
+        useStoreTripDriver.getState().setOrigin({location:{'lat':json?.trip[0]?.latitude,'lng':json?.trip[0]?.longitude},'description':json?.trip[0]?.address});
         useStoreTripDriver.getState().setDestination({
             location:{
                 lat: -29.965314,
                 lng: -71.34951
             },
             description:'UCN Coquimbo'
-          })
-        ))
+          });
+          if(json?.has_data){
+            setHasActiveTrip(true);
+            setTextButton("Ver viaje");
+          }else{
+            setHasActiveTrip(false);
+            setTextButton("Comenzar viaje");
+          }
+        }
+        )
         .catch((error)=>alert(error))
       } 
     },[useUserStore.getState().idUser,useUserStore.getState().hasActiveTrip]);
@@ -51,7 +59,7 @@ const WidgetUserInfo = () => {
                                 <VStack style={styles.info.content} space={1} >
                                     <Heading style={styles.text.career}>{careerName}</Heading>
                                     <Heading style={styles.text.name}>{name}</Heading>
-                                    <Button rounded="full" onPress={hasActiveTrip? goToActiveTripScreen : goToTripScreen} style={styles.button}>{hasActiveTrip? "Ver viaje" : "Comenzar viaje"}</Button>
+                                    <Button rounded="full" onPress={textButton == 'Ver viaje' ? goToActiveTripScreen : goToTripScreen} style={styles.button}>{textButton}</Button>
                                 </VStack>
                             </Box>
                             {/* <Box size={"150px"}>
