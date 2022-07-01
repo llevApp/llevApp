@@ -32,7 +32,7 @@ function SwitchButton({ screenName }) {
   return (
     <HStack space={1} alignItems='center'>
         <FontAwesome5 name="car" size={24} color="black" />
-        <Switch value={value} offTrackColor="orange.100" onTrackColor="orange.200" onThumbColor="orange.500" offThumbColor="orange.50"
+        <Switch value={value} offTrackColor="#159A9C" onTrackColor="#159A9C" 
         onValueChange={value => onChangeMethod(value)}/>
         <MaterialIcons name="emoji-people" size={24} color="black" />
     </HStack>

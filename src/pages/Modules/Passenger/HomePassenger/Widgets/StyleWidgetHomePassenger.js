@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
         alignContent:'space-between',
         alignItems:'stretch',
         minHeight:'50%',
+        maxHeight:'100%',
         minWidth:'100%',
         
         rounded:'xl',

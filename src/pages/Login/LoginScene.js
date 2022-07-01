@@ -4,7 +4,7 @@ import {Alert,Image,KeyboardAvoidingView, Text, TextInput, TouchableOpacity, Vie
 import { auth } from '../../../firebase.js'
 import styles from './StyleLogin'
 import logoLogin from '../../../img/logoLogin.png'
-import { Radio, NativeBaseProvider } from "native-base";
+import { Radio, NativeBaseProvider, StatusBar } from "native-base";
 import useLoginStore from './Store/storeLogin';
 import { useUserStore } from '../Home/Store/StoreHome'
 import {hubWebSocket} from '../../services/common/hubWebSocket'
@@ -59,6 +59,7 @@ const LoginScreen = () => {
 
   return (
     <NativeBaseProvider>
+      <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding": "height"}

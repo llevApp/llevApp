@@ -55,20 +55,14 @@ const WidgetUserInfo = () => {
                     <Box style={styles.mainBox}>
                     <Center>
                         <HStack style={styles.info}>
-                            <Box width={"65%"}> 
+                            <Box flex={5} > 
                                 <VStack style={styles.info.content} space={1} >
                                     <Heading style={styles.text.career}>{careerName}</Heading>
                                     <Heading style={styles.text.name}>{name}</Heading>
                                     <Button rounded="full" onPress={textButton == 'Ver viaje' ? goToActiveTripScreen : goToTripScreen} style={styles.button}>{textButton}</Button>
                                 </VStack>
                             </Box>
-                            {/* <Box size={"150px"}>
-                                 <AvatarUser avatarURL={avatarUrl} size={"100%"}></AvatarUser>
-                            </Box> */}
-                           
-                            <Avatar size={"2xl"} style={styles.image}
-                                source={{uri: loadingChangeAvatar? defaultUserImg : avatarUrl || defaultUserImg}}>
-                            </Avatar>
+                            <AvatarUser avatarURL={avatarUrl} size={'xl'}></AvatarUser>
                         </HStack>
                     </Center>
                 </Box>
@@ -94,7 +88,7 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
     },
     info: {
-        alignItems:'center', 
+        alignItems:'center',
         justifyContent:'space-evenly',
         content: {
             alignItems:'flex-start',

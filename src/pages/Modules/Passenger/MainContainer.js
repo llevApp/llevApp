@@ -10,6 +10,7 @@ import TripScreen from './Screens/TripScreen';
 import AccountScreen from './Screens/AccountScreen';
 import ChatScreen from './Screens/Chat/ChatScreen';
 import SwitchButton from '../../../utils/switchButton';
+import { StatusBar } from 'native-base';
 
 //Screen names
 const homeName = "Pasajero";
@@ -38,9 +39,26 @@ function MainContainer() {
       }
     }
   return (
+      <>
+      <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
+          tabBarActiveTintColor: "#159A9C",
+          tabBarInactiveTintColor: "grey",
+          tabBarLabelStyle: {
+            "paddingBottom": 5,
+            "fontSize": 15,
+
+          },
+          tabBarStyle: [
+              {
+                "display": "flex",
+                "height": 90
+              },
+              null
+            ]
+          ,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             let rn = route.name;
@@ -60,13 +78,7 @@ function MainContainer() {
             // You can return any component that you like here!
             return <MaterialCommunityIcons name={iconName} size={size} color={color}/>;
           },
-        })}
-        tabBarOptions={{
-          activeTintColor: '#159A9C',
-          inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 5, fontSize: 15 },
-          style: { padding: 10, height: 40}
-        }}>
+        })}>
 
         <Tab.Screen options={HeaderOptionsSwitch} name={homeName} component={HomeScreen} />
         <Tab.Screen name={tripsName} component={TripScreen} />
@@ -74,6 +86,8 @@ function MainContainer() {
         <Tab.Screen name={accountName} component={AccountScreen} />
       </Tab.Navigator>
 
+      </>
+      
   );
 }
 

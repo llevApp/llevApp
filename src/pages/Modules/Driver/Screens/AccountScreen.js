@@ -8,7 +8,6 @@ import { useTripsStore } from './StoreTrip/StoreTrips';
 import { hubWebSocket } from '../../../../services/common/hubWebSocket';
 import { hubChat } from '../../../../services/common/hubChat';
 import * as ImagePicker from 'expo-image-picker';
-import {ref, uploadBytes} from 'firebase/storage';
 import AvatarUser from '../../../../ui/avatarUser';
 
 const AccountScreen = () => {
@@ -17,8 +16,6 @@ const AccountScreen = () => {
     const [loading, setLoading] = useState(false);
     const [editing, setEditing] = useState(false);
     const currentUser = useAuth();
-
-
 
     useEffect(() => {
       if (currentUser?.photoURL) {
@@ -75,7 +72,7 @@ const AccountScreen = () => {
               </>
           ):(
             <Box size={250} alignContent="flex-start" justifyContent={"flex-start"}>
-               <AvatarUser avatarURL={avatarUrl} size={"100%"}/>
+               <AvatarUser avatarURL={avatarUrl} size={"2xl"}/>
             </Box>
           )}
           <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>

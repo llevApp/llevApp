@@ -244,7 +244,7 @@ useEffect(()=>{
                 title={"Esto es un marker de los viajes"}
                 >
                   <AvatarUserMap avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`}
- size={8} isUseMap></AvatarUserMap>
+ size={12} isUseMap></AvatarUserMap>
                   <MapView.Callout tooltip>
                                       <TouchableHighlight onPress= {()=>openModal(t)}>
                                           <View style={styles.colorBoxText}>
@@ -279,10 +279,10 @@ useEffect(()=>{
             strokeColor={colorsPolilynes[ Math.floor(Math.random() * 10)]}></MapViewDirections>
         </> 
         )) :   <Modal   isOpen={showModal} onClose={() => setShowModal(false)}  >
-                    <Modal.Content    maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
+                    <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
                       <Modal.Body _scrollview={{scrollEnabled:false}}>
                       <VStack style={styles.titleHeader}>
-                       <Heading style={styles.titleContent} color="primary.500" fontSize="xl">
+                       <Heading style={styles.titleContent} color="#159A9C" fontSize="xl">
                         {titleChange}
                         </Heading>
                         {titleChange == 'Cargando Datos' ? 
