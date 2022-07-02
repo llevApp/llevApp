@@ -7,7 +7,9 @@ import logoLogin from '../../../img/logo.png'
 import background from '../../../img/background.png'
 import { Box, Button, CheckIcon, FormControl, Icon, Input, Select, Stack, VStack, WarningOutlineIcon } from 'native-base'
 import { FontAwesome5,MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'; 
-import {URL_API,CREATE_NEW_USER} from "@env";
+import {URL_API,CREATE_NEW_USER,GET_DATA_USER} from "@env";
+import useLoginStore from '../Login/Store/storeLogin.js'
+import { useUserStore } from '../Home/Store/StoreHome.js'
 
 
 
@@ -24,6 +26,7 @@ const RegisterScene = () => {
   const [passwordError, setPasswordError] = useState('')
   const navigation = useNavigation()
   const [show, setShow] = React.useState(false);
+  const { userData, setAvatarUrl } = useUserStore(); 
 
   const handleSignUp = () => {
     handleSignUp2()
@@ -32,6 +35,7 @@ const RegisterScene = () => {
       .then(userCredentials => {
         const user = userCredentials.user;
         setUuid(user.uid)
+        useLoginStore.getState().setEmail(email);
         console.log('Registrado con:', user.email);
       })
       .catch(error => Alert.alert(`Error al registrar: ${error})`))
@@ -77,6 +81,8 @@ const RegisterScene = () => {
         if (response.ok) {    
           let responseText = JSON.stringify(response.text());
           console.log(responseText);
+          const url =  URL_API+GET_DATA_USER;
+          userData(url,email);
           navigation.replace("Login")
         }
         else {
