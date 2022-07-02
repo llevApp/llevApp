@@ -56,7 +56,7 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="Splash" component={SplashScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
-        <Stack.Screen  options={{ headerShown: false }} name="Register" component={RegisterScene} />
+        <Stack.Screen  options= {HeaderOptionsBack("Login")} name="Register" component={RegisterScene} />
         <Stack.Screen  options={{ headerShown: false }} name="Driver" component={Driver} />
         <Stack.Screen  options= {HeaderOptionsBack("Driver")} name="TripScreen" component={TripScreen} />
         <Stack.Screen  options= {HeaderOptionsBack("TripScreen")} name="SceneTripInit" component={SceneTripInit} />

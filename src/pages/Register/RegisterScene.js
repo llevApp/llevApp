@@ -5,30 +5,95 @@ import { auth } from '../../../firebase.js'
 import styles from './StyleRegister'
 import logoLogin from '../../../img/logo.png'
 import background from '../../../img/background.png'
-import { Box, CheckIcon, Icon, Input, Select } from 'native-base'
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { Box, Button, CheckIcon, FormControl, Icon, Input, Select, Stack, VStack, WarningOutlineIcon } from 'native-base'
+import { FontAwesome5,MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'; 
+import {URL_API,CREATE_NEW_USER} from "@env";
+
+
 
 const RegisterScene = () => {
   //Guardamos los correos
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [name, setName] = useState(null)
+  const [career, setCareer] = useState(null)
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [uuid, setUuid] = useState(null)
+  const [nameError, setNameError] = useState('')
+  const [careerError, setCareerError] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const navigation = useNavigation()
   const [show, setShow] = React.useState(false);
 
-
   const handleSignUp = () => {
+    handleSignUp2()
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
+        setUuid(user.uid)
         console.log('Registrado con:', user.email);
       })
-      .catch(error => Alert.alert('Error al registrar'))
+      .catch(error => Alert.alert(`Error al registrar: ${error})`))
   }
+
+  const handleSignUp2 = () => {
+    console.log(name, career, email, password)
+  }
+
+  const validate = () => {
+    if (name=='' || name==null) {
+      return false
+    } else if (career==0 || career==null) {
+      return false
+    } else if (email=='' || email==null) {
+      return false
+    }
+    return true
+  }
+
+  const submitValidation = validate()
+
+  useEffect(() => {
+    console.log(uuid)
+    console.log(URL_API+CREATE_NEW_USER)
+    if(uuid){
+      //SEND POST
+      const today = new Date();
+      fetch(URL_API+CREATE_NEW_USER, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name:name,
+        career_id:career,
+        email:email,
+        uuid_fb:uuid,
+      })
+    }).then(
+      function(response) {
+        if (response.ok) {    
+          let responseText = JSON.stringify(response.text());
+          console.log(responseText);
+          navigation.replace("Login")
+        }
+        else {
+          Alert.alert(`Unable to retrieve events.\nInvalid response received - (${response.status}).`);
+        }
+      }
+    )
+    .catch(
+      function(error) {
+        Alert.alert(`Unable to retrieve events.\n${error.message}`);
+      }
+    );
+  }}, [uuid])
 
  
 /* Use Effect unsuscribe */
-  useEffect(() => {
+  /* useEffect(async() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         navigation.replace("Login")
@@ -36,7 +101,7 @@ const RegisterScene = () => {
     })
 
     return unsubscribe
-  }, [])
+  }, []) */
 
   return (
     <Animated.View style={styles.containerViewHome} >
@@ -52,32 +117,75 @@ const RegisterScene = () => {
         <Text>{'\n'}</Text>
         <Text>{'\n'}</Text>
         <View style={styles.inputContainer}>
-        <Input w={{
-      base: "75%",
-      md: "25%"
-    }} InputLeftElement={<Icon as={<FontAwesome5 name="user-circle" size={24} color="black"/>
-  } size={5} ml="2" color="muted.400" />} placeholder="Name" />
-      <Input w={{
-      base: "75%",
-      md: "25%"
-    }} type={show ? "text" : "password"} InputRightElement={<Icon as={<FontAwesome5 name={show? "eye-slash":"eye"}/>} size={4} mr="2" color="muted.400" onPress={() => setShow(!show)} />} placeholder="Password" />
-        <TextInput
+          <VStack space={5} alignItems="center">
+            <Box>
+               <Input 
+              isRequired
+              color="white" w={{
+              base: "90%",
+              md: "25%"
+              }} 
+              backgroundColor="#00000020"
+              InputLeftElement={<Icon as={<FontAwesome5 name="user-circle" size={24}/>} 
+              size={5} ml="2" color="muted.200" />} placeholder="Nombre" 
+              onChangeText={text => setName(text)}/>
+            </Box>
+            {/*<Box>
+             <FormControl >
+          <Stack minW={"90%"}>
+             <FormControl.Label>Password</FormControl.Label>
+            <Input type="password" defaultValue="12345" placeholder="password" />
+            <FormControl.HelperText>
+              Must be atleast 6 characters.
+            </FormControl.HelperText>
+            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+              Atleast 6 characters are required.
+            </FormControl.ErrorMessage>
+          </Stack>
+        </FormControl> 
+            </Box>*/}
+            <Box>
+              <Select
+                InputRightElement={<Icon as={<MaterialIcons name="expand-more" size={24} />} 
+                size={7} mr="1" color="muted.200" />}
+                backgroundColor="#00000020"
+                selectedValue={null} minW={"90%"} accessibilityLabel="Choose Service" placeholder="Carrera" color={'white'}
+                _selectedItem={{
+                bg: "teal.600",
+                endIcon: <CheckIcon size="5" />
+                }} onValueChange={itemValue =>setCareer(itemValue)}>
+                  <Select.Item label="Ingeniería civil en Computación e informática" value={1} />
+                  <Select.Item label="Ingeniería civil Indusctrial" value={1} />
+                  <Select.Item label="Derecho" value={1} />
+                  <Select.Item label="Biología marina" value={1} />
+              </Select>
+            </Box>
+            <Box>
+               <Input color="white" w={{
+              base: "90%",
+              md: "25%"
+              }}
+              backgroundColor="#00000020"
+              type={"email"}
+              placeholder="Correo" 
+              onChangeText={text => setEmail(text)}/>
+            </Box>
+            <Box>
+              <Input color="white" 
+              backgroundColor="#00000020"
+                w={{ base: "90%", md: "25%"}} type={show ? "text" : "password"} InputRightElement={<Icon as={<MaterialCommunityIcons size={24} name={show? "eye-off":"eye"}/>} 
+                size={5} mr="2" color="muted.200" onPress={() => setShow(!show)}/>} placeholder="Contraseña"
+                onChangeText={text => setPassword(text)}/>
+            </Box>
+            
+           
+          </VStack>
+        {/* <TextInput
           placeholder="Nombre"
           value={email}
           onChangeText={text => setEmail(text)}
           style={styles.input}
         />
-        <Select selectedValue={null} minWidth="200" accessibilityLabel="Choose Service" placeholder="Carrera"  style={styles.select}
-        _selectedItem={{
-        bg: "teal.600",
-        endIcon: <CheckIcon size="5" />
-        }} mt={1} onValueChange={itemValue =>console.log(itemValue)}>
-          <Select.Item label="UX Research" value="ux" />
-          <Select.Item label="Web Development" value="web" />
-          <Select.Item label="Cross Platform Development" value="cross" />
-          <Select.Item label="UI Designing" value="ui" />
-          <Select.Item label="Backend Development" value="backend" />
-        </Select>
         <TextInput
           placeholder="Email"
           value={email}
@@ -90,16 +198,17 @@ const RegisterScene = () => {
           onChangeText={text => setPassword(text)}
           style={styles.input}
           secureTextEntry
-        />
+        /> */}
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
+        <Button
           onPress={handleSignUp}
+          isDisabled={!submitValidation}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Registrar</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
         </Animated.View>
         </ImageBackground>
@@ -108,33 +217,3 @@ const RegisterScene = () => {
 }
 
 export default RegisterScene
-
-/* 
-   <Text>{'\n'}</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={handleSignUp}
-          style={[styles.button, styles.buttonOutline]}
-        >
-          <Text style={styles.buttonOutlineText}>Registrar</Text>
-        </TouchableOpacity>
-      </View>
-
-
-*/
