@@ -124,7 +124,7 @@ return (
               </VStack>
           </Flex>
 
-     {     showModal && messages?.name && messages?.contribution ? 
+          {     showModal && messages?.name && messages?.contribution ? 
         (  <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
                     <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
                       <Modal.CloseButton />

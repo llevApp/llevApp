@@ -21,8 +21,8 @@ const initTrip = ()=>{
 };
 const pushToChat = ()=>{
     console.log('Send to Chat');
-    //navigation.replace("ChatScreen");
-    navigation.navigate('MessagesScreen');
+    navigation.replace("ChatScreen");
+    //navigation.navigate('MessagesScreen');
 }
 useEffect(()=>{
     if(name){
