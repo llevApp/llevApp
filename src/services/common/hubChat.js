@@ -12,14 +12,17 @@ create(
             setMessages: (value) => {
                     const json = JSON.parse(value);
                     const message = json.request;
-                    let msg = {
-                            tripId:message.trip_id,
-                            userId:message.user_id,
-                            latitude: message.latitude,
-                            longitude: message.longitude,
-                            contribution: message.contribution,
-                        }
-                        set({ messages: msg })},
+               if(message){
+                let msg = {
+                    tripId:message.trip_id,
+                    userId:message.user_id,
+                    latitude: message.latitude,
+                    longitude: message.longitude,
+                    contribution: message.contribution,
+                }
+                set({ messages: msg })}
+               }
+            ,
             setMessagesPassenger: (value) => 
             {
                 const json = JSON.parse(value);
