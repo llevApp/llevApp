@@ -43,8 +43,29 @@ const MessagesScreen = (data) => {
       const response = JSON.parse(e.data);
       console.log("onmessage=>", JSON.stringify(response));
       if( response.senderId != useUserStore.getState().idUser){
+        /* 
+              {
+        _id: '123123123123',
+        senderId: senderId,// receiver id
+        text: 'Hola mi nombre es '+ data?.route?.params?.userName + ' y soy tu conductor.',
+        createdAt: new Date(),
+        user: {
+          _id: receiverId,  // sender id
+          name: name,
+          avatar: image_path,
+        },
+      },
+        
+        */
+        /* 
+              "_id":messages[0]._id,
+      "senderId": senderId,
+      "receiverId": receiverId,
+      "message": messages[0].text,
+      "action": "message" */
         var sentMessages = {
-          _id: response.receiverId,
+          _id: response._id,
+          senderId: response.receiverId,
           text: response.message,
           createdAt: new Date(),
           user: {
@@ -65,9 +86,17 @@ const MessagesScreen = (data) => {
   }, [])
 
   useEffect(() => {
+
+    /* 
+          "senderId": senderId,
+      "receiverId": receiverId,
+      "message": messages[0].text,
+      "action": "message"
+      */
     setMessages([
       {
-        _id: senderId,// receiver id
+        _id: '123123123123',
+        senderId: senderId,// receiver id
         text: 'Hola mi nombre es '+ data?.route?.params?.userName + ' y soy tu conductor.',
         createdAt: new Date(),
         user: {
@@ -81,8 +110,12 @@ const MessagesScreen = (data) => {
 
 
 
-  const onSend = useCallback((messages = []) => {
+  const onSend = useCallback((messages) => {
+    console.log(messages);
+    /*  "_id": "6501e3d1-2ebc-4f43-b6e8-11fc87e7c703",
+     */
     let obj = {
+      "_id":messages[0]._id,
       "senderId": senderId,
       "receiverId": receiverId,
       "message": messages[0].text,
@@ -133,7 +166,7 @@ const MessagesScreen = (data) => {
       messages={messages}
       onSend={messages => onSend(messages)}
       user={{
-        _id:  useUserStore.getState().idUser,
+        _id:  senderId,
       }}
       scrollToBottom
       scrollToBottomComponent={scrollToBottomComponent}

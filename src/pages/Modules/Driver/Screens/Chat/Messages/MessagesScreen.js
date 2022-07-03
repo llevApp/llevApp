@@ -25,6 +25,7 @@ const MessagesScreenDriver = (data) => {
   }
   const navigation = useNavigation()
   const [messages, setMessages] = useState([]);
+  const[messageClean,setMessageClean]=useState(null)
   const [senderId, setSenderId] =useState(useUserStore.getState().idUser)
   const [receiverId, setReceiverId] =  useState(data?.route?.params?.useId)
   const [name, setName] = useState(data?.route?.params?.userName)
@@ -44,7 +45,8 @@ const MessagesScreenDriver = (data) => {
       console.log("onmessage=>", JSON.stringify(response));
       if( response.senderId != useUserStore.getState().idUser){
         var sentMessages = {
-          _id: response.receiverId,
+          _id: response._id,
+          senderId: response.receiverId,
           text: response.message,
           createdAt: new Date(),
           user: {
@@ -67,7 +69,8 @@ const MessagesScreenDriver = (data) => {
   useEffect(() => {
     setMessages([
       {
-        _id: senderId,// receiver id
+        _id: '223123123123',
+        senderId: senderId,// receiver id
         text: 'Hola mi nombre es '+ data?.route?.params?.userName + ' y soy tu pasajero.',
         createdAt: new Date(),
         user: {
@@ -83,6 +86,7 @@ const MessagesScreenDriver = (data) => {
 
   const onSend = useCallback((messages = []) => {
     let obj = {
+      "_id":messages[0]._id,
       "senderId": senderId,
       "receiverId": receiverId,
       "message": messages[0].text,
@@ -90,6 +94,7 @@ const MessagesScreenDriver = (data) => {
     }
     ws.current.send(JSON.stringify(obj))
     console.log('Enviado desde Vista Driver',obj);
+
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
   }, [])
   return (
