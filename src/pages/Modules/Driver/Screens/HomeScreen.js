@@ -22,6 +22,8 @@ const {conection: wsConection, isOpen, setIsOpen,messages,setMessages} = hubWebS
 const [disableTouchView, setDisableTouchView] = useState(true)
 
 const ResponseRequest = () =>{
+  hubWebSocket.getState().clearMessagesPassenger();
+  hubWebSocket.getState().clearMessages();
     wsConection?.send(`
       {
         "response":{
@@ -33,6 +35,8 @@ const ResponseRequest = () =>{
   `);
 };
 const ResponseDeclinedRequest = () =>{
+  hubWebSocket.getState().clearMessagesPassenger();
+  hubWebSocket.getState().clearMessages();
   wsConection?.send(`
     {
       "response":{
@@ -77,11 +81,13 @@ useEffect(()=>{
         setIsOpen(true);
       };
       wsConection.onmessage = (e) => {
+        //console.log(e);
         // a message was received      
         const json = JSON.parse(e.data);
         if(json?.request){
-          console.log('HomeScreebn Conductor',e.data);
-          setMessages(e.data);
+        //if(e?.data){
+          console.log('Home Screen Conductor',e?.data);
+          setMessages(e?.data);
           setShowModal(true);
         }
       };
@@ -118,9 +124,8 @@ return (
               </VStack>
           </Flex>
 
-
-
-          <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
+     {     showModal && messages?.name && messages?.contribution ? 
+        (  <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
                     <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
                       <Modal.CloseButton />
                       <Modal.Header>Solicitud de viaje</Modal.Header>
@@ -152,7 +157,7 @@ return (
                       </Button>
                       </Modal.Body>
                     </Modal.Content>
-          </Modal>
+          </Modal>) : null}
           </NativeBaseProvider>
           </RefreshControl>
         </View>
