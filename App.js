@@ -16,9 +16,11 @@ import {SceneTripInit as SceneTripInitPassenger} from './src/pages/Modules/Passe
 /* PASSENGER */
 import Passenger from './src/pages/Modules/Passenger/Passenger';
 import ChatScreen from './src/pages/Modules/Passenger/Screens/Chat/ChatScreen';
+import ChatScreenDriver from './src/pages/Modules/Driver/Screens/Chat/ChatScreen';
 /* ------- */
 /* Messages */
 import MessagesScreen from './src/pages/Modules/Passenger/Screens/Chat/Messages/MessagesScreen';
+import  MessagesScreenDriver from './src/pages/Modules/Driver/Screens/Chat/Messages/MessagesScreen';
 import { Button, KeyboardAvoidingView, NativeBaseProvider} from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Platform } from 'react-native-web';
@@ -68,8 +70,11 @@ export default function App() {
         <Stack.Screen  options={{ headerShown: false }} name="ChatScreen" component={ChatScreen} />
         <Stack.Screen  options= {HeaderOptionsBack("Passenger")} name="TripScreenPassenger" component={TripsScreenPassenger} />
         <Stack.Screen  options={{ headerShown: false }} name="SceneTripInitPassenger" component={SceneTripInitPassenger} />
-        {/* Messages */}
+        {/* Messages from passenget*/}
         <Stack.Screen  options={{ headerShown: false }} name="MessagesScreen" component={MessagesScreen} />
+        {/* Messages from DRIVER*/}
+        <Stack.Screen  options={{ headerShown: false }} name="MessagesScreenDriver" component={MessagesScreenDriver} />
+        <Stack.Screen  options={{ headerShown: false }} name="ChatScreenDriver" component={ChatScreenDriver} />
       </Stack.Navigator>
       </KeyboardAvoidingView>
       </SafeAreaProvider>

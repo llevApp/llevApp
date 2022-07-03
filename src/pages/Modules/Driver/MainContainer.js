@@ -8,12 +8,14 @@ import { useUserStore } from '../../Home/Store/StoreHome'
 import HomeScreen from './Screens/HomeScreen';
 import TripScreen from './Screens/TripScreen';
 import AccountScreen from './Screens/AccountScreen';
+import ChatScreenDriver from './Screens/Chat/ChatScreen';
 import SwitchButton from '../../../utils/switchButton';
 import { StatusBar } from 'native-base';
 
 //Screen names
 const homeName = "Conductor";
 const tripsName = "Historial de viajes";
+const chatName = "Chat";
 const accountName = "Cuenta";
 
 const Tab = createBottomTabNavigator();
@@ -65,6 +67,10 @@ function MainContainer() {
             } else if (rn === tripsName) {
               iconName = focused ? 'map-marker' : 'map-marker-outline';
 
+            }else if (rn === chatName) {
+              iconName = focused ? 'chat' : 'chat';
+
+            
             } else if (rn === accountName) {
               iconName = focused ? 'account' : 'account-outline';
             }
@@ -75,6 +81,7 @@ function MainContainer() {
         >
         <Tab.Screen options={HeaderOptionsSwitch} name={homeName} component={HomeScreen} />
         <Tab.Screen name={tripsName} component={TripScreen} />
+        <Tab.Screen name={chatName} component={ChatScreenDriver} />
         <Tab.Screen name={accountName} component={AccountScreen} />
       </Tab.Navigator></>
       

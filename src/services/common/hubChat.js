@@ -5,13 +5,15 @@ create(
         return {
             connection:undefined,
             isOpen: false,
-            messages: null,
+            messagesDriver: null,
             messagesPassenger:null,
-            setConnection: (value) => set({ conection: value }),
+            setConnection: (value) => set({ connection: value }),
             setIsOpen: (value) => set({ isOpen: value }),
-            setMessages: (value) => {
-                    const json = JSON.parse(value);
-                    const message = json.request;
+            setMessageFromDriver: (value) => {
+             console.log('Mensaje para el Driver',value);
+/*               const json = JSON.parse(value);
+              
+              const message = json.request;
                if(message){
                 let msg = {
                     tripId:message.trip_id,
@@ -20,27 +22,28 @@ create(
                     longitude: message.longitude,
                     contribution: message.contribution,
                 }
-                set({ messages: msg })}
-               }
+                set({ messages: msg })} */
+            }
             ,
-            setMessagesPassenger: (value) => 
+            setMessageFromPassenger: (value) => 
             {
-                const json = JSON.parse(value);
+                console.log('Mensaje para el Pasajero : ',value);
+/*                 const json = JSON.parse(value);
                 const message = json.response;
-                console.log('Estamos desde el chat : '+message);
                 let msg = {
                         status:message?.status,
                         trip_id:message?.trip_id,
                         user_id:message?.user_id
                     }
-                set({ messagesPassenger: msg })
+                set({ messagesPassenger: msg }) */
             },
-            clearMessages: () => set({ messages: undefined }),
+            clearMessagesDriver: () => set({ messagesDriver: undefined }),
+            clearMessagesPassenger: () => set({ messagesPassenger: undefined }),
             clearAll: () => {
                 set({
                     conection: undefined,
                     isOpen: false,
-                    messages: null,
+                    messagesDriver: null,
                     messagesPassenger:null,
                 });
             },

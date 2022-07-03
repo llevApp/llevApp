@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/core';
 import { auth } from '../../../../../../firebase';
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useTripsStore } from '../StoreTrip/StoreTrips';
-import {URL_API,PASSENGER_TRIPS} from "@env";
+import {URL_API,TRIPS_DRIVER,GET_TRIP_INFO} from "@env";
 import {Container,
     Card,
     UserInfo,
@@ -18,7 +18,7 @@ import {Container,
     TextSection} from './ChatScreen.style';
 import { View, Text, Button, FlatList,StyleSheet } from 'react-native';
 
-const ChatScreen = () => {
+const ChatScreenDriver = () => {
     const navigation = useNavigation();
     const handleSignOut = () => {
       auth
@@ -35,10 +35,11 @@ const [Messages,setMessages]=useState(null);
     const {name,idUser} = useUserStore();
 
 useEffect(()=>{
-    fetch(URL_API+PASSENGER_TRIPS)
+  if(idUser){
+    fetch(URL_API+TRIPS_DRIVER+idUser)
     .then((response)=>response.json())
     .then((json)=>{
-      if(json){
+ /*      if(json){
         let response = json?.map((t)=>{
           if( t?.driver_id != idUser){
           return t;
@@ -46,28 +47,73 @@ useEffect(()=>{
       });
       let filter = response.filter((v)=>v!=undefined);
         if(filter?.length == 0){
-        console.log('NO drivers!!');
+        console.log('No tenemos pasajeros');
         }else{
-          let newMessages = filter?.map((t)=>{
-            return{
-              id: t?.driver_id,
-              userName: t?.name,
+        const me = [
+            {
+              id: '3',
+              userName: 'Dionisio Olivares',
+              userImg: require('./assets/users/user-1.jpg'),
+              messageTime: '4 mins ago',
+              messageText:
+                'Hola, en un segundo te respondo',
+            },
+            {
+              id: '5',
+              userName: 'Nicolas Garcia',
+              userImg: require('./assets/users/user-1.jpg'),
+              messageTime: '',
+              messageText:
+                'Hola, en un segundo te respondo',
+            },
+            {
+              id: '24',
+              userName: 'Eliot',
               userImg: require('./assets/users/user-1.jpg'),
               messageTime: '',
               messageText:
                 'Hola, en un segundo te respondo',
             }
-          })
-          setMessages(newMessages);
+        ];
+        setMessages(me);
         }
       }else{
-        console.log('NO drivers!!');
-      }
-    })
+        console.log('No tenemos pasajeros');
+      } */
+      const me = [
+        {
+          id: '3',
+          userName: 'Dionisio Olivares',
+          userImg: require('./assets/users/user-1.jpg'),
+          messageTime: '4 mins ago',
+          messageText:
+            'Hola, en un segundo te respondo',
+        },
+        {
+          id: '5',
+          userName: 'Nicolas Garcia',
+          userImg: require('./assets/users/user-1.jpg'),
+          messageTime: '',
+          messageText:
+            'Hola, en un segundo te respondo',
+        },
+        {
+          id: '24',
+          userName: 'Eliot',
+          userImg: require('./assets/users/user-1.jpg'),
+          messageTime: '',
+          messageText:
+            'Hola, en un segundo te respondo',
+        }
+    ];
+    setMessages(me);
+    
+    }
+    
+    )
     .catch((error)=>alert(error))
     .finally( ()=>console.log(''));
-
-
+  }
 },[idUser]);
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -77,7 +123,7 @@ useEffect(()=>{
           renderItem={({item}) => (
             <Card onPress={() =>{ 
             console.log(item?.userName,item?.userImg,item?.messageText);
-            navigation.navigate('MessagesScreen', {
+            navigation.navigate('MessagesScreenDriver', {
               useId:item?.id,userName: item?.userName,userImg: item?.userImg,messageText:item.messageText
             })
             }
@@ -101,7 +147,7 @@ useEffect(()=>{
     );
 }
 
-export default ChatScreen;
+export default ChatScreenDriver;
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
