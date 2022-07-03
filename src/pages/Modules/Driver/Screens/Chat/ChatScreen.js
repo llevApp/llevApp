@@ -6,6 +6,7 @@ import { auth } from '../../../../../../firebase';
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useTripsStore } from '../StoreTrip/StoreTrips';
 import {URL_API,TRIPS_DRIVER,GET_TRIP_INFO} from "@env";
+import {hubChat} from '../../../../../services/common/hubChat';
 import {Container,
     Card,
     UserInfo,
@@ -121,11 +122,14 @@ useEffect(()=>{
           data={Messages}
           keyExtractor={item=>item.id}
           renderItem={({item}) => (
-            <Card onPress={() =>{ 
-            console.log(item?.userName,item?.userImg,item?.messageText);
+            <Card onPress={() =>{
+
+              console.log(item?.userName,item?.userImg,item?.messageText);
             navigation.navigate('MessagesScreenDriver', {
               useId:item?.id,userName: item?.userName,userImg: item?.userImg,messageText:item.messageText
             })
+            
+           
             }
             }>
               <UserInfo>
