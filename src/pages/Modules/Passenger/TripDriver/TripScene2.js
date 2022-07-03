@@ -11,6 +11,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API,WEB_SOCKET_CHANNEL} from "@env";
 import {hubWebSocket} from '../../../../services/common/hubWebSocket';
 import { useUserStore } from '../../../Home/Store/StoreHome';
+import Geocoder from 'react-native-geocoding';
 import {
   Button,
   Actionsheet,
@@ -172,33 +173,57 @@ useEffect(()=>{
 
 useEffect(()=>{
   if(wsConection && activeWs){
+    Geocoder.init(GOOGLE_MAPS_APIKEY, {language : "es"});
     //console.log('entramos al ws');
     wsConection.onopen = () => {
-      //console.log('ID USER '+idUser);
-      // connection opened
-      setIsOpen(true);
+    setIsOpen(true);
+    Geocoder.from(dataWs?.latitude, dataWs?.longitude)
+		.then(json => {
+        		var addressComponent = json.results[0].address_components[0];
+			      console.log(addressComponent);
+            wsConection.send(`
+            {
+              "request":{
+                  "trip_id":${dataWs?.trip_id},
+                  "user_id":${idUser},
+                  "latitude":${dataWs?.latitude},
+                  "longitude":${dataWs?.longitude},
+                  "contribution":${contribution},
+                  "location:":${addressComponent?.long_name}
+              }
+            }
+           `);
+           setVisible(false);
+           navigation.replace("Passenger");
+		})
+		.catch(error => {
+      console.warn(error)
       wsConection.send(`
-        {
-          "request":{
-              "trip_id":${dataWs?.trip_id},
-              "user_id":${idUser},
-              "latitude":${dataWs?.latitude},
-              "longitude":${dataWs?.longitude},
-              "contribution":${contribution}
-          }
+      {
+        "request":{
+            "trip_id":${dataWs?.trip_id},
+            "user_id":${idUser},
+            "latitude":${dataWs?.latitude},
+            "longitude":${dataWs?.longitude},
+            "contribution":${contribution},
+            "location:":"Coquimbo"
         }
-    `);
-    setVisible(false);
-    navigation.replace("Passenger");
+      }
+      `);
+      setVisible(false);
+      navigation.replace("Passenger");
+    });
     };
+
+
+
     wsConection.onmessage = (e) => {
       // a message was received
       const json = JSON.parse(e.data);
       const message = json?.response;
       if(message?.status){
+        //console.log('VIENE DESDE PASAJERO',message);
         setMessagesPassenger(e.data);
-      }else{
-        //console.log('NOTIFICAR '+e.data);
       }
       
     };
