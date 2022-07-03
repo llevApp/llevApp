@@ -80,6 +80,7 @@ useEffect(()=>{
         // a message was received      
         const json = JSON.parse(e.data);
         if(json?.request){
+          console.log('HomeScreebn Conductor',e.data);
           setMessages(e.data);
           setShowModal(true);
         }

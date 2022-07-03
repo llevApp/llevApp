@@ -28,6 +28,7 @@ export const hubWebSocket =
                 ,
                 setMessagesPassenger: (value) => 
                 {
+                    console.log('Estamos desde el hub web socket');
                     const json = JSON.parse(value);
                     const message = json?.response;
                     if(message!=undefined || message){
@@ -41,6 +42,7 @@ export const hubWebSocket =
                 }
                 ,
                 clearMessages: () => set({ messages: undefined }),
+                clearMessagesPassenger: () => set({ messagesPassenger: undefined }),
                 clearAll: () => {
                     set({
                         conection: undefined,

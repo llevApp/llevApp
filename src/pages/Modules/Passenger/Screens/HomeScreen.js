@@ -15,7 +15,7 @@ const navigation = useNavigation();
 const { name,idUser } = useUserStore();
 const [showModal, setShowModal] = useState(false);
 /* Get ws connection */
-const {conection: wsConection, isOpen, setIsOpen,setMessagesPassenger,messagesPassenger,setMessages} = hubWebSocket();
+const {conection: wsConection, isOpen, setIsOpen,messagesPassenger,setMessages} = hubWebSocket();
 const initTrip = ()=>{
     navigation.replace("TripScreenPassenger");
 };
@@ -41,12 +41,12 @@ useEffect(()=>{
     }
 },[idUser]);
 useEffect(()=>{
-  if(messagesPassenger!=null){
+  if(hubWebSocket.getState().messagesPassenger!=null){
     console.log('Mensaje desde el store:');
-    console.log(messagesPassenger);
+    console.log(hubWebSocket.getState().messagesPassenger);
     setShowModal(true);
   }
-},[messagesPassenger])
+},[hubWebSocket.getState().messagesPassenger])
 
 return (
         <View style={styles.mainContainer}>
@@ -74,15 +74,17 @@ return (
                       <Button flex="1" colorScheme="green" onPress={() => {
                         pushToChat();
                         setShowModal(false);
-                        setMessages(null);
-                        setMessagesPassenger(null);
+                        hubWebSocket.getState().clearMessagesPassenger();
+                        //setMessages(null);
+                        //setMessagesPassenger(null);
                       }}>
                         Chatear
                       </Button>
                       <Button variant="ghost" colorScheme="blue" onPress={() => {
                         setShowModal(false);
-                        setMessages(null);
-                        setMessagesPassenger(null);
+                        //setMessages(null);
+                        //setMessagesPassenger(null);
+                        hubWebSocket.getState().clearMessagesPassenger();
                       }}>
                         Todo ok
                       </Button>
@@ -99,7 +101,7 @@ return (
                       <Button flex="1" colorScheme="green" onPress={() => {
                         setShowModal(false);
                         setMessages(null);
-                        setMessagesPassenger(null);
+                        hubWebSocket.getState().clearMessagesPassenger();
                       }}>
                         Cerrar
                       </Button>
