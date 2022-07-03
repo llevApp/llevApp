@@ -77,10 +77,12 @@ useEffect(()=>{
         setIsOpen(true);
       };
       wsConection.onmessage = (e) => {
-        // a message was received
-        console.log('VIENE DESDE CONDUCTOR',e.data)
-        setMessages(e.data);
-        setShowModal(true);
+        // a message was received      
+        const json = JSON.parse(e.data);
+        if(json?.request){
+          setMessages(e.data);
+          setShowModal(true);
+        }
       };
       wsConection.onerror = (e) => {
         // an error occurred
