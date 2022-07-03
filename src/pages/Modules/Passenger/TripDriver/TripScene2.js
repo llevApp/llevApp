@@ -189,10 +189,11 @@ useEffect(()=>{
                   "latitude":${dataWs?.latitude},
                   "longitude":${dataWs?.longitude},
                   "contribution":${contribution},
-                  "location:":${addressComponent?.long_name}
+                  "location:":"Coquimbo"
               }
             }
            `);
+           /* "location:":${addressComponent?.long_name} */
            setVisible(false);
            navigation.replace("Passenger");
 		})
@@ -222,7 +223,7 @@ useEffect(()=>{
       const json = JSON.parse(e.data);
       const message = json?.response;
       if(message?.status){
-        //console.log('VIENE DESDE PASAJERO',message);
+        console.log('VIENE DESDE PASAJERO',message);
         setMessagesPassenger(e.data);
       }
       
