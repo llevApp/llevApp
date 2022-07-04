@@ -8,7 +8,7 @@ import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useTripsStore } from './../../Screens/StoreTrip/StoreTrips';
 
 const WidgetUserTrips = () => {
-    const {tripsArray} = useTripsStore()
+    const {tripsArray} = useTripsStore();
     const { idUser, name } = useUserStore();
   
     useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
@@ -17,31 +17,6 @@ const WidgetUserTrips = () => {
     },[]); 
 
 
-
-    const TripCard = (trip) => {
-        return (
-            <>
-                <Box width={"100%"} style={styles.tripCard.container}> 
-                    <Box style={styles.tripCard.header} >
-                        <Heading fontSize={15}>Aporte </Heading>
-                        <Text style={{fontSize:15, fontStyle:"italic"}}>{trip.recentText}</Text>
-                    </Box>
-                    <Box /* bg="#DEEFE7" */ rounded="md" width="100%" alignContent="space-between">
-                        <VStack padding={3} alignContent="space-between" alignItems={"stretch"} justifyContent="space-between">
-                            <Box>
-                                <Heading style={styles.tripCard.text.title}>Pasajero</Heading>
-                                <Heading style={styles.tripCard.text.value}>{trip.driver}</Heading>
-                            </Box>
-                            <Box>
-                                <Heading style={styles.tripCard.text.title}>Ubicación</Heading>
-                                <Heading style={styles.tripCard.text.value}>{trip.address?.toUpperCase()}</Heading>
-                            </Box>
-                        </VStack>
-                    </Box>
-                </Box>
-            </>
-        );
-    };
 
     return(<>
         
@@ -53,31 +28,31 @@ const WidgetUserTrips = () => {
                     </Text>  
                 </Heading>
                 {tripsArray? 
-                    (<><FlatList data={tripsArray.slice(0,3)} 
+                    (<><FlatList data={tripsArray.slice(tripsArray.length-3,tripsArray.length).reverse()} 
                         renderItem={({item}) => 
                             <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="90" pr="5" py="6" borderRadius="20" w = "100%">
                                 <HStack space={3} justifyContent="center" >
                                     <VStack>
                                         <HStack space={2} justifyContent="left" pl="4"  >
-                                            <Text fontSize="xs"  _dark={{color: "warmGray.50"}} color="#159A9C" bold   py="0"  >
+                                            <Text fontSize="2xs"  _dark={{color: "warmGray.50"}} color="#159A9C" py="0"  >
                                                 {item.address?.toUpperCase()}
                                             </Text>
                                         </HStack>
                                         <HStack space={3} justifyContent="left" pl="4" >
-                                            <Text  fontSize="lg" color="coolGray.600" _dark={{color: "warmGray.200"}} >
+                                            <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}}>
                                                 $
                                             </Text>
-                                            <Text  fontSize="lg" color="#6AC18A" _dark={{color: "warmGray.200"}} >
+                                            <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}} fontStyle="bold" >
                                                 {item.recentText}
                                             </Text>
-                                            <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="1" py="1.5" >
+                                            <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}}  py="5"   >
                                                 USD
                                             </Text>
                                         </HStack>
                                     </VStack>
                                     <Spacer />
                                     <HStack space={1}  >
-                                        <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800"  pl="0" pr="70" py="1" >
+                                        <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800" marginTop={-1} pl="0" pr="70" py="1" >
                                             {item.timeStamp}
                                         </Text>
                                     </HStack>
