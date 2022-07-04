@@ -45,6 +45,34 @@ export const useTripsStore =
                     }
                     
                 }, 
+                setTripsWhitTips: (userID) => {
+                    if (userID) {
+                        set({ loading: true, error: null });
+                    let url = URL_API+TRIPS_DRIVER+userID;
+                    //console.log('Esta es la URL: '+url);
+                    fetch(url)
+                        .then((response)=>response?.json())
+                        .then((json)=>set({tripsArray: json?.trip?.map((trip,index)=>{
+                            let date = moment(trip.init_trip_time).format('MMM DD, YYYY')
+                            if (trip.total_tips>0){
+                                return{
+                                    id:index,
+                                    driver:trip.name,
+                                    start:[trip.latitude,trip.longitude],
+                                    timeStamp:date,
+                                    recentText:trip.total_tips,
+                                    address:trip.address,
+                                    passengerNumber:trip.total_passenger,
+                                    avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
+                                }
+                            }
+                        })
+                        }))
+                        .catch((error)=>alert("Lo sentimos, ha ocurrido un error.",error))
+                        .finally( ()=>set({ loading:false  }));
+                    }
+                    
+                },
                 clearAll: () => {
                 set({
                     tripsArray:undefined,

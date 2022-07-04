@@ -11,18 +11,17 @@ export const hubWebSocket =
                 setIsOpen: (value) => set({ isOpen: value }),
                 setMessages: (value) => 
                     {
-                        const json = JSON.parse(value);
-                        const message = json?.request;
-                       if( message != undefined ){
+                       if( value != undefined ){
                             let msg = {
-                                tripId:message?.trip_id,
-                                userId:message?.user_id,
-                                latitude: message?.latitude,
-                                longitude: message?.longitude,
-                                contribution: message?.contribution,
-                                name:message?.user_name
+                                tripId:value?.trip_id,
+                                userId:value?.user_id,
+                                latitude: value?.latitude,
+                                longitude: value?.longitude,
+                                location:value?.location,
+                                contribution: value?.contribution,
+                                name:value?.user_name
                             }
-                        set({ messages: msg })
+                            set({ messages: msg })
                         }
                     }
                 ,
