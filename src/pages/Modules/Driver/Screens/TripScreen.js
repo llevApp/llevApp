@@ -8,12 +8,10 @@ import {URL_API,TRIPS_DRIVER} from '@env';
 export default function TripScreen({ navigation }) {
 
     const {tripsArray} = useTripsStore()
-    //console.log("array ", tripsArray);
     const { idUser, name } = useUserStore();
   
     useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
     useEffect(()=>{
-      
         useTripsStore.getState().setTripsPassenger(idUser)
     },[]); 
     useEffect(()=>{
@@ -37,9 +35,6 @@ export default function TripScreen({ navigation }) {
             <Box >
                 <Heading fontSize="xl" pb="0" borderColor="black"  color="white"  pl="10" pr="50" py="0" marginTop="10" marginBottom="0" >
                         <VStack space={4} justifyContent="left" pl="4" py="4" >
-                            <Text color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2"  fontStyle="italic">
-                                Viajes como conductor realizados por: 
-                            </Text>
                             <HStack pl="4" space={2}>
                                 <MaterialCommunityIcons name="card-account-details" size={24} color="black" />
                                 <Text color="#0C5C5D" _dark={{color: "warmGray.200"}}  fontSize="xl" fontWeight="bold" pl="4">
