@@ -5,12 +5,12 @@ import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
 import {URL_API,TRIPS_DRIVER_ACTIVE} from "@env";
 import {useStoreTripDriver} from '../../TripDriver/Store/StoreScene';
+import AvatarUser from '../../../../../ui/avatarUser';
 const WidgetUserInfo = () => {
     const backgrounImg = "https://media.istockphoto.com/photos/colorful-background-picture-id170094323?k=20&m=170094323&s=612x612&w=0&h=YEerCprCW1d4n0-XjGVxzQhAqfKmwluXLVJHhMpWAgs=";  
     const navigation = useNavigation();
     const {name, idUser, careerName, avatarUrl, hasActiveTrip, setHasActiveTrip} = useUserStore();
     const [textButton,setTextButton]=useState(null);
-
     useEffect(()=>{
         if(idUser){
         fetch(URL_API+TRIPS_DRIVER_ACTIVE+idUser , {
@@ -57,10 +57,10 @@ const WidgetUserInfo = () => {
                                     <Button rounded="full" onPress={textButton == 'Ver viaje' ? goToActiveTripScreen : goToTripScreen} style={styles.button}>{textButton}</Button>
                                 </VStack>
                             </Box>
-                            <Avatar size={'2xl'} source={{uri: avatarUrl}}>
-                                    {textButton == 'Ver viaje' ?
-                                        (  
-                                           /*  <PresenceTransition 
+                            <AvatarUser avatarURL={avatarUrl} size={'xl'}></AvatarUser>
+                            
+                                         <PresenceTransition 
+                                                visible={textButton == 'Ver viaje'}
                                                 initial={{
                                                     opacity: 0,
                                                     scale: 0
@@ -70,14 +70,9 @@ const WidgetUserInfo = () => {
                                                     transition: {
                                                         duration: 250
                                                     }
-                                            }}>  */
-                                                <Avatar.Badge borderColor="papayawhip" bg="teal.500" marginRight={3} />
-                                            /* </PresenceTransition> */
-                                        )
-                                        :
-                                        ( null)
-                                    }
-                            </Avatar>
+                                            }}>
+                                                <Avatar.Badge size={5} borderColor="papayawhip" bg="teal.500" marginRight={3} top={10}/>
+                            </PresenceTransition>
                         </HStack>
                     </Center>
                 </Box>
