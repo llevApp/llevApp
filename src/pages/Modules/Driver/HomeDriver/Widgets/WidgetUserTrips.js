@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, ScrollView, Image } from "native-base";
 import { StyleSheet } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
@@ -7,6 +8,8 @@ const WidgetUserTrips = () => {
 
     const {name} = useUserStore();
     const {tripsArray} = useTripsStore()
+    const navigation = useNavigation();
+
 
     const TripCard = (trip) => {
         return (

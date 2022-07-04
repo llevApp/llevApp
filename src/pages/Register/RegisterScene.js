@@ -5,7 +5,7 @@ import { auth } from '../../../firebase.js'
 import styles from './StyleRegister'
 import logoLogin from '../../../img/logo.png'
 import background from '../../../img/background.png'
-import { Box, Button, CheckIcon, FormControl, Icon, Input, Select, Stack, VStack, WarningOutlineIcon } from 'native-base'
+import { Box, Button, CheckIcon, FormControl, Icon, Input, KeyboardAvoidingView, Select, Stack, VStack, WarningOutlineIcon } from 'native-base'
 import { FontAwesome5,MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'; 
 import {URL_API,CREATE_NEW_USER,GET_DATA_USER} from "@env";
 import useLoginStore from '../Login/Store/storeLogin.js'
@@ -117,11 +117,18 @@ const RegisterScene = () => {
         alignItems:'center',
         marginTop:250
     }}>
+      <KeyboardAvoidingView
+      style={{flex: 1,
+      alignItems: 'center' }}
+      behavior={Platform.OS === "ios" ? "position": "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+      >
         <View style={styles.imageContainer}>
         <Image  style={styles.logoContainer} source={logoLogin} />
         </View>
         <Text>{'\n'}</Text>
         <Text>{'\n'}</Text>
+        
         <View style={styles.inputContainer}>
           <VStack space={5} alignItems="center">
             <Box>
@@ -206,7 +213,7 @@ const RegisterScene = () => {
           secureTextEntry
         /> */}
       </View>
-
+     
       <View style={styles.buttonContainer}>
         <Button
           onPress={handleSignUp}
@@ -214,10 +221,12 @@ const RegisterScene = () => {
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Registrar</Text>
-        </Button>
+        </Button> 
       </View>
-        </Animated.View>
-        </ImageBackground>
+      </KeyboardAvoidingView>
+      </Animated.View>
+      </ImageBackground> 
+         
     </Animated.View>
   )
 }
