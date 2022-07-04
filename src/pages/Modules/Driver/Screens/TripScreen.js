@@ -34,7 +34,7 @@ export default function TripScreen({ navigation }) {
         <View style={{ flex: 1 }} background="#F5F8FF">
             <Box >
                 <Heading fontSize="xl" pb="0" borderColor="black"  color="white"  pl="10" pr="50" py="0" marginTop="10" marginBottom="0" >
-                        <VStack space={4} justifyContent="left" pl="4" py="4" >
+                        <VStack space={4}pl="4" py="4" >
                             <HStack pl="4" space={2}>
                                 <MaterialCommunityIcons name="card-account-details" size={24} color="black" />
                                 <Text color="#0C5C5D" _dark={{color: "warmGray.200"}}  fontSize="xl" fontWeight="bold" pl="4">
@@ -47,38 +47,29 @@ export default function TripScreen({ navigation }) {
                     (<>
                         <FlatList data={tripsArray} 
                         renderItem={({item}) => 
-                            <Box borderWidth="0.4" margin="0.2" borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="110" pr="5" py="6" borderRadius="34">
-                                <HStack space={3} justifyContent="center" >
-                                    <VStack>
-                                        <HStack space={2} justifyContent="left" pl="4"  >
-                                            <MaterialCommunityIcons name="map-marker" size={24} color="red"  />
-                                            <Text fontSize="sm"  _dark={{color: "warmGray.50"}} color="#159A9C" bold  pl="3" py="0"  >
+                            <Box borderWidth="0.5" borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white" borderRadius="20" w={"100%"} h={120}>
+                                <HStack space={3} justifyContent="flex-end" margin={5} >
+                                    <VStack marginLeft ="2" >
+                                        <HStack space={2} >
+                                            <Text fontSize="md"  _dark={{color: "warmGray.50"}} color="#159A9C" maxWidth={250} >
                                                 {item.address?.toUpperCase()}
                                             </Text>
                                         </HStack>
-                                        <HStack space={3} justifyContent="left" pl="4" >
-                                            <MaterialCommunityIcons name="hand-coin" size={24} color="black" />
-                                            <Text  fontSize="lg" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2" fontStyle="italic">
+                                        <HStack space={3} marginLeft ="4" marginTop={2}>
+                                            <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}}>
                                                 $
                                             </Text>
-                                            <Text  fontSize="lg" color="#6AC18A" _dark={{color: "warmGray.200"}} fontStyle="italic">
+                                            <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}} >
                                                 {item.recentText}
                                             </Text>
-                                            <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="1" py="1.5" fontStyle="italic">
+                                            <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}} marginTop="6" >
                                                 USD
-                                            </Text>
-                                        </HStack>
-                                        <HStack space={3} justifyContent="left" pl="4" >
-                                            <MaterialCommunityIcons name="seat-passenger" size={24} color="black" />
-                                            <Text  fontSize="sm" color="coolGray.600" _dark={{color: "warmGray.200"}}pl="2" fontStyle="italic">
-                                                Numero de pasajeros: {item.passengerNumber}
                                             </Text>
                                         </HStack>
                                     </VStack>
                                     <Spacer />
-                                    <HStack space={1} justifyContent="center" >
-                                        <MaterialCommunityIcons name="clock-time-eight-outline" size={24} color="black"/>
-                                        <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800"  pl="0" pr="70" py="1" >
+                                    <HStack space={1}  >
+                                        <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800" >
                                             {item.timeStamp}
                                         </Text>
                                     </HStack>

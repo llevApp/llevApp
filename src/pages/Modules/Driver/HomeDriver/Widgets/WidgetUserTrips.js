@@ -28,7 +28,7 @@ const WidgetUserTrips = () => {
                     </Text>  
                 </Heading>
                 {tripsArray? 
-                    (<><FlatList data={tripsArray.slice(tripsArray.length-3,tripsArray.length).reverse()} 
+                    (<><FlatList data={tripsArray.slice(tripsArray.length-4,tripsArray.length).reverse()} 
                         renderItem={({item}) => 
                             <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="90" pr="5" py="6" borderRadius="20" w = "100%" marginTop={1} h = "105">
                                 <HStack space={3} justifyContent="center" >
@@ -42,7 +42,7 @@ const WidgetUserTrips = () => {
                                             <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}}>
                                                 $
                                             </Text>
-                                            <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}} fontStyle="bold" >
+                                            <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}} >
                                                 {item.recentText}
                                             </Text>
                                             <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}}  py="5"   >
@@ -91,13 +91,13 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         alignContent:'space-between',
         alignItems:'stretch',
-
         minWidth:'100%',
-        
+        minHeight:'68%',
         rounded:'xl',
         borderColor:'#B4BEC9', 
         borderRadius:10,
         borderWidth:1,
+        shadow:5,
 
         /* shadowOffset:10,
         shadowRadius:5,

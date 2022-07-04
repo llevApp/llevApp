@@ -45,9 +45,9 @@ const WidgetUserInfo = () => {
     }
     return(
         <>
-            <Container style={styles.mainContainer}  >
-                <ImageBackground source={{uri: backgrounImg}} borderRadius={10} >
-                    <Box style={styles.mainBox}>
+            <Container style={styles.mainContainer} >
+                <ImageBackground source={{uri: backgrounImg}} borderRadius={5}  >
+                    <Box  style={styles.mainBox} >
                     <Center>
                         <HStack style={styles.info}>
                             <Box flex={5} > 
@@ -88,7 +88,7 @@ const WidgetUserInfo = () => {
 const styles = StyleSheet.create({
     mainContainer: {
         minWidth:'100%', 
-        
+        shadow:'20', 
         //height:'container',
         //flex: 0,
       /* backgroundColor: '#fff',
