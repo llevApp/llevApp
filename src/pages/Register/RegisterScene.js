@@ -7,7 +7,7 @@ import logoLogin from '../../../img/logo.png'
 import background from '../../../img/background.png'
 import { Box, Button, CheckIcon, FormControl, Icon, Input, KeyboardAvoidingView, Select, Stack, VStack, WarningOutlineIcon } from 'native-base'
 import { FontAwesome5,MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'; 
-import {URL_API,CREATE_NEW_USER,GET_DATA_USER} from "@env";
+import {URL_API,CREATE_NEW_USER,GET_DATA_USER,GET_CAREERS} from "@env";
 import useLoginStore from '../Login/Store/storeLogin.js'
 import { useUserStore } from '../Home/Store/StoreHome.js'
 
@@ -15,6 +15,9 @@ import { useUserStore } from '../Home/Store/StoreHome.js'
 
 const RegisterScene = () => {
   //Guardamos los correos
+  const [careerList,setCareerList] = useState([{
+    name: "ICCI", id:1
+  }])
   const [name, setName] = useState(null)
   const [career, setCareer] = useState(null)
   const [email, setEmail] = useState(null)
@@ -27,6 +30,16 @@ const RegisterScene = () => {
   const navigation = useNavigation()
   const [show, setShow] = React.useState(false);
   const { userData, setAvatarUrl } = useUserStore(); 
+
+  useEffect(()=>{
+    console.log("Carreras: ",URL_API+GET_CAREERS)
+    fetch(URL_API+GET_CAREERS , {
+        method: 'GET',})
+    .then((response)=>response.json())
+    .then((json)=> (setCareerList(json)))
+    .catch((error)=>console.log(error))
+    }
+  ,[]);
 
   const handleSignUp = () => {
     handleSignUp2()
@@ -59,8 +72,7 @@ const RegisterScene = () => {
   const submitValidation = validate()
 
   useEffect(() => {
-    console.log(uuid)
-    console.log(URL_API+CREATE_NEW_USER)
+    console.log("uuid: ",uuid)
     if(uuid){
       //SEND POST
       const today = new Date();
@@ -167,10 +179,18 @@ const RegisterScene = () => {
                 bg: "teal.600",
                 endIcon: <CheckIcon size="5" />
                 }} onValueChange={itemValue =>setCareer(itemValue)}>
-                  <Select.Item label="Ingeniería civil en Computación e informática" value={1} />
+                  {careerList.map(option => {
+                    return (
+                      <Select.Item
+                        label={option.name}
+                        value={option.id}
+                      />
+                    );
+                  })}
+                  {/* <Select.Item label="Ingeniería civil en Computación e informática" value={1} />
                   <Select.Item label="Ingeniería civil Indusctrial" value={1} />
                   <Select.Item label="Derecho" value={1} />
-                  <Select.Item label="Biología marina" value={1} />
+                  <Select.Item label="Biología marina" value={1} /> */}
               </Select>
             </Box>
             <Box>
