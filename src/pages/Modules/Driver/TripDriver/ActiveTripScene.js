@@ -3,7 +3,7 @@ import {View ,Keyboard, Platform,TouchableHighlight,TextInput } from "react-nati
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import styles from './TripScene.style';
-import {GOOGLE_MAPS_APIKEY,URL_API,TRIPS_DRIVER,DRIVER_END_TRIP} from "@env";
+import {GOOGLE_MAPS_APIKEY,URL_API,TRIPS_DRIVER,DRIVER_END_TRIP,TRIPS_DRIVER_ACTIVE} from "@env";
 import { useNavigation } from '@react-navigation/core';
 import {
   Box,

@@ -87,7 +87,7 @@ useEffect(()=>{
         if(json?.request){
         //if(e?.data){
           console.log('Home Screen Conductor',e?.data);
-          setMessages(e?.data);
+          setMessages(json?.request);
           setShowModal(true);
         }
       };
