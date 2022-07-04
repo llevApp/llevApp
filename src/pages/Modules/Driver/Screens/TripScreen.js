@@ -48,18 +48,18 @@ export default function TripScreen({ navigation }) {
                         <FlatList data={tripsArray} 
                         renderItem={({item}) => 
                             <Box borderWidth="0.5" borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white" borderRadius="20" w={"100%"} h={120}>
-                                <HStack space={3} justifyContent="flex-end" margin={5} >
+                                <HStack space={3} justifyContent="flex-end" margin={5} marginTop={2} marginBottom={2}>
                                     <VStack marginLeft ="2" >
                                         <HStack space={2} >
-                                            <Text fontSize="md"  _dark={{color: "warmGray.50"}} color="#159A9C" maxWidth={250} >
+                                            <Text fontSize="sm"  _dark={{color: "warmGray.50"}} color="#159A9C" maxWidth={220} minWidth={220} >
                                                 {item.address?.toUpperCase()}
                                             </Text>
                                         </HStack>
-                                        <HStack space={3} marginLeft ="4" marginTop={2}>
-                                            <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}}>
+                                        <HStack space={3} marginTop={2} marginBottom={2}>
+                                            <Text  fontSize="5xl" color="#6AC18A" _dark={{color: "warmGray.200"}}>
                                                 $
                                             </Text>
-                                            <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}} >
+                                            <Text  fontSize="5xl" color="#6AC18A" _dark={{color: "warmGray.200"}} >
                                                 {item.recentText}
                                             </Text>
                                             <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}} marginTop="6" >
