@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Center, Container, Heading, Avatar, Box, HStack, VStack, Button,PresenceTransition } from "native-base";
+import { Text, View, Center, Container, Heading, Avatar, Box, HStack, VStack, Button,PresenceTransition ,Badge} from "native-base";
 import { ImageBackground, StyleSheet } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
@@ -58,22 +58,25 @@ const WidgetUserInfo = () => {
                                 </VStack>
                             </Box>
                             <AvatarUser avatarURL={avatarUrl} size={'xl'}></AvatarUser>
-                            
-                                         <PresenceTransition 
-                                                visible={textButton == 'Ver viaje'}
-                                                initial={{
-                                                    opacity: 0,
-                                                    scale: 0
-                                                }} animate={{
-                                                    opacity: 1,
-                                                    scale: 1,
-                                                    transition: {
-                                                        duration: 250
-                                                    }
-                                            }}>
-                                                <Avatar.Badge size={5} borderColor="papayawhip" bg="teal.500" marginRight={3} top={10}/>
-                            </PresenceTransition>
+                                <PresenceTransition 
+                                       visible={textButton == 'Ver viaje'}
+                                       initial={{
+                                           opacity: 0,
+                                           scale: 0
+                                       }} animate={{
+                                           opacity: 1,
+                                           scale: 1,
+                                           transition: {
+                                               duration: 250
+                                           }
+                                   }}>
+                                    <Avatar.Badge size={8} borderColor="papayawhip" bg="teal.500" marginRight={3} top={10}/>
+                                </PresenceTransition>
                         </HStack>
+                        {textButton == 'Ver viaje' ?
+                        <Badge colorScheme="info" alignSelf="flex-end" variant="subtle"px={7}>
+                            viaje activo
+                        </Badge>:null}
                     </Center>
                 </Box>
                 </ImageBackground>

@@ -22,15 +22,15 @@ const WidgetUserTrips = () => {
         
         <Container style={styles.mainContainer} maxHeight ="55%">
             <Box style={styles.mainBox} >
-                <Heading fontSize="sm" pb="0" borderColor="black"  color="white"  pl="4"  py="0" >  
-                    <Text color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2"  fontStyle="italic">
-                        Ultimos viajes realizados: 
+                <Heading fontSize="sm" pb="0" borderColor="black"  color="white"    py="0" >  
+                    <Text color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2" >
+                        Ultimos viajes realizados
                     </Text>  
                 </Heading>
                 {tripsArray? 
                     (<><FlatList data={tripsArray.slice(tripsArray.length-3,tripsArray.length).reverse()} 
                         renderItem={({item}) => 
-                            <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="90" pr="5" py="6" borderRadius="20" w = "100%">
+                            <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="90" pr="5" py="6" borderRadius="20" w = "100%" marginTop={1} h = "105">
                                 <HStack space={3} justifyContent="center" >
                                     <VStack>
                                         <HStack space={2} justifyContent="left" pl="4"  >
