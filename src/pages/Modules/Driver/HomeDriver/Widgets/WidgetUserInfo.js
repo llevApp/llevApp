@@ -7,7 +7,7 @@ import {URL_API,TRIPS_DRIVER_ACTIVE} from "@env";
 import {useStoreTripDriver} from '../../TripDriver/Store/StoreScene';
 import AvatarUser from '../../../../../ui/avatarUser';
 const WidgetUserInfo = () => {
-    const backgrounImg = "https://media.istockphoto.com/photos/colorful-background-picture-id170094323?k=20&m=170094323&s=612x612&w=0&h=YEerCprCW1d4n0-XjGVxzQhAqfKmwluXLVJHhMpWAgs=";  
+    const backgrounImg = "https://digitalsynopsis.com/wp-content/uploads/2017/07/beautiful-color-ui-gradients-backgrounds-socialive.png";  
     const navigation = useNavigation();
     const {name, idUser, careerName, avatarUrl, hasActiveTrip, setHasActiveTrip} = useUserStore();
     const [textButton,setTextButton]=useState(null);
@@ -45,8 +45,8 @@ const WidgetUserInfo = () => {
     }
     return(
         <>
-            <Container style={styles.mainContainer} >
-                <ImageBackground source={{uri: backgrounImg}} >
+            <Container style={styles.mainContainer}  >
+                <ImageBackground source={{uri: backgrounImg}} borderRadius={10} >
                     <Box style={styles.mainBox}>
                     <Center>
                         <HStack style={styles.info}>
@@ -88,6 +88,7 @@ const WidgetUserInfo = () => {
 const styles = StyleSheet.create({
     mainContainer: {
         minWidth:'100%', 
+        
         //height:'container',
         //flex: 0,
       /* backgroundColor: '#fff',
