@@ -3,7 +3,7 @@ import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, N
 import { ImageBackground, StyleSheet } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
-import {URL_API,TRIPS_DRIVER} from "@env";
+import {URL_API,TRIPS_DRIVER,TRIPS_DRIVER_ACTIVE} from "@env";
 import {useStoreTripDriver} from '../../TripDriver/Store/StoreScene';
 import AvatarUser from "../../../../../ui/avatarUser";
 const WidgetUserInfo = () => {
@@ -17,10 +17,13 @@ const WidgetUserInfo = () => {
         //console.log('Comprobar si tiene viajes activos',useUserStore.getState().hasActiveTrip);
         if(idUser){
         //console.log("endpoint: ",URL_API+TRIPS_DRIVER+idUser)
-        fetch(URL_API+TRIPS_DRIVER+idUser , {
+        console.log(idUser);
+        fetch(URL_API+TRIPS_DRIVER_ACTIVE+idUser , {
             method: 'GET',})
         .then((response)=>response.json())
         .then((json)=> {
+       // const response = JSON.stringify(json);
+        console.log(json);
         useStoreTripDriver.getState().setOrigin({location:{'lat':json?.trip[0]?.latitude,'lng':json?.trip[0]?.longitude},'description':json?.trip[0]?.address});
         useStoreTripDriver.getState().setDestination({
             location:{
@@ -38,7 +41,7 @@ const WidgetUserInfo = () => {
           }
         }
         )
-        .catch((error)=>alert(error))
+        .catch((error)=>console.log(error))
       } 
     },[useUserStore.getState().idUser,useUserStore.getState().hasActiveTrip]);
 
