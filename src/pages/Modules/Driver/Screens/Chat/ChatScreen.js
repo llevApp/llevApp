@@ -32,6 +32,7 @@ const ChatScreenDriver = () => {
         .catch(error => alert(error.message))
     };
 const [Messages,setMessages]=useState(null);
+const [idTrip,setIdTrip]=useState(null);
     const userImg = "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
     const {name,idUser} = useUserStore();
 
@@ -40,75 +41,18 @@ useEffect(()=>{
     fetch(URL_API+TRIPS_DRIVER+idUser)
     .then((response)=>response.json())
     .then((json)=>{
- /*      if(json){
-        let response = json?.map((t)=>{
-          if( t?.driver_id != idUser){
-          return t;
-        }
-      });
-      let filter = response.filter((v)=>v!=undefined);
-        if(filter?.length == 0){
-        console.log('No tenemos pasajeros');
+     if(json){ 
+      setIdTrip(null);
+        if(json?.length == 0){
+        console.log('No tenemos viajes activos');
         }else{
-        const me = [
-            {
-              id: '3',
-              userName: 'Dionisio Olivares',
-              userImg: require('./assets/users/user-1.jpg'),
-              messageTime: '4 mins ago',
-              messageText:
-                'Hola, en un segundo te respondo',
-            },
-            {
-              id: '5',
-              userName: 'Nicolas Garcia',
-              userImg: require('./assets/users/user-1.jpg'),
-              messageTime: '',
-              messageText:
-                'Hola, en un segundo te respondo',
-            },
-            {
-              id: '24',
-              userName: 'Eliot',
-              userImg: require('./assets/users/user-1.jpg'),
-              messageTime: '',
-              messageText:
-                'Hola, en un segundo te respondo',
-            }
-        ];
-        setMessages(me);
+          console.log('Tenemos un viaje activo');
+          console.log(json?.trip[0].trip_id);
+          setIdTrip(json?.trip[0].trip_id);
         }
       }else{
         console.log('No tenemos pasajeros');
-      } */
-   const me = [
-        {
-          id: '3',
-          userName: 'Dionisio Olivares',
-          userImg: require('./assets/users/user-1.jpg'),
-          messageTime: '4 mins ago',
-          messageText:
-            'Hola, en un segundo te respondo',
-        },
-        {
-          id: '5',
-          userName: 'Nicolas Garcia',
-          userImg: require('./assets/users/user-1.jpg'),
-          messageTime: '',
-          messageText:
-            'Hola, en un segundo te respondo',
-        },
-        {
-          id: '24',
-          userName: 'Eliot',
-          userImg: require('./assets/users/user-1.jpg'),
-          messageTime: '',
-          messageText:
-            'Hola, en un segundo te respondo',
-        }
-    ];
-    setMessages(me);
-    
+      } 
     }
     
     )
@@ -116,6 +60,39 @@ useEffect(()=>{
     .finally( ()=>console.log(''));
   }
 },[idUser]);
+
+useEffect(()=>{
+
+  if(idTrip){
+    console.log(URL_API+GET_TRIP_INFO+idTrip);
+    fetch(URL_API+GET_TRIP_INFO+idTrip)
+    .then((response)=>response.json())
+    .then((json)=>{
+     if(json){ 
+        if(json?.length == 0){
+          console.log('No tenemos pasajeros');
+        }else{
+          let objectPassenger = json?.map((passenger)=>{
+             return {
+              'id':passenger?.user_id,
+              'userName':passenger?.user_name,
+              'userImg':passenger?.uuid_fb,
+              'messageText':'Hola, escribeme...'
+             }
+          })
+          console.log(objectPassenger);
+        setMessages(objectPassenger);
+        }
+      }else{
+        console.log('No tenemos pasajeros');
+      } 
+    }
+    
+    )
+    .catch((error)=>alert(error))
+    .finally( ()=>console.log(''));
+  }
+},[idTrip]);
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <FlatList 

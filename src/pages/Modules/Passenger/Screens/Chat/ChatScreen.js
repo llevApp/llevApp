@@ -40,6 +40,7 @@ useEffect(()=>{
     .then((response)=>response.json())
     .then((json)=>{
       if(json){
+        console.log(json);
         let response = json?.map((t)=>{
           if( t?.driver_id != idUser){
           return t;
@@ -53,7 +54,7 @@ useEffect(()=>{
             return{
               id: t?.driver_id,
               userName: t?.name,
-              userImg: require('./assets/users/user-1.jpg'),
+              userImg:`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`,
               messageTime: '',
               messageText:
                 'Hola, en un segundo te respondo',

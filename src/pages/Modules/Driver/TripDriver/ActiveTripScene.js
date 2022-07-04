@@ -48,7 +48,7 @@ export const ActiveTripScreen= () => {
 
   useEffect(()=>{
     if(idUser){
-      fetch(URL_API+TRIPS_DRIVER+idUser , {
+      fetch(URL_API+TRIPS_DRIVER_ACTIVE+idUser , {
         method: 'GET',})
     .then((response)=>response.json())
     .then((json)=> (setTripID(json.trip?.[0]?.trip_id)),setHasActiveTrip(true))
