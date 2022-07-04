@@ -1,37 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, Image, AspectRatio } from "native-base";
+import { Text, View, Center, Container, Heading, Avatar, Box, HStack, VStack, Button,PresenceTransition } from "native-base";
 import { ImageBackground, StyleSheet } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
-import {URL_API,TRIPS_DRIVER,TRIPS_DRIVER_ACTIVE} from "@env";
+import {URL_API,TRIPS_DRIVER_ACTIVE} from "@env";
 import {useStoreTripDriver} from '../../TripDriver/Store/StoreScene';
-import AvatarUser from "../../../../../ui/avatarUser";
 const WidgetUserInfo = () => {
-    const backgrounImg = "https://media.istockphoto.com/photos/colorful-background-picture-id170094323?k=20&m=170094323&s=612x612&w=0&h=YEerCprCW1d4n0-XjGVxzQhAqfKmwluXLVJHhMpWAgs=";
-    const defaultUserImg = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";    
+    const backgrounImg = "https://media.istockphoto.com/photos/colorful-background-picture-id170094323?k=20&m=170094323&s=612x612&w=0&h=YEerCprCW1d4n0-XjGVxzQhAqfKmwluXLVJHhMpWAgs=";  
     const navigation = useNavigation();
-    const {name, idUser, careerName, avatarUrl, loadingChangeAvatar, hasActiveTrip, setHasActiveTrip} = useUserStore();
-  const [textButton,setTextButton]=useState(null);
+    const {name, idUser, careerName, avatarUrl, hasActiveTrip, setHasActiveTrip} = useUserStore();
+    const [textButton,setTextButton]=useState(null);
 
     useEffect(()=>{
-        //console.log('Comprobar si tiene viajes activos',useUserStore.getState().hasActiveTrip);
         if(idUser){
-        //console.log("endpoint: ",URL_API+TRIPS_DRIVER+idUser)
-        console.log(idUser);
         fetch(URL_API+TRIPS_DRIVER_ACTIVE+idUser , {
             method: 'GET',})
         .then((response)=>response.json())
         .then((json)=> {
-       // const response = JSON.stringify(json);
-        console.log(json);
         useStoreTripDriver.getState().setOrigin({location:{'lat':json?.trip[0]?.latitude,'lng':json?.trip[0]?.longitude},'description':json?.trip[0]?.address});
         useStoreTripDriver.getState().setDestination({
             location:{
                 lat: -29.965314,
                 lng: -71.34951
             },
-            description:'UCN Coquimbo'
-          });
+            description:'UCN Coquimbo'});
           if(json?.has_data){
             setHasActiveTrip(true);
             setTextButton("Ver viaje");
@@ -65,7 +57,27 @@ const WidgetUserInfo = () => {
                                     <Button rounded="full" onPress={textButton == 'Ver viaje' ? goToActiveTripScreen : goToTripScreen} style={styles.button}>{textButton}</Button>
                                 </VStack>
                             </Box>
-                            <AvatarUser avatarURL={avatarUrl} size={'xl'}></AvatarUser>
+                            <Avatar size={'2xl'} source={{uri: avatarUrl}}>
+                                    {textButton == 'Ver viaje' ?
+                                        (  
+                                           /*  <PresenceTransition 
+                                                initial={{
+                                                    opacity: 0,
+                                                    scale: 0
+                                                }} animate={{
+                                                    opacity: 1,
+                                                    scale: 1,
+                                                    transition: {
+                                                        duration: 250
+                                                    }
+                                            }}>  */
+                                                <Avatar.Badge borderColor="papayawhip" bg="teal.500" marginRight={3} />
+                                            /* </PresenceTransition> */
+                                        )
+                                        :
+                                        ( null)
+                                    }
+                            </Avatar>
                         </HStack>
                     </Center>
                 </Box>
@@ -113,6 +125,8 @@ const styles = StyleSheet.create({
     },
     image: {
         borderColor: '#fff',
+        /* backgroundSize: cover,
+        backgroundPosition: Center, */
     },
   });
 export default WidgetUserInfo;

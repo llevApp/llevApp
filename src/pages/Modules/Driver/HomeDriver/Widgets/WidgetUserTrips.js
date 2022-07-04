@@ -1,14 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, ScrollView, Image } from "native-base";
+import React, { useEffect, useState } from 'react'
+import moment from 'moment';
+import { Text, View, FlatList,Spacer,Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, ScrollView, Image } from "native-base";
 import { StyleSheet } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useTripsStore } from './../../Screens/StoreTrip/StoreTrips';
 
 const WidgetUserTrips = () => {
-
-    const {name} = useUserStore();
     const {tripsArray} = useTripsStore()
-    const navigation = useNavigation();
+    const { idUser, name } = useUserStore();
+  
+    useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
+    useEffect(()=>{
+        useTripsStore.getState().setTripsPassenger(idUser)
+    },[]); 
+
 
 
     const TripCard = (trip) => {
@@ -38,21 +45,48 @@ const WidgetUserTrips = () => {
 
     return(<>
         
-        <Container style={styles.mainContainer}>
-            <Box style={styles.mainBox}> 
-                <VStack space={4}>
-                    <HStack justifyContent="space-between">
-                        <Heading  style={{fontSize:15, fontStyle:"italic"}}>Historial de viajes</Heading>
-                        <Button size="sm" variant="ghost">Ver todos</Button>
-                    </HStack>
-                    <ScrollView >
-                        <Box style={styles.mainBox.scroll}>
-                        {tripsArray?.lenght > 0 ? (tripsArray?.map((trip)=>{
-                            return (
-                                <TripCard 
-                                    key={trip?.id} {...trip}>
-                                </TripCard>)}))
-                            :
+        <Container style={styles.mainContainer} maxHeight ="55%">
+            <Box style={styles.mainBox} >
+                <Heading fontSize="sm" pb="0" borderColor="black"  color="white"  pl="4"  py="0" >  
+                    <Text color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2"  fontStyle="italic">
+                        Ultimos viajes realizados: 
+                    </Text>  
+                </Heading>
+                {tripsArray? 
+                    (<><FlatList data={tripsArray.slice(0,3)} 
+                        renderItem={({item}) => 
+                            <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="90" pr="5" py="6" borderRadius="20" w = "100%">
+                                <HStack space={3} justifyContent="center" >
+                                    <VStack>
+                                        <HStack space={2} justifyContent="left" pl="4"  >
+                                            <Text fontSize="xs"  _dark={{color: "warmGray.50"}} color="#159A9C" bold   py="0"  >
+                                                {item.address?.toUpperCase()}
+                                            </Text>
+                                        </HStack>
+                                        <HStack space={3} justifyContent="left" pl="4" >
+                                            <Text  fontSize="lg" color="coolGray.600" _dark={{color: "warmGray.200"}} >
+                                                $
+                                            </Text>
+                                            <Text  fontSize="lg" color="#6AC18A" _dark={{color: "warmGray.200"}} >
+                                                {item.recentText}
+                                            </Text>
+                                            <Text  fontSize="xs" color="coolGray.600" _dark={{color: "warmGray.200"}} pl="1" py="1.5" >
+                                                USD
+                                            </Text>
+                                        </HStack>
+                                    </VStack>
+                                    <Spacer />
+                                    <HStack space={1}  >
+                                        <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800"  pl="0" pr="70" py="1" >
+                                            {item.timeStamp}
+                                        </Text>
+                                    </HStack>
+                                </HStack>
+                            </Box>} keyExtractor={item => item.id}
+                        />
+                    </>) : 
+                    (<><HStack space={2} alignItems="center" justifyContent='center' padding={10}>
+                            <Heading color="primary.500" fontSize="md">
                                 <Center>
                                     <Text>Sin viajes Disponibles</Text>
                                     <Image size={400} resizeMode={"contain"} borderRadius={0} alt=" "
@@ -62,11 +96,9 @@ const WidgetUserTrips = () => {
                                     >
                                     </Image>
                                 </Center>
-                        }
-                        </Box>
-                    </ScrollView>
-                    
-                </VStack>
+                            </Heading>
+                        </HStack>
+                    </>)}
             </Box>
       </Container>
 </>
