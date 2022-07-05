@@ -80,8 +80,7 @@ function MainContainer() {
           },
         })}>
 
-        <Tab.Screen options={HeaderOptionsSwitch} name={homeName} component={HomeScreen} />
-        <Tab.Screen name={tripsName} component={TripScreen} />
+        <Tab.Screen options={HeaderOptionsSwitch} name={homeName} component={HomeScreen} />      
         <Tab.Screen name={chatName} component={ChatScreen} />
         <Tab.Screen name={accountName} component={AccountScreen} />
       </Tab.Navigator>
