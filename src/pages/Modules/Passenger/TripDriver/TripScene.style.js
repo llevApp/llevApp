@@ -18,10 +18,9 @@ const styles = StyleSheet.create({
     },
     input: {
       paddingHorizontal: 15,
-      paddingVertical: 10,
-      borderRadius: 10,
-      margin: 25,
-      color: '#002333'
+      color: '#002333',
+      fontSize: 25,
+      color: 'green'
       
     },
     textContainer: {
