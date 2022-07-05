@@ -16,7 +16,7 @@ function SwitchButton({ screenName }) {
   const color = (target == "driver" ?  "#159A9C":"#ffd670")
   const carColor = (target == "driver" ?  "#5cbcd2":"#black")
   const peopleColor = (target == "driver" ?  "#black":"#ff9770")
-  const carSize = (target == "driver" ?  38:24)
+  const carSize = (target == "driver" ?  36:24)
   const peopleSize = (target == "driver" ? 26:40)
   const onChangeMethod = (value) => {
     let newTarget = ""
