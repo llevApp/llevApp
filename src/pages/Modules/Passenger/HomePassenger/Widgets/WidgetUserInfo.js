@@ -4,7 +4,7 @@ import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
 import AvatarUser from "../../../../../ui/avatarUser";
 const WidgetUserInfo = () => {
-    const backgrounImg = "https://digitalsynopsis.com/wp-content/uploads/2017/07/beautiful-color-ui-gradients-backgrounds-socialive.png";
+    const backgrounImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgngr5yRtG0kBHhQRVS41ImU7AdCua8tZ0JpaHOzaexCoZEsTseJA6xq-peEJpY_js7F4&usqp=CAU";
     const navigation = useNavigation();
     const {name, careerName, avatarUrl, loadingChangeAvatar} = useUserStore();
     const onClick= ()=>{
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop:5,
+        backgroundColor:'#ff9770',
     },
     image: {
         borderColor: '#fff',

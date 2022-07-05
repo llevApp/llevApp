@@ -1,4 +1,4 @@
-import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack } from "native-base";
+import { Text, View, Container, Heading, Avatar, Divider, Box, HStack, VStack} from "native-base";
 import { StyleSheet,TouchableHighlight } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API} from "@env";
@@ -6,7 +6,6 @@ import MapView from "react-native-maps";
 import styles from './StyleWidgetHomePassenger';
 import * as Location from 'expo-location';
 import React, { useEffect,useState,useRef } from 'react';
-import MapViewDirections from "react-native-maps-directions";
 import { useStoreTripPassanger } from '../../../../Modules/Passenger/TripDriver/Store/StoreScene';
 import {AvatarUser, AvatarUserMap} from "../../../../../ui/avatarUser";
 
@@ -21,7 +20,7 @@ const WidgetUserTrips = () => {
         idUser
       }));
     const {name} = useUserStore();
-    const { setOrigin:originRequest,destination,setDestination} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
+    const { setOrigin:originRequest} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
         setOrigin,setDestination,origin,destination
       }));
 

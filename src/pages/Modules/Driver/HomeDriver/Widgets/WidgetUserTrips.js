@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from 'react'
-import moment from 'moment';
-import { Text, View, FlatList,Spacer,Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, ScrollView, Image } from "native-base";
+import { Text, FlatList,Spacer,Center, Container, Heading, Box, HStack, NativeBaseProvider, VStack, Image } from "native-base";
 import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { useUserStore } from '../../../../Home/Store/StoreHome';
