@@ -46,10 +46,9 @@ useEffect(()=>{
         if(json?.length == 0){
         console.log('No tenemos viajes activos');
         }else{
-          console.log('Tenemos un viaje activo');
-          console.log(json.trip?.[0]?.trip_id);
-          console.log(json?.trip[0].trip_id);
-          setIdTrip(json?.trip[0].trip_id);
+          if(json){
+            setIdTrip(json?.trip[0].trip_id);
+          }
         }
       }else{
         console.log('No tenemos pasajeros');
@@ -81,7 +80,7 @@ useEffect(()=>{
               messageText:'Hola, escribeme...'
              }
           })
-          console.log(objectPassenger);
+        console.log(objectPassenger);
         setMessages(objectPassenger);
         }
       }else{
@@ -90,7 +89,7 @@ useEffect(()=>{
     }
     
     )
-    .catch((error)=>alert(error))
+    .catch((error)=>console.log(error))
     .finally( ()=>console.log(''));
   }
 },[idTrip]);
