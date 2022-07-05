@@ -86,11 +86,17 @@ const Driver = ()=>{
             //console.log(e);
             // a message was received      
             const json = JSON.parse(e.data);
+            let isMounted = true;
             if(json?.request){
             //if(e?.data){
             console.log('Home Screen Conductor',e?.data);
             setMessages(json?.request);
-            setShowModal(true);
+
+            if (isMounted) {
+                setShowModal(true);
+
+            }
+            isMounted = false
             }
         };
         wsConection.onerror = (e) => {
