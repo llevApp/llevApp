@@ -112,6 +112,7 @@ export const TripScreen= () => {
   const { idUser } = useUserStore(({ idUser }) => ({
     idUser
   }));
+  
 
   const {conection: wsConection, isOpen:isOpenWs, setIsOpen,setMessagesPassenger} = hubWebSocket();
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};

@@ -119,7 +119,11 @@ const Driver = ()=>{
         (  <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
                     <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
                       <Modal.CloseButton />
-                      <Modal.Header>Solicitud de viaje</Modal.Header>
+                      <Modal.Header>
+                        <Text color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2" >
+                        Solicitud de viajes
+                        </Text>  
+                      </Modal.Header>
                       <Modal.Body _scrollview={{scrollEnabled:false}}>
                       <VStack style={styles.widgets} space={2}>
                         <VStack direction="row" space={3}>

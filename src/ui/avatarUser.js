@@ -2,9 +2,9 @@ import { Box, Image } from 'native-base'
 import React, { useEffect } from 'react'
 import { StyleSheet, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 
-const alternativeAvatarUrl = "https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360"
+const alternativeAvatarUrl = "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png"
 const loadingAvatarUrl = "https://ajisenramenpanama.com/wp-content/uploads/2020/07/user_icon.png"
-const loadingAvatarMapUrl = "https://fondosmil.com/fondo/4923.jpg"
+const loadingAvatarMapUrl = "https://ajisenramenpanama.com/wp-content/uploads/2020/07/user_icon.png"
 
 export const AvatarUser = ({avatarURL, size: avatarSize}) => {
   
