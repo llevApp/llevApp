@@ -26,7 +26,7 @@ const WidgetUserTrips = () => {
 
     const { avatarUrl } = useUserStore(
     );
-    console.log(avatarUrl)
+    console.log("avatar url: ",avatarUrl)
     /* Call function when the user put geolocalization */
     async function getLocationPermission(){
         let {status} = await Location.requestForegroundPermissionsAsync();
@@ -117,7 +117,7 @@ const WidgetUserTrips = () => {
                                         longitude: t?.longitude
                                     }}
                                 >
-                                    <AvatarUserMap avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`}
+                                    <AvatarUserMap avatarURL={`https://firebasestorage.googleapis.com/v0/b/llevapp.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=7ae4bc5b-af55-4c54-b162-e065f2fa8af4`}
                                         size={6} 
                                         isUseMap>
                                     </AvatarUserMap>
@@ -126,7 +126,7 @@ const WidgetUserTrips = () => {
                                             <View style={styles.colorBoxText}>
                                                 <HStack space={1}>
                                                 <View width={"45%"} justifyContent='center' padding={1}>
-                                                    <AvatarUser avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`} size={"20"}></AvatarUser>
+                                                    <AvatarUser avatarURL={`https://firebasestorage.googleapis.com/v0/b/llevapp.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=7ae4bc5b-af55-4c54-b162-e065f2fa8af4`} size={"20"}></AvatarUser>
                                                 </View>
                                                 </HStack>
                                             </View>

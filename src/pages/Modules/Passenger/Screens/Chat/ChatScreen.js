@@ -53,7 +53,7 @@ useEffect(()=>{
             return{
               id: t?.driver_id,
               userName: t?.name,
-              userImg:`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`,
+              userImg:`https://firebasestorage.googleapis.com/v0/b/llevapp.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=7ae4bc5b-af55-4c54-b162-e065f2fa8af4`,
               messageTime: '',
               messageText:
                 'Hola, en un segundo te respondo',

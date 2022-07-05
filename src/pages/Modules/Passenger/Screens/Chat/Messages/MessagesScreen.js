@@ -32,8 +32,7 @@ const MessagesScreen = (data) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    console.log("Iniciamos conexion")
-    console.log(HUB_CHAT+data?.route?.params?.useId+'/'+useUserStore.getState().idUser);
+    console.log("Iniciamos conexion: ", HUB_CHAT+data?.route?.params?.useId+'/'+useUserStore.getState().idUser);
     // enter your websocket url
     ws.current = new WebSocket(HUB_CHAT+data?.route?.params?.useId+'/'+useUserStore.getState().idUser);
     ws.current.onopen = () => {
@@ -111,7 +110,7 @@ const MessagesScreen = (data) => {
 
 
   const onSend = useCallback((messages) => {
-    console.log(messages);
+    console.log("mesagge:", messages);
     /*  "_id": "6501e3d1-2ebc-4f43-b6e8-11fc87e7c703",
      */
     let obj = {

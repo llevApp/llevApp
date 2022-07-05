@@ -55,8 +55,7 @@ useEffect(()=>{
 },[idUser]);
 useEffect(()=>{
   if(hubWebSocket.getState().messagesPassenger!=null){
-    console.log('Mensaje desde el store:');
-    console.log(hubWebSocket.getState().messagesPassenger);
+    console.log('Mensaje desde el store:',hubWebSocket.getState().messagesPassenger);
     setShowModal(true);
   }
 },[hubWebSocket.getState().messagesPassenger])

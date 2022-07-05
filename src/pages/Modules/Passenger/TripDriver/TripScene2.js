@@ -182,7 +182,7 @@ useEffect(()=>{
     Geocoder.from(origin)
 		.then(json => {
         		let addressComponent = json.results[0].address_components[0];
-			      console.log(dataWs);
+			      console.log("data ws: ",dataWs);
             useTripsStore.getState().setTripSendData({
               "trip_id":dataWs?.trip_id,
               "user_id":idUser,
@@ -283,7 +283,7 @@ useEffect(()=>{
           
                 title={"Esto es un marker de los viajes"}
                 >
-                  <AvatarUserMap avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`}
+                  <AvatarUserMap avatarURL={`https://firebasestorage.googleapis.com/v0/b/llevapp.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=7ae4bc5b-af55-4c54-b162-e065f2fa8af4`}
  size={12} isUseMap></AvatarUserMap>
                   <MapView.Callout tooltip>
                                       <TouchableHighlight onPress= {()=>openModal(t)}>
@@ -298,7 +298,7 @@ useEffect(()=>{
                                                   }</Text>
                                               </View>
                                               <View width={"45%"} justifyContent='center' padding={1}>
-                                                <AvatarUser avatarURL={`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`} size={"20"}></AvatarUser>
+                                                <AvatarUser avatarURL={`https://firebasestorage.googleapis.com/v0/b/llevapp.appspot.com/o/images%2Favatars%2F${t?.uuid_fb}.png?alt=media&token=7ae4bc5b-af55-4c54-b162-e065f2fa8af4`} size={"20"}></AvatarUser>
                                               </View>
                                           </HStack>
                                           </View>

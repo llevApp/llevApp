@@ -24,11 +24,14 @@ const AccountScreen = () => {
     }, [currentUser])
 
     const submitData = async () => {
+      //console.log("vamo a cambiar la foto 1")
       if (image != null ){
         const img = await fetch(image);
         const bytes = await img.blob();
         setLoadingChangeAvatar(true)
+        //console.log("vamo a cambiar la foto 2")
         await upload(bytes,currentUser,setLoading);
+        //console.log("se cambio?")
         setEditing(false)
         setLoadingChangeAvatar(false)
       }

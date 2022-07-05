@@ -55,7 +55,7 @@ const RegisterScene = () => {
   }
 
   const handleSignUp2 = () => {
-    console.log(name, career, email, password)
+    console.log("name career email pass: ",name, career, email, password)
   }
 
   const validate = () => {
@@ -92,7 +92,7 @@ const RegisterScene = () => {
       function(response) {
         if (response.ok) {    
           let responseText = JSON.stringify(response.text());
-          console.log(responseText);
+          console.log("response txt: ",responseText);
           const url =  URL_API+GET_DATA_USER;
           userData(url,email);
           navigation.replace("Login")

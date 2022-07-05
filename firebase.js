@@ -7,12 +7,13 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const app = firebase.initializeApp( {
-  apiKey: "AIzaSyAEKqtJyQ4E9l77kaTNGnRbyDdfzJvVWHw",
-  authDomain: "sistema-electivos-auth.firebaseapp.com",
-  projectId: "sistema-electivos-auth",
-  storageBucket: "sistema-electivos-auth.appspot.com",
-  messagingSenderId: "41892760780",
-  appId: "1:41892760780:web:d3e9711d5d83e2f3a20669"
+  apiKey: "AIzaSyAsMZa1qIKM3jalkzxNqUyvXQ1CNeS7fEs",
+  authDomain: "llevapp.firebaseapp.com",
+  projectId: "llevapp",
+  storageBucket: "llevapp.appspot.com",
+  messagingSenderId: "534135888579",
+  appId: "1:534135888579:web:7322bfd5e0a7be0961a076",
+  measurementId: "G-6R8LMHDCTH"
 });
 
 // Initialize Firebase
