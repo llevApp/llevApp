@@ -186,7 +186,7 @@ useEffect(()=>{
             <Box style={styless.mainBox}> 
                 <VStack space={4}>
                     <HStack justifyContent="space-between">
-                        <Heading  style={{fontSize:15, fontStyle:"italic"}}>Solicitud de viaje</Heading>
+                        <Heading  style={{fontSize:15}}>Solicitud de viaje</Heading>
                         <Button size="sm" variant="ghost" onPress={() => {setFullWidget(!fullWidget)}}>{fullWidget? "Ver menos" : "Ver más"}</Button>
                     </HStack>
                     <HStack justifyContent={"space-around"} alignItems="center">
@@ -198,9 +198,6 @@ useEffect(()=>{
                         <HStack justifyContent={"space-around"} alignItems="center">
                             <Box>
                                 <TripCard nameDriver={useTripsStore.getState().tripSendData?.nameDriver} addres={useTripsStore.getState().tripSendData?.addressDriver}/>
-                            </Box>
-                            <Box alignSelf={"center"}>
-                                <AvatarUser size={"lg"} avatarURL={imagesAvatar[0]}></AvatarUser>
                             </Box>
                         </HStack>
                     </Box>)}
