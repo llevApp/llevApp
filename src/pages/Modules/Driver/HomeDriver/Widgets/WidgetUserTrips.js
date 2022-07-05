@@ -26,7 +26,7 @@ const WidgetUserTrips = () => {
                         Ultimos viajes realizados
                     </Text>  
                 </Heading>
-                {tripsArray.length > 0 ? 
+                {tripsArray?.length > 0 ? 
                     (<><FlatList data={tripsArray.slice(tripsArray.length-4,tripsArray.length).reverse()} 
                         renderItem={({item}) => 
                             <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="90" pr="5" py="6" borderRadius="20" w = "100%" marginTop={1} h = "105">

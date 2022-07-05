@@ -14,6 +14,10 @@ function SwitchButton({ screenName }) {
   const {target, setTarget} = useLoginStore();
   const value = (target == "driver" ? false : true)
   const color = (target == "driver" ?  "#159A9C":"#ffd670")
+  const carColor = (target == "driver" ?  "#5cbcd2":"#black")
+  const peopleColor = (target == "driver" ?  "#black":"#ff9770")
+  const carSize = (target == "driver" ?  38:24)
+  const peopleSize = (target == "driver" ? 26:40)
   const onChangeMethod = (value) => {
     let newTarget = ""
     let replace = ""
@@ -31,10 +35,10 @@ function SwitchButton({ screenName }) {
   }
   return (
     <HStack space={1} alignItems='center'>
-        <FontAwesome5 name="car" size={24} color="black" />
+        <FontAwesome5 name="car" size={carSize} color={carColor} />
         <Switch value={value} offTrackColor={color} onTrackColor={color}
         onValueChange={value => onChangeMethod(value)}/>
-        <MaterialIcons name="emoji-people" size={24} color="black" />
+        <MaterialIcons name="emoji-people" size={peopleSize} color={peopleColor} />
     </HStack>
     
   );
