@@ -70,7 +70,7 @@ const WidgetUserInfo = () => {
                                                duration: 250
                                            }
                                    }}>
-                                    <Avatar.Badge size={8} borderColor="papayawhip" bg="teal.500" marginRight={3} top={10}/>
+                                    <Avatar.Badge size={8} borderColor="papayawhip" bg="green.500" marginRight={3} top={10}/>
                                 </PresenceTransition>
                         </HStack>
                         {textButton == 'Ver viaje' ?
