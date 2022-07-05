@@ -9,13 +9,11 @@ import { useTripsStore } from './../../Screens/StoreTrip/StoreTrips';
 const WidgetUserTrips = () => {
     const {tripsArray} = useTripsStore();
     const { idUser, name } = useUserStore();
-  
+    let bgColor = (tripsArray?.recentText > 5 ?  "green":"#f68080")
     useEffect(()=>{useTripsStore.getState().setTripsPassenger(idUser)},[idUser]);
     useEffect(()=>{
         useTripsStore.getState().setTripsPassenger(idUser)
     },[]); 
-
-
 
     return(<>
         
@@ -29,7 +27,7 @@ const WidgetUserTrips = () => {
                 {tripsArray?.length > 0 ? 
                     (<><FlatList data={tripsArray.slice(tripsArray.length-4,tripsArray.length).reverse()} 
                         renderItem={({item}) => 
-                            <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="90" pr="5" py="6" borderRadius="20" w = "100%" marginTop={1} h = "105">
+                            <Box borderWidth="0.4"  borderColor={item?.recentText > 5 ?  "#60d394":"#f68080"} _dark={{borderColor: "gray.600"} }   pl="90" pr="5" py="6" borderRadius="20" w = "100%" marginTop={1} h = "105" >
                                 <HStack space={3} justifyContent="center" >
                                     <VStack>
                                         <HStack space={2} justifyContent="left" pl="4"  >
