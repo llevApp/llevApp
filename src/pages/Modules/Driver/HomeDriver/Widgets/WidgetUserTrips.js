@@ -27,7 +27,7 @@ const WidgetUserTrips = () => {
                 {tripsArray?.length > 0 ? 
                     (<><FlatList data={tripsArray.slice(tripsArray.length-4,tripsArray.length).reverse()} 
                         renderItem={({item}) => 
-                            <Box borderWidth="0.4"  borderColor={0 ?  "#60d394":"#f68080"} _dark={{borderColor: "gray.600"} } background="white"  pl="4" pr="5" py="6" w = "100%" marginTop={1} h = "105" borderRadius={10}>
+                            <Box borderWidth="0.4"  borderColor={item?.recentText>0 ?  "#60d394":"#f68080"} _dark={{borderColor: "gray.600"} } background="white"  pl="4" pr="5" py="6" w = "100%" marginTop={1} h = "105" borderRadius={10}>
                                 <HStack space={3} justifyContent={"space-around"}>
                                     <VStack >
                                         <Text fontSize="2xs"  _dark={{color: "warmGray.50"}} color="#159A9C" py="0"  >
