@@ -63,9 +63,7 @@ const TripScreen= () => {
 /*   const origin = {latitude: -29.98131942375116, longitude: -71.35180660362076};
   const destination = {latitude: -29.965314, longitude: -71.349513}; */
   const [visible,setVisible] = useState(true); 
-  const { setOrigin,setDestination, origin} = useStoreTripDriver(({ setOrigin,setDestination,origin }) => ({
-    setOrigin,setDestination,origin
-  }));
+  const { setOrigin,setDestination, origin,datetime,setDatetime} = useStoreTripDriver();
   const {
     isOpen,
     onOpen,
@@ -78,6 +76,7 @@ const TripScreen= () => {
   
   const bottomInset = useKeyboardBottomInset();
   const sendDataInit = () => {
+    setDatetime(chosenDate)
     setVisible(false);
     navigation.replace("SceneTripInit");
   }
@@ -86,7 +85,7 @@ const TripScreen= () => {
     navigation.replace("SceneSelectOrigin");
   }
 
-  const [chosenDate, setChosenDate] = useState(new Date());
+  const [chosenDate, setChosenDate] = useState(datetime ? datetime : new Date());
   const dateMoment = moment(chosenDate).locale('Es')
   const DatePickerTrip = () => {
     return <View style={styles.input}>
@@ -175,7 +174,7 @@ const TripScreen= () => {
                     <Text style={styles.H1}>Seleccionar punto de partida</Text>
                 </View>
                 <View style={styles.container}>
-                <Actionsheet.Item onPress={() => goSelectOrigin()}>
+                <Actionsheet.Item onPress={() => {goSelectOrigin(),setDatetime(chosenDate)}}>
                   <ModalItemPlace></ModalItemPlace>
                 </Actionsheet.Item>
                 <Actionsheet.Item onPress={() => setShowModalDatePicker(true)}>

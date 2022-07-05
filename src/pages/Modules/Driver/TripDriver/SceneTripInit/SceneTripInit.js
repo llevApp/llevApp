@@ -18,6 +18,7 @@ import {
 } from 'native-base';
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { AvatarUserMap } from "../../../../../ui/avatarUser";
+import moment from "moment";
 
 
 const useKeyboardBottomInset = () => {
@@ -66,9 +67,7 @@ const SceneTripInit= () => {
     onClose
   } = useDisclose();
   const bottomInset = useKeyboardBottomInset();
-  const { setOrigin,setDestination,origin,destination} = useStoreTripDriver(({ setOrigin,setDestination,origin,destination }) => ({
-    setOrigin,setDestination,origin,destination
-  }));
+  const { setOrigin,setDestination,origin,destination,datetime} = useStoreTripDriver();
   const {name, idUser, careerName, avatarUrl, hasActiveTrip, setHasActiveTrip} = useUserStore();
 
   const mapRef = useRef(null);
@@ -93,7 +92,7 @@ const toTrip = () => {
 useEffect( ()=>{
  if(isOpen){
   //SEND POST
-  const today = new Date();
+  const datetimeTrip = datetime? moment.utc(datetime).local().format() : new Date();
   fetch(URL_API+DRIVER_NEW_TRIP, {
   method: 'POST',
   headers: {
@@ -104,7 +103,7 @@ useEffect( ()=>{
     user_id: idUser,
     latitude: origin?.location.lat,
     longitude: origin?.location.lng,
-    start_time: today,
+    start_time: datetimeTrip,
     address:origin?.description
   })
 });

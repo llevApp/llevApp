@@ -92,6 +92,7 @@ useEffect(()=>{
              return {
               id:passenger?.user_id,
               userName:passenger?.user_name,
+              UserImgWrapper:`https://firebasestorage.googleapis.com/v0/b/llevapp.appspot.com/o/images%2Favatars%2F${passenger?.uuid_fb}.png?alt=media&token=7ae4bc5b-af55-4c54-b162-e065f2fa8af4`,
               userImg:`https://firebasestorage.googleapis.com/v0/b/llevapp.appspot.com/o/images%2Favatars%2F${passenger?.uuid_fb}.png?alt=media&token=7ae4bc5b-af55-4c54-b162-e065f2fa8af4`,
               messageText:'Hola, escribeme...'
              }
