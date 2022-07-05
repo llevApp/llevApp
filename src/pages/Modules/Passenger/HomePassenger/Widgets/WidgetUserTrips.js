@@ -17,6 +17,9 @@ const WidgetUserTrips = () => {
         latitude: -29.98131942375116,
         longitude: -71.35180660362076,
     });
+    const { idUser } = useUserStore(({ idUser }) => ({
+        idUser
+      }));
     const {name} = useUserStore();
     const { setOrigin:originRequest,destination,setDestination} = useStoreTripPassanger(({ setOrigin,setDestination,origin,destination }) => ({
         setOrigin,setDestination,origin,destination
@@ -45,9 +48,21 @@ const WidgetUserTrips = () => {
     useEffect(()=>{
         fetch(URL_API+PASSENGER_TRIPS)
         .then((response)=>response.json())
-        .then((json)=>setTrips(json))
+        .then((json)=>{
+            if(json){
+              let response = json?.map((t)=>{
+                if( t?.driver_id != idUser){
+                return t;
+              }
+            });
+            let filter = response.filter((v)=>v!=undefined);
+            setTrips(filter)
+            }
+          })
+        //.then((json)=>setTrips(json), console.log(trips))
         .catch((error)=>alert(error))
     }
+    
     ,[]);
 
 
@@ -92,7 +107,8 @@ const WidgetUserTrips = () => {
                             </AvatarUserMap>
 
                             </MapView.Marker>
-                            { trips?.length>0 ? trips?.map((t,index) => (<>
+                            { trips?.length>0 ? trips?.map((t,index)=> (<>
+
                                 <MapView.Marker 
                                     coordinate={{
                                         latitude: t?.latitude,
