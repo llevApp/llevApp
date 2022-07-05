@@ -1,6 +1,6 @@
 import React,{useState,useEffect,useRef, useId} from "react";
 import {Alert,View, Text,Keyboard, Platform,TouchableHighlight,TextInput } from "react-native";
-import {  NativeBaseProvider, Flex,Spinner,Modal,Heading} from "native-base";
+import {  NativeBaseProvider, Flex,Spinner,Modal,Heading, KeyboardAvoidingView} from "native-base";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import CountDown from 'react-native-countdown-component';
@@ -23,6 +23,7 @@ import {
   HStack,
 } from 'native-base';
 import { AlertDialog, Center } from "native-base";
+import { FontAwesome } from '@expo/vector-icons'; 
 
 import { useNavigation } from '@react-navigation/core'
 import { Marker } from "react-native-svg";
@@ -391,18 +392,35 @@ useEffect(()=>{
         <Center flex={1} px="3">
                 {/* <ModalInstrucction /> */}
         </Center>
-        <Actionsheet isOpen={visible} onClose={onClose}>
+        <KeyboardAvoidingView
+          style={{flex: 1,
+          alignItems: 'center' }}
+          behavior={Platform.OS === "ios" ? "position": "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+          >
+        <Actionsheet isOpen={visible} onClose={() => setVisible(false)}>
         <Actionsheet.Content bottom={bottomInset}>
               <Box w="100%" style={styles.containerBox}  justifyContent="center">
               <View style={styles.textContainer}>
               <Text style={styles.H1}>Iniciar oferta de viaje</Text>
               </View>
-                <TextInput
-                placeholder="contribution"
-                value={contribution}
-                onChangeText={text => setContribution(text)}
-                style={styles.input}
-                />
+              <Box flex={1} m={10} alignItems="center">
+                 <HStack alignContent={"center"}>
+                    <FontAwesome name="dollar" size={25} color="black" />
+                    <Box>
+                      <TextInput
+                        marginBottom={'auto'}
+                        placeholder="Contribucion"
+                        keyboardType="numeric"
+                        value={contribution}
+                        onChangeText={text => setContribution(text)}
+                        style={styles.input}
+                        />
+                    </Box>
+              </HStack>
+              </Box>
+             
+                
                 <VStack alignItems="center">
                   <Button onPress={sendDataInit} style={styles.button} padding={5}>
                         <Text style={styles.buttonText}>Enviar oferta</Text>
@@ -411,6 +429,7 @@ useEffect(()=>{
               </Box>    
           </Actionsheet.Content>
         </Actionsheet> 
+        </KeyboardAvoidingView>
         </View>
 
 );

@@ -4,8 +4,7 @@ import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useNavigation } from '@react-navigation/core'
 import AvatarUser from "../../../../../ui/avatarUser";
 const WidgetUserInfo = () => {
-    const backgrounImg = "https://media.istockphoto.com/photos/colorful-background-picture-id170094323?k=20&m=170094323&s=612x612&w=0&h=YEerCprCW1d4n0-XjGVxzQhAqfKmwluXLVJHhMpWAgs=";
-    const defaultUserImg = "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
+    const backgrounImg = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgngr5yRtG0kBHhQRVS41ImU7AdCua8tZ0JpaHOzaexCoZEsTseJA6xq-peEJpY_js7F4&usqp=CAU";
     const navigation = useNavigation();
     const {name, careerName, avatarUrl, loadingChangeAvatar} = useUserStore();
     const onClick= ()=>{
@@ -14,7 +13,7 @@ const WidgetUserInfo = () => {
     return(
         <>
             <Container style={styles.mainContainer} >
-                <ImageBackground source={{uri: backgrounImg}} >
+                <ImageBackground source={{uri: backgrounImg}}  borderRadius={5} >
                     <Box style={styles.mainBox}>
                     <Center>
                         <HStack style={styles.info}>
@@ -71,6 +70,7 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop:5,
+        backgroundColor:'#ff9770',
     },
     image: {
         borderColor: '#fff',

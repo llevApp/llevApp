@@ -44,7 +44,7 @@ function MainContainer() {
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
-          tabBarActiveTintColor: "#159A9C",
+          tabBarActiveTintColor: "#ff9770",
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             "paddingBottom": 5,
