@@ -181,14 +181,16 @@ useEffect(()=>{
     Geocoder.from(origin)
 		.then(json => {
         		let addressComponent = json.results[0].address_components[0];
-			      console.log(addressComponent);
-            useTripsStore.getState.setTripSendData({
+			      console.log(dataWs);
+            useTripsStore.getState().setTripSendData({
               "trip_id":dataWs?.trip_id,
               "user_id":idUser,
               "latitude":dataWs?.latitude,
               "longitude":dataWs?.longitude,
               "contribution":contribution,
-              "location":addressComponent?.long_name
+              "location":addressComponent?.long_name,
+              "nameDriver":dataWs?.name,
+              "addressDriver":dataWs?.address
             })
             wsConection.send(`
             {
@@ -198,7 +200,7 @@ useEffect(()=>{
                   "latitude":${dataWs?.latitude},
                   "longitude":${dataWs?.longitude},
                   "contribution":${contribution},
-                  "location":${addressComponent?.long_name}
+                  "location":"Coquimbo"
               }
             }
            `);

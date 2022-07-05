@@ -1,12 +1,14 @@
 import React,{useState,useEffect,useRef} from "react";
 import {Alert,View, Text,Keyboard, Platform,TouchableHighlight,TextInput, StyleSheet, ViewBase } from "react-native";
 import {  NativeBaseProvider, Flex,Spinner,Modal,Heading, Container, Badge} from "native-base";
+import * as Notifications from 'expo-notifications';
 //import styles from './WidgetTripStatus.style';
 import moment from 'moment';
 import { useStoreTripPassanger} from './../Store/StoreScene';
 import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API,WEB_SOCKET_CHANNEL} from "@env";
 import {hubWebSocket} from '../../../../../services/common/hubWebSocket';
 import { useUserStore } from '../../../../Home/Store/StoreHome';
+import {useTripsStore} from '../../Screens/StoreTrip/StoreTrips';
 import {
   Button,
   Actionsheet,
@@ -88,8 +90,12 @@ const ModalInstrucction = () => {
 export const WidgetTripStatus = () => {
 
     const {name} = useUserStore();
-    const [fullWidget,setFullWidget] = useState(false)
-    const TripCard = (trip) => {
+    const {conection,messagesPassenger}= hubWebSocket();
+    const [fullWidget,setFullWidget] = useState(false);
+    const[stateTripPassanger,setStateTripPassanger]=useState(null);
+    
+    const TripCard = (props) => {
+      const {nameDriver,addres}=props;
         return (
             <>
                 <Box width={"100%"} > 
@@ -101,11 +107,11 @@ export const WidgetTripStatus = () => {
                         <VStack padding={3} alignContent="space-between" alignItems={"stretch"} justifyContent="space-between">
                             <Box>
                                 <Heading style={styless.tripCard.text.title}>Conductor</Heading>
-                                <Heading style={styless.tripCard.text.value}>{/* trip.driver */ "Macarena"}</Heading>
+                                <Heading style={styless.tripCard.text.value}>{nameDriver ?? '-'}</Heading>
                             </Box>
                             <Box>
                                 <Heading style={styless.tripCard.text.title}>Punto de partida</Heading>
-                                <Heading style={styless.tripCard.text.value}>{/* trip.address?.toUpperCase() */ "Blanco 20, Coquimbo"}</Heading>
+                                <Heading style={styless.tripCard.text.value}>{addres ?? '-'}</Heading>
                             </Box>
                         </VStack>
                     </Box>
@@ -114,13 +120,15 @@ export const WidgetTripStatus = () => {
         );
     };
 
-    const StatusWidget = () => {
-        let status = 2
+    const StatusWidget = (props) => {
+      const {status}=props;
+        //let status = 2
+
         const colorSchemes = ["info","success","error","warning"]
         const textInfo = ["Que pasa mi chico","Viaje confirmado","Viaje rechazado","Esperando respuesta"]
         return <View>
-            <Badge variant={"solid"} colorScheme={colorSchemes[status]} alignSelf="center">
-                {textInfo[status]}
+            <Badge variant={"solid"} colorScheme={colorSchemes[status == 'accepted' ? 1 : status == 'declined' ? 2 : 3]} alignSelf="center">
+                {textInfo[status == 'accepted' ? 1 : status == 'declined' ? 2 : 3]}
             </Badge>
         </View>
     }
@@ -144,9 +152,23 @@ export const WidgetTripStatus = () => {
        "https://cdn-icons-png.flaticon.com/512/219/219967.png",
        "https://cdn-icons-png.flaticon.com/512/219/219976.png",
     ]
-
-    return(<>
-        
+useEffect(()=>{
+  if(messagesPassenger){
+    if(useTripsStore.getState().tripSendData?.trip_id == messagesPassenger?.trip_id ){
+      setStateTripPassanger(messagesPassenger)
+    }
+  }
+},[messagesPassenger]);
+useEffect(()=>{
+if(stateTripPassanger){
+    console.log('Nombre conductor',useTripsStore.getState().tripSendData?.trip_id);
+    console.log('Mensaje a STATUS',stateTripPassanger?.status);
+    console.log('Mensaje a TRIP ID',stateTripPassanger?.trip_id);
+}
+},[stateTripPassanger])
+    return (
+    <>
+      {stateTripPassanger != null ? (
         <Container style={styless.mainContainer}>
             <Box style={styless.mainBox}> 
                 <VStack space={4}>
@@ -157,14 +179,14 @@ export const WidgetTripStatus = () => {
 
                     <HStack justifyContent={"space-around"} alignItems="center">
                         <Heading fontSize={15}>Estado solicitud </Heading>
-                        <StatusWidget></StatusWidget>
+                        <StatusWidget status={stateTripPassanger?.status}></StatusWidget>
                     </HStack>
 
                     {fullWidget && (
                     <Box style={styless.mainBox.scroll}>
                         <HStack justifyContent={"space-around"} alignItems="center">
                             <Box>
-                                <TripCard/>
+                                <TripCard nameDriver={useTripsStore.getState().tripSendData?.nameDriver} addres={useTripsStore.getState().tripSendData?.addressDriver}/>
                             </Box>
                             <Box alignSelf={"center"}>
                                 <AvatarUser size={"lg"} avatarURL={imagesAvatar[0]}></AvatarUser>
@@ -173,10 +195,11 @@ export const WidgetTripStatus = () => {
                     </Box>)}
                 </VStack>
             </Box>
-      </Container>
-</>
-    );
-}
+         </Container>
+      ): null }
+  </>
+  );
+};
 
 const styless = StyleSheet.create({
     mainContainer: {
