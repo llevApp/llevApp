@@ -29,7 +29,7 @@ const MessagesScreenDriver = (data) => {
   const [senderId, setSenderId] =useState(useUserStore.getState().idUser)
   const [receiverId, setReceiverId] =  useState(data?.route?.params?.useId)
   const [name, setName] = useState(data?.route?.params?.userName)
-  const [image_path, setImage_path] = useState(require('../assets/users/user-1.jpg'))
+  const [image_path, setImage_path] = useState(data?.route?.params?.userImg)
   const ws = useRef(null);
 
   useEffect(() => {

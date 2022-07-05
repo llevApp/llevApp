@@ -9,7 +9,8 @@ export const useTripsStore =
                 arraylist:undefined,
                 setError: (error) => set({ error }),
                 loading:false,
-                
+                tripSendData:null,
+                setTripSendData:(value) => set({ tripSendData:value }),
                 setTripsPassenger: (userID) => {
                     if (userID) {
                         set({ loading: true, error: null });

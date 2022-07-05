@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/core';
 import { auth } from '../../../../../../firebase';
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useTripsStore } from '../StoreTrip/StoreTrips';
-import {URL_API,TRIPS_DRIVER,GET_TRIP_INFO} from "@env";
+import {URL_API,TRIPS_DRIVER_ACTIVE,GET_TRIP_INFO} from "@env";
 import {hubChat} from '../../../../../services/common/hubChat';
 import {Container,
     Card,
@@ -38,7 +38,7 @@ const [idTrip,setIdTrip]=useState(null);
 
 useEffect(()=>{
   if(idUser){
-    fetch(URL_API+TRIPS_DRIVER+idUser)
+    fetch(URL_API+TRIPS_DRIVER_ACTIVE+idUser)
     .then((response)=>response.json())
     .then((json)=>{
      if(json){ 
@@ -47,6 +47,7 @@ useEffect(()=>{
         console.log('No tenemos viajes activos');
         }else{
           console.log('Tenemos un viaje activo');
+          console.log(json.trip?.[0]?.trip_id);
           console.log(json?.trip[0].trip_id);
           setIdTrip(json?.trip[0].trip_id);
         }
@@ -74,10 +75,10 @@ useEffect(()=>{
         }else{
           let objectPassenger = json?.map((passenger)=>{
              return {
-              'id':passenger?.user_id,
-              'userName':passenger?.user_name,
-              'userImg':passenger?.uuid_fb,
-              'messageText':'Hola, escribeme...'
+              id:passenger?.user_id,
+              userName:passenger?.user_name,
+              userImg:`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${passenger?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`,
+              messageText:'Hola, escribeme...'
              }
           })
           console.log(objectPassenger);

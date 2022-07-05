@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef} from "react";
+import React,{useState,useEffect,useRef, useId} from "react";
 import {Alert,View, Text,Keyboard, Platform,TouchableHighlight,TextInput } from "react-native";
 import {  NativeBaseProvider, Flex,Spinner,Modal,Heading} from "native-base";
 import MapView from "react-native-maps";
@@ -11,6 +11,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API,WEB_SOCKET_CHANNEL} from "@env";
 import {hubWebSocket} from '../../../../services/common/hubWebSocket';
 import { useUserStore } from '../../../Home/Store/StoreHome';
+import {useTripsStore} from '../../Passenger/Screens/StoreTrip/StoreTrips';
 import Geocoder from 'react-native-geocoding';
 import {
   Button,
@@ -181,7 +182,14 @@ useEffect(()=>{
 		.then(json => {
         		let addressComponent = json.results[0].address_components[0];
 			      console.log(addressComponent);
-            
+            useTripsStore.getState.setTripSendData({
+              "trip_id":dataWs?.trip_id,
+              "user_id":idUser,
+              "latitude":dataWs?.latitude,
+              "longitude":dataWs?.longitude,
+              "contribution":contribution,
+              "location":addressComponent?.long_name
+            })
             wsConection.send(`
             {
               "request":{
@@ -223,11 +231,14 @@ useEffect(()=>{
       // a message was received
       const json = JSON.parse(e.data);
       const message = json?.response;
-      if(message?.status){
-        console.log('VIENE DESDE PASAJERO',message);
-        setMessagesPassenger(e.data);
+      if(message?.status ){
+        const json = JSON.parse(e.data);
+        const message = json?.response;
+        if(message?.user_id == idUser){
+          console.log('VIENE DESDE PASAJERO',message);
+          setMessagesPassenger(e.data);
+        }
       }
-      
     };
     wsConection.onerror = (e) => {
       // an error occurred

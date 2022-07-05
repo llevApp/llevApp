@@ -19,6 +19,19 @@ const {conection: wsConection, isOpen, setIsOpen,messagesPassenger,setMessages} 
 const initTrip = ()=>{
     navigation.replace("TripScreenPassenger");
 };
+const sendResponseDriver= ()=>{
+  hubWebSocket.getState().clearMessagesPassenger();
+  hubWebSocket.getState().clearMessages();
+  wsConection?.send(`
+  {
+    "request":{
+        "status":"chat",
+        "trip_id":${messages.tripId},
+        "user_id":${messages.userId}
+    }
+  }
+`);
+}
 const pushToChat = ()=>{
     console.log('Send to Chat');
     navigation.navigate('Chat')
