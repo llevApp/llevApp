@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 15,
       paddingVertical: 10,
       borderRadius: 10,
-      marginTop: 5,
+      margin: 25,
       color: '#002333'
       
     },
