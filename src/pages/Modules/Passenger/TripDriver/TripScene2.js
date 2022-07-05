@@ -122,8 +122,6 @@ export const TripScreen= () => {
   }));
 const sendDataInit = () => {
   /* Send Data to Driver for ws */
-      //console.log('Connected to the server')
-     // console.log(dataWs?.driver_id);
       let ws = new WebSocket(WEB_SOCKET_CHANNEL+dataWs?.driver_id);
       hubWebSocket.getState().setConection(ws);
       setActiveWs(true);
@@ -131,11 +129,7 @@ const sendDataInit = () => {
   const openModal = (t) => {
     setActiveWs(false);
     setVisible(true);
-    //console.log('*******************');
-    //console.log(origin);
-    //console.log(t)
     setDataWs(t);
-    //console.log('*******************');
   }
   const backHome = ()=>{
     navigation.replace("Passenger");
@@ -177,13 +171,11 @@ useEffect(()=>{
 useEffect(()=>{
   if(wsConection && activeWs){
     Geocoder.init(GOOGLE_MAPS_APIKEY, {language : "es"});
-    //console.log('entramos al ws');
     wsConection.onopen = () => {
     setIsOpen(true);
     Geocoder.from(origin)
 		.then(json => {
         		let addressComponent = json.results[0].address_components[0];
-			      console.log("data ws: ",dataWs);
             useTripsStore.getState().setTripSendData({
               "trip_id":dataWs?.trip_id,
               "user_id":idUser,
@@ -251,7 +243,6 @@ useEffect(()=>{
         const json = JSON.parse(e.data);
         const message = json?.response;
         if(message?.user_id == idUser){
-          console.log('VIENE DESDE PASAJERO',message);
           setMessagesPassenger(e.data);
         }
       }
@@ -263,8 +254,7 @@ useEffect(()=>{
     
     wsConection.onclose = (e) => {
       // connection closed
-      //console.log(e.code, e.reason);
-      Alert.alert(e.code +' ' +e.reason);
+      console.log(e.code +' ' +e.reason);
     }; 
   }
 },[activeWs]);
@@ -343,18 +333,6 @@ useEffect(()=>{
                         (null)
                         }
                       </VStack>
-                  {/*     <Button flex="1" colorScheme="green" onPress={() => {
-                        backHome();
-                        setShowModal(false);
-                      }}>
-                        Volver
-                      </Button>
-                      <Button variant="ghost" colorScheme="red" onPress={() => {
-                        backHome();
-                        setShowModal(false);
-                      }}>
-                        Cancelar
-                      </Button> */}
                       </Modal.Body>
                       {titleChange == 'Cargando Datos' ? 
                         (null):
@@ -383,7 +361,7 @@ useEffect(()=>{
                 longitude:origin?.longitude
               }}
               title={"Este eres tú"}
-              description={"Tu ubicacion actual"}
+              description={"Tu ubicación actual"}
               identifier="destination"
             />
             <MapView.Marker
@@ -403,7 +381,6 @@ useEffect(()=>{
 
         </MapView>
         <Center flex={1} px="3">
-                {/* <ModalInstrucction /> */}
         </Center>
         <KeyboardAvoidingView
           style={{flex: 1,

@@ -158,7 +158,6 @@ useEffect( ()=>{
           fetchDetails={true}
           onPress={(data, details = null) => {
             // 'details' is provided when fetchDetails = true
-           console.log("location: ",details.geometry.location)
             setOrigin({
               location:details.geometry.location,
               description:data.description

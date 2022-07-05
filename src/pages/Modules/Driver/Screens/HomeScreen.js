@@ -42,7 +42,7 @@ useEffect(()=>{
       let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
       hubWebSocket.getState().setConection(ws);
     }else{
-      //console.log('Undefined id user');
+      //Undefined id user;
     }
 },[idUser]);
 
@@ -54,32 +54,27 @@ useEffect(()=>{
         setIsOpen(true);
       };
       wsConection.onmessage = (e) => {
-        //console.log(e);
         // a message was received      
         const json = JSON.parse(e.data);
         if(json?.request){
-        //if(e?.data){
-          console.log('Home Screen Conductor',e?.data);
           setMessages(json?.request);
           setShowModal(true);
         }
       };
       wsConection.onerror = (e) => {
         // an error occurred
-        Alert.alert('Error in WS, '+ e.message);
+        console.log('Error in WS, '+ e.message);
       };
       
       wsConection.onclose = (e) => {
         // connection closed
-        //console.log(e.code, e.reason);
-        Alert.alert(e.code +' ' +e.reason);
+        console.log(e.code +' ' +e.reason);
       };
     }
   
 },[wsConection]);
 
 useEffect(()=>{
-    //console.log('Mensaje WS: ', messages);
     //hubWebSocket.getState().clearMessages();
 }),[messages];
 
@@ -96,41 +91,6 @@ return (
                   <WidgetUserTrips style={styles.tripsInfo}/>
               </VStack>
           </Flex>
-
-          {/* {     showModal && messages?.name && messages?.contribution ? 
-        (  <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
-                    <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
-                      <Modal.CloseButton />
-                      <Modal.Header>Solicitud de viaje</Modal.Header>
-                      <Modal.Body _scrollview={{scrollEnabled:false}}>
-                      <VStack style={styles.widgets} space={2}>
-                        <VStack direction="row" space={3}>
-                          <Text>{messages?.name}</Text>
-                        </VStack>
-                        <VStack direction="row" space={3}>
-                          <Text>Ubicación:</Text>
-                          <Text>{messages?.location}</Text>
-                        </VStack>
-                        <VStack direction="row" space={1} >
-                          <Text>Contribución:</Text>
-                          <Text>{messages?.contribution}</Text>
-                        </VStack>
-                      </VStack>
-                      <Button flex="1" colorScheme="green" onPress={() => {
-                        ResponseRequest();
-                        setShowModal(false);
-                      }}>
-                        Aceptar
-                      </Button>
-                      <Button variant="ghost" colorScheme="red" onPress={() => {
-                        ResponseDeclinedRequest();
-                        setShowModal(false);
-                      }}>
-                        Cancelar
-                      </Button>
-                      </Modal.Body>
-                    </Modal.Content>
-          </Modal>) : null} */}
           </NativeBaseProvider>
           </RefreshControl>
         </View>

@@ -26,7 +26,6 @@ const WidgetUserTrips = () => {
 
     const { avatarUrl } = useUserStore(
     );
-    console.log("avatar url: ",avatarUrl)
     /* Call function when the user put geolocalization */
     async function getLocationPermission(){
         let {status} = await Location.requestForegroundPermissionsAsync();
@@ -58,7 +57,6 @@ const WidgetUserTrips = () => {
             setTrips(filter)
             }
           })
-        //.then((json)=>setTrips(json), console.log(trips))
         .catch((error)=>alert(error))
     }
     

@@ -32,36 +32,14 @@ const MessagesScreen = (data) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    console.log("Iniciamos conexion: ", HUB_CHAT+data?.route?.params?.useId+'/'+useUserStore.getState().idUser);
     // enter your websocket url
     ws.current = new WebSocket(HUB_CHAT+data?.route?.params?.useId+'/'+useUserStore.getState().idUser);
     ws.current.onopen = () => {
-      console.log("conexion establecida")
+      console.log("connect init");
     };
     ws.current.onmessage = e => {
       const response = JSON.parse(e.data);
-      console.log("onmessage=>", JSON.stringify(response));
       if( response.senderId != useUserStore.getState().idUser){
-        /* 
-              {
-        _id: '123123123123',
-        senderId: senderId,// receiver id
-        text: 'Hola mi nombre es '+ data?.route?.params?.userName + ' y soy tu conductor.',
-        createdAt: new Date(),
-        user: {
-          _id: receiverId,  // sender id
-          name: name,
-          avatar: image_path,
-        },
-      },
-        
-        */
-        /* 
-              "_id":messages[0]._id,
-      "senderId": senderId,
-      "receiverId": receiverId,
-      "message": messages[0].text,
-      "action": "message" */
         var sentMessages = {
           _id: response._id,
           senderId: response.receiverId,
@@ -77,7 +55,7 @@ const MessagesScreen = (data) => {
       }
     };
     ws.current.onclose = () => {
-      console.log("connection cerrada");
+      console.log("connection close");
     }
     return () => {
       ws.current.close();
@@ -85,13 +63,6 @@ const MessagesScreen = (data) => {
   }, [])
 
   useEffect(() => {
-
-    /* 
-          "senderId": senderId,
-      "receiverId": receiverId,
-      "message": messages[0].text,
-      "action": "message"
-      */
     setMessages([
       {
         _id: '123123123123',
@@ -110,9 +81,6 @@ const MessagesScreen = (data) => {
 
 
   const onSend = useCallback((messages) => {
-    console.log("mesagge:", messages);
-    /*  "_id": "6501e3d1-2ebc-4f43-b6e8-11fc87e7c703",
-     */
     let obj = {
       "_id":messages[0]._id,
       "senderId": senderId,
@@ -120,7 +88,6 @@ const MessagesScreen = (data) => {
       "message": messages[0].text,
       "action": "message"
     }
-    console.log('Enviado desde Vista Pasajero',obj);
     ws.current.send(JSON.stringify(obj))
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
   }, [])

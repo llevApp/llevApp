@@ -84,7 +84,6 @@ export default function TripScreen({ navigation }) {
                 avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
             }
         });
-        //console.log(FlatListData);
     },[tripsArray]);
     return (
         <View style={{ flex: 1 }} background="#F5F8FF">

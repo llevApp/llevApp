@@ -33,29 +33,16 @@ const sendResponseDriver= ()=>{
 `);
 }
 const pushToChat = ()=>{
-    console.log('Send to Chat');
-    navigation.navigate('Chat')
-    //navigation.navigate('MessagesScreen');
+    navigation.navigate('Chat');
 }
 useEffect(()=>{
     if(name){
     setNameShow(name);
-    //console.log('Estamos en vista Pasajero');
   }
 }),[name];
   /* When get the user id, open ws */
-  useEffect(()=>{
-    /* Create Connection with WS */
-    if(idUser){
-      //let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
-      //hubWebSocket.getState().setConection(ws);
-    }else{
-      //console.log('Undefined id user');
-    }
-},[idUser]);
 useEffect(()=>{
   if(hubWebSocket.getState().messagesPassenger!=null){
-    console.log('Mensaje desde el store:',hubWebSocket.getState().messagesPassenger);
     setShowModal(true);
   }
 },[hubWebSocket.getState().messagesPassenger])

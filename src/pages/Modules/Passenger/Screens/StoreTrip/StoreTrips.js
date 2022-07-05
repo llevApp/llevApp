@@ -15,7 +15,6 @@ export const useTripsStore =
                     if (userID) {
                         set({ loading: true, error: null });
                     let url = URL_API+PASSENGER_TRIPS+userID;
-                    //console.log('Esta es la URL: '+url);
                     fetch(url)
                         .then((response)=>response?.json())
                         .then((json)=>set({tripsArray: json?.trip?.map((trip,index)=>{

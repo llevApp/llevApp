@@ -24,7 +24,7 @@ function MainContainer() {
   const { name } = useUserStore();
   useEffect(()=>{
     if(name){
-   //console.log(name);
+   //Update name
   }   
 
   },[name]);

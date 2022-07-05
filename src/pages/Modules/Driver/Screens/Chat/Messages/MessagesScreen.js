@@ -33,15 +33,13 @@ const MessagesScreenDriver = (data) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    console.log("Iniciamos conexion: ", HUB_CHAT+useUserStore.getState().idUser+'/'+data?.route?.params?.useId);
     // enter your websocket url
     ws.current = new WebSocket(HUB_CHAT+useUserStore.getState().idUser+'/'+data?.route?.params?.useId);
     ws.current.onopen = () => {
-      console.log("conexion establecida")
+      console.log("connect init");
     };
     ws.current.onmessage = e => {
       const response = JSON.parse(e.data);
-      console.log("onmessage=>", JSON.stringify(response));
       if( response.senderId != useUserStore.getState().idUser){
         var sentMessages = {
           _id: response._id,
@@ -58,7 +56,7 @@ const MessagesScreenDriver = (data) => {
       }
     };
     ws.current.onclose = () => {
-      console.log("connection cerrada");
+      console.log("connection close");
     }
     return () => {
       ws.current.close();
@@ -92,8 +90,6 @@ const MessagesScreenDriver = (data) => {
       "action": "message"
     }
     ws.current.send(JSON.stringify(obj))
-    console.log('Enviado desde Vista Driver',obj);
-
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
   }, [])
   return (

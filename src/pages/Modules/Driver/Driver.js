@@ -72,7 +72,7 @@ const Driver = ()=>{
         let ws = new WebSocket(WEB_SOCKET_CHANNEL+idUser);
         hubWebSocket.getState().setConection(ws);
         }else{
-        //console.log('Undefined id user');
+        //'Undefined id user'
         }
     },[idUser]);
 
@@ -84,13 +84,10 @@ const Driver = ()=>{
             setIsOpen(true);
         };
         wsConection.onmessage = (e) => {
-            //console.log(e);
             // a message was received      
             const json = JSON.parse(e.data);
             let isMounted = true;
             if(json?.request){
-            //if(e?.data){
-            console.log('Home Screen Conductor',e?.data);
             setMessages(json?.request);
 
             if (isMounted) {
@@ -107,15 +104,13 @@ const Driver = ()=>{
         
         wsConection.onclose = (e) => {
             // connection closed
-            //console.log(e.code, e.reason);
-            Alert.alert(e.code +' ' +e.reason);
+            console.log(e.code +' ' +e.reason);
         };
         }
     
     },[wsConection]);
 
     useEffect(()=>{
-        //console.log('Mensaje WS: ', messages);
         //hubWebSocket.getState().clearMessages();
     }),[messages];
 

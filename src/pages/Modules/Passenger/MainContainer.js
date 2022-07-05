@@ -24,13 +24,6 @@ function MainContainer() {
   const { name} = useUserStore(({ name }) => ({
     name
   }));
-  useEffect(()=>{
-    if(name){
-   //console.log(name);
-  }   
-
-  },[name]);
-
   const HeaderOptionsSwitch= () => {
     return {
         headerRight: () => (

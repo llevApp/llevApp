@@ -53,22 +53,16 @@ useEffect(()=>{
     .then((response)=>response.json())
     .then((json)=>{
      if(json){
-      console.log(json); 
       setIdTrip(null);
         if(json?.trip?.length == 0){
-        console.log('No tenemos viajes activos');
         setTitleChange('Ups no hay chats disponibles');
         }else{
           if(json?.trip){
             setIdTrip(json?.trip[0].trip_id);
             setTitleChange('Hay viajes activos');
-          }else{
-            console.log('nada');
           }
         }
-      }else{
-        console.log('No tenemos pasajeros');
-      } 
+      }
     }
     
     )
@@ -97,12 +91,9 @@ useEffect(()=>{
               messageText:'Hola, escribeme...'
              }
           })
-        console.log("object passenger: ",objectPassenger);
         setMessages(objectPassenger);
         }
-      }else{
-        console.log('No tenemos pasajeros');
-      } 
+      }
     }
     
     )
@@ -117,13 +108,9 @@ useEffect(()=>{
           keyExtractor={item=>item.id}
           renderItem={({item}) => (
             <Card onPress={() =>{
-
-              console.log("item: ",item?.userName,item?.userImg,item?.messageText);
             navigation.navigate('MessagesScreenDriver', {
               useId:item?.id,userName: item?.userName,userImg: item?.userImg,messageText:item.messageText
             })
-            
-           
             }
             }>
               <UserInfo>

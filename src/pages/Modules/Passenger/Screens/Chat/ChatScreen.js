@@ -76,7 +76,6 @@ useEffect(()=>{
           setMessages(newMessages);
         }
       }else{
-        console.log('NO drivers!!');
         setTitleChange('Ups no hay chats disponibles');
       }
     })
@@ -91,7 +90,6 @@ useEffect(()=>{
           keyExtractor={item=>item.id}
           renderItem={({item}) => (
             <Card onPress={() =>{ 
-                console.log(item?.userName,item?.userImg,item?.messageText);
               navigation.navigate('MessagesScreen', {
                 useId:item?.id,userName: item?.userName,userImg: item?.userImg,messageText:item.messageText
               })
