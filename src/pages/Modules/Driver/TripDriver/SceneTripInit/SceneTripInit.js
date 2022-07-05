@@ -88,7 +88,7 @@ const toHome = () => {
   navigation.replace("Driver");
 }
 const toTrip = () => {
-  navigation.replace("ActiveTrips");
+  navigation.navigate("ActiveTrips");
 }
 useEffect( ()=>{
  if(isOpen){

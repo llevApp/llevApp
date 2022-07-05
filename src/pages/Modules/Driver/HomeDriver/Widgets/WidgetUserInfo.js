@@ -41,7 +41,7 @@ const WidgetUserInfo = () => {
         navigation.replace("TripScreen")
     }
     const goToActiveTripScreen= ()=>{
-        navigation.replace("ActiveTrips")
+        navigation.navigate("ActiveTrips")
     }
     return(
         <>
