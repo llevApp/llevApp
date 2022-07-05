@@ -1,4 +1,4 @@
-import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack, ScrollView } from "native-base";
+import { Text, View, Center, Container, Heading, Avatar, Divider, Box, HStack, NativeBaseProvider, VStack, Button, Stack } from "native-base";
 import { StyleSheet,TouchableHighlight } from "react-native";
 import { useUserStore } from '../../../../Home/Store/StoreHome';
 import {GOOGLE_MAPS_APIKEY,PASSENGER_TRIPS,URL_API} from "@env";
@@ -74,14 +74,17 @@ const WidgetUserTrips = () => {
             <>
                 <Container style={styles.mainContainer}>
                     <Box style={styles.mainBox}>
-                    <HStack justifyContent="space-between">
-                        <Heading  style={{fontSize:15}}>A tu alrededor</Heading>
-                    </HStack> 
-                    <VStack space={290}>  
+                    <Heading fontSize="md" pb="0" borderColor="black"  color="white"    py="0" >  
+                    <Text color="coolGray.600" _dark={{color: "warmGray.200"}} pl="2" >
+                        Conductores a tu alrededor
+                    </Text>  
+                </Heading>
+                    <VStack space={290} >  
                         <HStack justifyContent="space-between">  
                         </HStack>
                         <MapView
                             ref={mapRef}
+                            borderRadius="5"
                             style={styles.map}
                             mapType="mutedStandard"
                             initialRegion={{
