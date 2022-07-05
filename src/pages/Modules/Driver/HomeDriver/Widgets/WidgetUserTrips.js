@@ -29,15 +29,13 @@ const WidgetUserTrips = () => {
                 {tripsArray?.length > 0 ? 
                     (<><FlatList data={tripsArray.slice(tripsArray.length-4,tripsArray.length).reverse()} 
                         renderItem={({item}) => 
-                            <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="90" pr="5" py="6" borderRadius="20" w = "100%" marginTop={1} h = "105">
-                                <HStack space={3} justifyContent="center" >
-                                    <VStack>
-                                        <HStack space={2} justifyContent="left" pl="4"  >
-                                            <Text fontSize="2xs"  _dark={{color: "warmGray.50"}} color="#159A9C" py="0"  >
-                                                {item.address?.toUpperCase()}
-                                            </Text>
-                                        </HStack>
-                                        <HStack space={3} justifyContent="left" pl="4" >
+                            <Box borderWidth="0.4"  borderColor="gray.200" _dark={{borderColor: "gray.600"} } background="white"  pl="4" pr="5" py="6" w = "100%" marginTop={1} h = "105">
+                                <HStack space={3} justifyContent={"space-around"}>
+                                    <VStack >
+                                        <Text fontSize="2xs"  _dark={{color: "warmGray.50"}} color="#159A9C" py="0"  >
+                                            {item.address?.toUpperCase()}
+                                        </Text>
+                                        <HStack space={3} alignSelf={"flex-start"} pl="4" >
                                             <Text  fontSize="4xl" color="#6AC18A" _dark={{color: "warmGray.200"}}>
                                                 $
                                             </Text>
@@ -50,8 +48,8 @@ const WidgetUserTrips = () => {
                                         </HStack>
                                     </VStack>
                                     <Spacer />
-                                    <HStack space={1}  >
-                                        <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800" marginTop={-1} pl="0" pr="70" py="1" >
+                                    <HStack space={1} >
+                                        <Text fontSize="2xs" _dark={{color: "warmGray.50"}} color="coolGray.800" marginTop={-1} pl="0" py="1" >
                                             {item.timeStamp}
                                         </Text>
                                     </HStack>
