@@ -5,8 +5,10 @@ export const useStoreTripDriver =
             return {
                 origin:undefined,
                 destination:undefined,
+                datetime:undefined,
                 setOrigin: (value) => set({ origin: value }),
-                setDestination: (value) => set({ destination: value })
+                setDestination: (value) => set({ destination: value }),
+                setDatetime: (value) => set({ datetime: value })
             }
         }
 );
