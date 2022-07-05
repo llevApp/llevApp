@@ -99,7 +99,7 @@ export default function TripScreen({ navigation }) {
                             </HStack>
                         </VStack>
                 </Heading>
-                {tripsArray? 
+                {tripsArray.length > 0 ? 
                     (<>
                         <FlatList data={tripsArray} 
                         renderItem={({item}) => 
