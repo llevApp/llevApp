@@ -103,7 +103,7 @@ export default function TripScreen({ navigation }) {
                     (<>
                         <FlatList data={tripsArray} 
                         renderItem={({item}) => 
-                            <Box borderWidth="0.5" borderColor={item?.recentText > 5 ?  "#60d394":"#f68080"} _dark={{borderColor: "gray.600"} } background="white" borderRadius="20" w={"100%"} h={120} margin={0.5}>
+                            <Box borderWidth="0.5" borderColor={item?.recentText > 0 ?  "#60d394":"#f68080"} _dark={{borderColor: "gray.600"} } background="white" borderRadius="20" w={"100%"} h={120} margin={0.5}>
                                 <HStack space={4} justifyContent="flex-end" marginRight={5} marginLeft={10} marginTop={2}>
                                     <VStack marginLeft ="2" >
                                         <HStack  >
