@@ -328,7 +328,7 @@ useEffect(()=>{
               longitude: -71.349513
             }}
             apikey={GOOGLE_MAPS_APIKEY}
-            strokeWidth={5}
+            strokeWidth={2}
             strokeColor={colorsPolilynes[ Math.floor(Math.random() * 10)]}></MapViewDirections>
         </> 
         )) :   <Modal   isOpen={showModal} onClose={() => setShowModal(false)}  >
