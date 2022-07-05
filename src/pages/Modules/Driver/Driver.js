@@ -10,6 +10,7 @@ import { Alert } from 'react-native-web';
 import {WEB_SOCKET_CHANNEL} from "@env";
 import MainContainer from './MainContainer'
 import { StyleSheet } from 'react-native';
+import { useStoreDriver } from './DriverStore';
 /* import { Text } from 'native-base' */
 
 
@@ -18,7 +19,7 @@ const Driver = ()=>{
 
     const [nameShow, setNameShow] = useState(null);
     const navigation = useNavigation();
-    const [showModal, setShowModal] = useState(false);
+    const {showModal, setShowModal} = useStoreDriver()
     const {idUser, name} = useUserStore();
     const {conection: wsConection, isOpen, setIsOpen,messages,setMessages} = hubWebSocket();
     const [disableTouchView, setDisableTouchView] = useState(true)
