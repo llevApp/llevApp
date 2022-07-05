@@ -33,8 +33,7 @@ const MessagesScreenDriver = (data) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    console.log("Iniciamos conexion")
-    console.log(HUB_CHAT+useUserStore.getState().idUser+'/'+data?.route?.params?.useId);
+    console.log("Iniciamos conexion: ", HUB_CHAT+useUserStore.getState().idUser+'/'+data?.route?.params?.useId);
     // enter your websocket url
     ws.current = new WebSocket(HUB_CHAT+useUserStore.getState().idUser+'/'+data?.route?.params?.useId);
     ws.current.onopen = () => {

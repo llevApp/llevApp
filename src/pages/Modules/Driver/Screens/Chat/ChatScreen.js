@@ -64,7 +64,7 @@ useEffect(()=>{
 useEffect(()=>{
 
   if(idTrip){
-    console.log(URL_API+GET_TRIP_INFO+idTrip);
+    console.log("URL: ",URL_API+GET_TRIP_INFO+idTrip);
     fetch(URL_API+GET_TRIP_INFO+idTrip)
     .then((response)=>response.json())
     .then((json)=>{
@@ -76,11 +76,11 @@ useEffect(()=>{
              return {
               id:passenger?.user_id,
               userName:passenger?.user_name,
-              userImg:`https://firebasestorage.googleapis.com/v0/b/sistema-electivos-auth.appspot.com/o/images%2Favatars%2F${passenger?.uuid_fb}.png?alt=media&token=2be81107-b1eb-45f8-baa7-349cc6bfb99d`,
+              userImg:`https://firebasestorage.googleapis.com/v0/b/llevapp.appspot.com/o/images%2Favatars%2F${passenger?.uuid_fb}.png?alt=media&token=7ae4bc5b-af55-4c54-b162-e065f2fa8af4`,
               messageText:'Hola, escribeme...'
              }
           })
-        console.log(objectPassenger);
+        console.log("object passenger: ",objectPassenger);
         setMessages(objectPassenger);
         }
       }else{
@@ -101,7 +101,7 @@ useEffect(()=>{
           renderItem={({item}) => (
             <Card onPress={() =>{
 
-              console.log(item?.userName,item?.userImg,item?.messageText);
+              console.log("item: ",item?.userName,item?.userImg,item?.messageText);
             navigation.navigate('MessagesScreenDriver', {
               useId:item?.id,userName: item?.userName,userImg: item?.userImg,messageText:item.messageText
             })
