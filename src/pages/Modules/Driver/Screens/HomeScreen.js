@@ -21,33 +21,6 @@ const {idUser, name} = useUserStore();
 const {conection: wsConection, isOpen, setIsOpen,messages,setMessages} = hubWebSocket();
 const [disableTouchView, setDisableTouchView] = useState(true)
 
-const ResponseRequest = () =>{
-  hubWebSocket.getState().clearMessagesPassenger();
-  hubWebSocket.getState().clearMessages();
-    wsConection?.send(`
-      {
-        "response":{
-            "status":"accepted",
-            "trip_id":${messages.tripId},
-            "user_id":${messages.userId}
-        }
-      }
-  `);
-};
-const ResponseDeclinedRequest = () =>{
-  hubWebSocket.getState().clearMessagesPassenger();
-  hubWebSocket.getState().clearMessages();
-  wsConection?.send(`
-    {
-      "response":{
-          "status":"declined",
-          "trip_id":${messages.tripId},
-          "user_id":${messages.userId}
-      }
-    }
-`);
-};
-
 useEffect(()=>{
     useTripsStore.getState().setTripsPassenger(idUser);
     if (idUser) {
@@ -124,7 +97,7 @@ return (
               </VStack>
           </Flex>
 
-          {     showModal && messages?.name && messages?.contribution ? 
+          {/* {     showModal && messages?.name && messages?.contribution ? 
         (  <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
                     <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
                       <Modal.CloseButton />
@@ -157,7 +130,7 @@ return (
                       </Button>
                       </Modal.Body>
                     </Modal.Content>
-          </Modal>) : null}
+          </Modal>) : null} */}
           </NativeBaseProvider>
           </RefreshControl>
         </View>
