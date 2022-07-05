@@ -23,6 +23,7 @@ import {
   HStack,
 } from 'native-base';
 import { AlertDialog, Center } from "native-base";
+import { FontAwesome } from '@expo/vector-icons'; 
 
 import { useNavigation } from '@react-navigation/core'
 import { Marker } from "react-native-svg";
@@ -401,14 +402,23 @@ useEffect(()=>{
               <View style={styles.textContainer}>
               <Text style={styles.H1}>Iniciar oferta de viaje</Text>
               </View>
-                <TextInput
-                marginBottom={'auto'}
-                placeholder="Contribucion"
-                keyboardType="numeric"
-                value={contribution}
-                onChangeText={text => setContribution(text)}
-                style={styles.input}
-                />
+              <Box flex={1} m={10} alignItems="center">
+                 <HStack alignContent={"center"}>
+                    <FontAwesome name="dollar" size={25} color="black" />
+                    <Box>
+                      <TextInput
+                        marginBottom={'auto'}
+                        placeholder="Contribucion"
+                        keyboardType="numeric"
+                        value={contribution}
+                        onChangeText={text => setContribution(text)}
+                        style={styles.input}
+                        />
+                    </Box>
+              </HStack>
+              </Box>
+             
+                
                 <VStack alignItems="center">
                   <Button onPress={sendDataInit} style={styles.button} padding={5}>
                         <Text style={styles.buttonText}>Enviar oferta</Text>
