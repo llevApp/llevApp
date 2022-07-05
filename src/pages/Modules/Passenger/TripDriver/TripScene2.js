@@ -1,6 +1,6 @@
 import React,{useState,useEffect,useRef, useId} from "react";
 import {Alert,View, Text,Keyboard, Platform,TouchableHighlight,TextInput } from "react-native";
-import {  NativeBaseProvider, Flex,Spinner,Modal,Heading} from "native-base";
+import {  NativeBaseProvider, Flex,Spinner,Modal,Heading, KeyboardAvoidingView} from "native-base";
 import MapView from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import CountDown from 'react-native-countdown-component';
@@ -389,14 +389,22 @@ useEffect(()=>{
         <Center flex={1} px="3">
                 {/* <ModalInstrucction /> */}
         </Center>
-        <Actionsheet isOpen={visible} onClose={onClose}>
+        <KeyboardAvoidingView
+          style={{flex: 1,
+          alignItems: 'center' }}
+          behavior={Platform.OS === "ios" ? "position": "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+          >
+        <Actionsheet isOpen={visible} onClose={() => setVisible(false)}>
         <Actionsheet.Content bottom={bottomInset}>
               <Box w="100%" style={styles.containerBox}  justifyContent="center">
               <View style={styles.textContainer}>
               <Text style={styles.H1}>Iniciar oferta de viaje</Text>
               </View>
                 <TextInput
-                placeholder="contribution"
+                marginBottom={'auto'}
+                placeholder="Contribucion"
+                keyboardType="numeric"
                 value={contribution}
                 onChangeText={text => setContribution(text)}
                 style={styles.input}
@@ -409,6 +417,7 @@ useEffect(()=>{
               </Box>    
           </Actionsheet.Content>
         </Actionsheet> 
+        </KeyboardAvoidingView>
         </View>
 
 );
