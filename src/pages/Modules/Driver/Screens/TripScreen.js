@@ -8,7 +8,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import {URL_API,TRIPS_DRIVER} from '@env';
 export default function TripScreen({ navigation }) {
 
-    const {tripsArray} = useTripsStore()
+    const {tripsArray,error} = useTripsStore()
     const { idUser, name } = useUserStore();
   
 
@@ -71,21 +71,9 @@ export default function TripScreen({ navigation }) {
         useTripsStore.getState().setTripsPassenger(idUser)
     },[]); 
     useEffect(()=>{
-        const FlatListData = tripsArray?.map((trip,index)=>{
-            let date = moment(trip.init_trip_time).format('MM/DD/YY HH:MM')
-            return{
-                id:index,
-                driver:trip.name,
-                start:[trip.latitude,trip.longitude],
-                timeStamp:date,
-                recentText:trip.total_tips,
-                address:trip.address,
-                passengerNumber:trip.total_passenger,
-                avatarUrl: "https://img.icons8.com/officel/80/000000/map-pin.png"
-            }
-        });
-        //console.log(FlatListData);
-    },[tripsArray]);
+        console.log(tripsArray);
+        console.log(error);
+    },[error]);
     return (
         <View style={{ flex: 1 }} background="#F5F8FF">
             <Box >
@@ -99,7 +87,7 @@ export default function TripScreen({ navigation }) {
                             </HStack>
                         </VStack>
                 </Heading>
-                {tripsArray.length > 0 ? 
+                {tripsArray?.length > 0 ? 
                     (<>
                         <FlatList data={tripsArray} 
                         renderItem={({item}) => 

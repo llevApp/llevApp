@@ -7,7 +7,8 @@ export const useTripsStore =
         (set) => {
             return {
                 tripsArray:undefined,
-                setError: (error) => set({ error }),
+                error:undefined,
+                setError: (value) => set({ error:value }),
                 loading:false,
                 setTripsPassenger2: (endpoint) => {
                     set({ loading: true, error: null });
@@ -40,7 +41,7 @@ export const useTripsStore =
                             }
                         })
                         }))
-                        .catch((error)=>alert("Lo sentimos, ha ocurrido un error.",error))
+                        .catch((value)=>set({ error:value  }))
                         .finally( ()=>set({ loading:false  }));
                     }
                     

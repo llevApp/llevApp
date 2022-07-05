@@ -103,7 +103,9 @@ const Driver = ()=>{
             //console.log(e.code, e.reason);
             Alert.alert(e.code +' ' +e.reason);
         };
+        
         }
+      
     
     },[wsConection]);
 
