@@ -78,7 +78,7 @@ const WidgetUserTrips = () => {
                         Conductores a tu alrededor
                     </Text>  
                 </Heading>
-                    <VStack space={290} >  
+                    <VStack space={290} flex={1} >  
                         <HStack justifyContent="space-between">  
                         </HStack>
                         <MapView
