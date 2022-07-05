@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -25,13 +25,27 @@ import { Button, KeyboardAvoidingView, NativeBaseProvider} from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Platform } from 'react-native-web';
 import SceneSelectOrigin from './src/pages/Modules/Driver/TripDriver/SceneSelectOrigin/SceneSelectOrigin';
-import BackButton from './src/utils/backButton'
-
+import BackButton from './src/utils/backButton';
+import { storeApp } from './storeApp';
+import{hubWebSocket} from './src/services/common/hubWebSocket';
+import{useUserStore} from './src/pages/Home/Store/StoreHome';
+import * as Notifications from 'expo-notifications';
 /* Driver */
 import ActiveTripScene from './src/pages/Modules/Driver/TripDriver/ActiveTripScene';
 
 const Stack = createNativeStackNavigator();
 /* Changes */
+// First, set the handler that will cause the notification
+// to show the alert
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
+
 export default function App() {
   const HeaderOptionsBack= (screen) => {
     return {
@@ -41,8 +55,87 @@ export default function App() {
         ),
         headerTitle: ""
       }
+  }
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  const{pushNotification} = storeApp();
+  const {idUser}=useUserStore();
+  const {messages,messagesPassenger}=hubWebSocket();
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (true) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync({
+          ios: {
+            allowAlert: true,
+            allowBadge: true,
+            allowSound: true,
+            allowAnnouncements: true,
+          },
+        });
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    }
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
     }
   
+    return token;
+  }
+  async function schedulePushNotification(titleMessage,bodyMessage,dataMessage) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: titleMessage+"📬",
+        body: bodyMessage,
+        data: { data: dataMessage },
+      },
+      trigger: { seconds: 2 },
+    });
+  }
+  useEffect(()=>{
+    if(idUser){
+    if(messages){
+      console.log('Desde app mensajes para driver:',idUser,messages);
+     
+         schedulePushNotification('LLEVAPP ',messages?.name+' te contribuye con '+messages?.contribution+', aceptas ?',messages?.name+' te contribuye con '+messages?.contribution+', aceptas?');
+      
+    }else if(messagesPassenger){
+      console.log('Desde app mensajes pasajeros:',idUser,messagesPassenger);
+      let result = messagesPassenger?.status == 'accepted' ? 'aceptado' :'rechazado';
+      schedulePushNotification('LLEVAPP ','Tu solicitud de viaje ha sido '+result,'Tu solicitud de viaje ha sido '+result);
+    }
+    }
+  },[idUser,messages,messagesPassenger]);
   return (
    
     <NativeBaseProvider>
@@ -76,6 +169,12 @@ export default function App() {
         <Stack.Screen  options={{ headerShown: false }} name="MessagesScreenDriver" component={MessagesScreenDriver} />
         <Stack.Screen  options={{ headerShown: false }} name="ChatScreenDriver" component={ChatScreenDriver} />
       </Stack.Navigator>
+{/*       <Button
+        title="Press to schedule a notification"
+        onPress={async () => {
+          await schedulePushNotification();
+        }}
+      /> */}
       </KeyboardAvoidingView>
       </SafeAreaProvider>
       </NavigationContainer>
@@ -83,7 +182,6 @@ export default function App() {
     
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
