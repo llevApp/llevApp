@@ -191,7 +191,8 @@ useEffect(()=>{
               "contribution":contribution,
               "location":addressComponent?.long_name,
               "nameDriver":dataWs?.name,
-              "addressDriver":dataWs?.address
+              "addressDriver":dataWs?.address,
+              "status":'cargando'
             })
             wsConection.send(`
             {
@@ -210,6 +211,17 @@ useEffect(()=>{
            navigation.replace("Passenger");
 		})
 		.catch(error => {
+      useTripsStore.getState().setTripSendData({
+        "trip_id":dataWs?.trip_id,
+        "user_id":idUser,
+        "latitude":dataWs?.latitude,
+        "longitude":dataWs?.longitude,
+        "contribution":contribution,
+        "location":addressComponent?.long_name,
+        "nameDriver":dataWs?.name,
+        "addressDriver":dataWs?.address,
+        "status":'cargando'
+      })
       console.warn(error)
       wsConection.send(`
       {

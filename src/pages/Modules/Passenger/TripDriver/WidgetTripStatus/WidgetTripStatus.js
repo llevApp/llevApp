@@ -93,7 +93,7 @@ export const WidgetTripStatus = () => {
     const {conection,messagesPassenger}= hubWebSocket();
     const [fullWidget,setFullWidget] = useState(false);
     const[stateTripPassanger,setStateTripPassanger]=useState(null);
-    
+    const {tripSendData,setTripSendData}=useTripsStore();
     const TripCard = (props) => {
       const {nameDriver,addres}=props;
         return (
@@ -152,20 +152,33 @@ export const WidgetTripStatus = () => {
        "https://cdn-icons-png.flaticon.com/512/219/219967.png",
        "https://cdn-icons-png.flaticon.com/512/219/219976.png",
     ]
+const clearView = ()=>{
+  setTimeout(()=>{setTripSendData(null)}, 30000);
+  setTimeout(()=>{setStateTripPassanger(null)}, 30000);
+}
 useEffect(()=>{
   if(messagesPassenger){
     if(useTripsStore.getState().tripSendData?.trip_id == messagesPassenger?.trip_id ){
-      setStateTripPassanger(messagesPassenger)
+      setTripSendData({
+        "trip_id":tripSendData?.trip_id,
+        "user_id":tripSendData?.user_id,
+        "latitude":tripSendData?.latitude,
+        "longitude":tripSendData?.longitude,
+        "contribution":tripSendData?.contribution,
+        "location":tripSendData?.location,
+        "nameDriver":tripSendData?.nameDriver,
+        "addressDriver":tripSendData?.addressDriver,
+        "status":messagesPassenger?.status
+      })
+      clearView();
     }
   }
 },[messagesPassenger]);
 useEffect(()=>{
-if(stateTripPassanger){
-    console.log('Nombre conductor',useTripsStore.getState().tripSendData?.trip_id);
-    console.log('Mensaje a STATUS',stateTripPassanger?.status);
-    console.log('Mensaje a TRIP ID',stateTripPassanger?.trip_id);
-}
-},[stateTripPassanger])
+   if(useTripsStore.getState().tripSendData){
+    setStateTripPassanger(tripSendData);
+  }
+},[tripSendData]);
     return (
     <>
       {stateTripPassanger != null ? (
@@ -176,12 +189,10 @@ if(stateTripPassanger){
                         <Heading  style={{fontSize:15, fontStyle:"italic"}}>Solicitud de viaje</Heading>
                         <Button size="sm" variant="ghost" onPress={() => {setFullWidget(!fullWidget)}}>{fullWidget? "Ver menos" : "Ver más"}</Button>
                     </HStack>
-
                     <HStack justifyContent={"space-around"} alignItems="center">
                         <Heading fontSize={15}>Estado solicitud </Heading>
                         <StatusWidget status={stateTripPassanger?.status}></StatusWidget>
                     </HStack>
-
                     {fullWidget && (
                     <Box style={styless.mainBox.scroll}>
                         <HStack justifyContent={"space-around"} alignItems="center">
