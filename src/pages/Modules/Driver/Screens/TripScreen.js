@@ -122,7 +122,6 @@ export default function TripScreen({ navigation }) {
                                                 USD
                                             </Text>
                                         </HStack>
-    
                                     </VStack>
                                     <Spacer />
                                     <VStack marginRight={10}>
@@ -134,7 +133,6 @@ export default function TripScreen({ navigation }) {
                                         {passengerNumberWidget(item)}
                                     </VStack>
                                 </HStack>
-                                
                             </Box>} keyExtractor={item => item.id}
                         />
                     </>) : 
