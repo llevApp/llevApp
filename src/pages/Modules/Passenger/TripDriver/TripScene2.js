@@ -356,7 +356,7 @@ useEffect(()=>{
                         }
                      
                     </Modal.Content>
-          </Modal>
+              </Modal>
       }
         {
          origin && (

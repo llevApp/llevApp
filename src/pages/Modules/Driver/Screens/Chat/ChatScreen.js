@@ -7,6 +7,7 @@ import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useTripsStore } from '../StoreTrip/StoreTrips';
 import {URL_API,TRIPS_DRIVER_ACTIVE,GET_TRIP_INFO} from "@env";
 import {hubChat} from '../../../../../services/common/hubChat';
+import {hubWebSocket} from '../../../../../services/common/hubWebSocket';
 import {Container,
     Card,
     UserInfo,
@@ -17,10 +18,18 @@ import {Container,
     PostTime,
     MessageText,
     TextSection} from './ChatScreen.style';
-import { View, Text, Button, FlatList,StyleSheet } from 'react-native';
-
+import { View, Text, FlatList,StyleSheet } from 'react-native';
+import {   
+  VStack,
+  Button,
+  useDisclose,
+  Image,
+  HStack,Modal,Heading,Spinner} from "native-base";
 const ChatScreenDriver = () => {
     const navigation = useNavigation();
+    const[titleChange,setTitleChange]=useState('Cargando Datos');
+    const{messages}=hubWebSocket();
+    const [showModal, setShowModal] = useState(true);
     const handleSignOut = () => {
       auth
         .signOut()
@@ -35,19 +44,26 @@ const [Messages,setMessages]=useState(null);
 const [idTrip,setIdTrip]=useState(null);
     const userImg = "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
     const {name,idUser} = useUserStore();
-
+    const backHome = ()=>{
+      navigation.replace("Driver");
+    }
 useEffect(()=>{
   if(idUser){
     fetch(URL_API+TRIPS_DRIVER_ACTIVE+idUser)
     .then((response)=>response.json())
     .then((json)=>{
-     if(json){ 
+     if(json){
+      console.log(json); 
       setIdTrip(null);
-        if(json?.length == 0){
+        if(json?.trip?.length == 0){
         console.log('No tenemos viajes activos');
+        setTitleChange('Ups no hay chats disponibles');
         }else{
-          if(json){
+          if(json?.trip){
             setIdTrip(json?.trip[0].trip_id);
+            setTitleChange('Hay viajes activos');
+          }else{
+            console.log('nada');
           }
         }
       }else{
@@ -56,10 +72,10 @@ useEffect(()=>{
     }
     
     )
-    .catch((error)=>alert(error))
+    .catch((error)=>console.log(error))
     .finally( ()=>console.log(''));
   }
-},[idUser]);
+},[idUser,messages]);
 
 useEffect(()=>{
 
@@ -124,6 +140,36 @@ useEffect(()=>{
             </Card>
           )}
         />
+        {titleChange != 'Hay viajes activos' ? (
+          <Modal   isOpen={showModal} onClose={() => setShowModal(false)}  >
+                    <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
+                      <Modal.Body _scrollview={{scrollEnabled:false}}>
+                      <VStack style={styles.titleHeader}>
+                       <Heading style={styles.titleContent} color="#159A9C" fontSize="xl">
+                        {titleChange}
+                        </Heading>
+                        {titleChange == 'Cargando Datos' ? 
+                        (<Spinner accessibilityLabel="Loading posts"  size="lg"/>):
+                        (null)
+                        }
+                      </VStack>
+                      </Modal.Body>
+                      {titleChange == 'Cargando Datos' ? 
+                        (null):
+                        ( <Modal.Footer>
+                          <Button flex="1" colorScheme="red" onPress={() => {
+                        backHome();
+                        setShowModal(false);
+                      }}>
+                        Volver
+                      </Button>
+                           </Modal.Footer>)
+                        }
+                     
+                    </Modal.Content>
+          </Modal>
+
+        ) : null}
         </View>
     );
 }

@@ -7,6 +7,7 @@ import { useUserStore } from '../../../../Home/Store/StoreHome';
 import { useTripsStore } from '../StoreTrip/StoreTrips';
 import {URL_API,PASSENGER_TRIPS} from "@env";
 import {hubChat} from '../../../../../services/common/hubChat';
+import {hubWebSocket} from '../../../../../services/common/hubWebSocket';
 import {Container,
     Card,
     UserInfo,
@@ -17,10 +18,21 @@ import {Container,
     PostTime,
     MessageText,
     TextSection} from './ChatScreen.style';
-import { View, Text, Button, FlatList,StyleSheet } from 'react-native';
-
+import { View, Text, FlatList,StyleSheet } from 'react-native';
+import {   
+  VStack,
+  Button,
+  useDisclose,
+  Image,
+  HStack,Modal,Heading,Spinner} from "native-base";
 const ChatScreen = () => {
     const navigation = useNavigation();
+    const[titleChange,setTitleChange]=useState('Cargando Datos');
+    const [showModal, setShowModal] = useState(true);
+    const{messagesPassenger}=hubWebSocket();
+    const backHome = ()=>{
+      navigation.replace("Passenger");
+    }
     const handleSignOut = () => {
       auth
         .signOut()
@@ -36,6 +48,7 @@ const [Messages,setMessages]=useState(null);
     const {name,idUser} = useUserStore();
 
 useEffect(()=>{
+  if(idUser){
     fetch(URL_API+PASSENGER_TRIPS)
     .then((response)=>response.json())
     .then((json)=>{
@@ -47,7 +60,7 @@ useEffect(()=>{
       });
       let filter = response.filter((v)=>v!=undefined);
         if(filter?.length == 0){
-        console.log('NO drivers!!');
+          setTitleChange('Ups no hay chats disponibles');
         }else{
           let newMessages = filter?.map((t)=>{
             return{
@@ -59,17 +72,18 @@ useEffect(()=>{
                 'Hola, en un segundo te respondo',
             }
           })
+          setTitleChange('Tenemos un driver asignado');
           setMessages(newMessages);
         }
       }else{
         console.log('NO drivers!!');
+        setTitleChange('Ups no hay chats disponibles');
       }
     })
-    .catch((error)=>alert(error))
+    .catch((error)=>console.log(error))
     .finally( ()=>console.log(''));
-
-
-},[idUser]);
+  }
+},[idUser,messagesPassenger]);
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <FlatList 
@@ -77,7 +91,6 @@ useEffect(()=>{
           keyExtractor={item=>item.id}
           renderItem={({item}) => (
             <Card onPress={() =>{ 
-
                 console.log(item?.userName,item?.userImg,item?.messageText);
               navigation.navigate('MessagesScreen', {
                 useId:item?.id,userName: item?.userName,userImg: item?.userImg,messageText:item.messageText
@@ -100,6 +113,36 @@ useEffect(()=>{
             </Card>
           )}
         />
+        {titleChange != 'Tenemos un driver asignado' ? (
+          <Modal   isOpen={showModal} onClose={() => setShowModal(false)}  >
+                    <Modal.Content maxWidth="400px" bgColor={"#FFFFF9"} color={"#FFFFF9" }>
+                      <Modal.Body _scrollview={{scrollEnabled:false}}>
+                      <VStack style={styles.titleHeader}>
+                       <Heading style={styles.titleContent} color="#159A9C" fontSize="xl">
+                        {titleChange}
+                        </Heading>
+                        {titleChange == 'Cargando Datos' ? 
+                        (<Spinner accessibilityLabel="Loading posts"  size="lg"/>):
+                        (null)
+                        }
+                      </VStack>
+                      </Modal.Body>
+                      {titleChange == 'Cargando Datos' ? 
+                        (null):
+                        ( <Modal.Footer>
+                          <Button flex="1" colorScheme="red" onPress={() => {
+                        backHome();
+                        setShowModal(false);
+                      }}>
+                        Volver
+                      </Button>
+                           </Modal.Footer>)
+                        }
+                     
+                    </Modal.Content>
+          </Modal>
+
+        ) : null}
         </View>
     );
 }
