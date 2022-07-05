@@ -90,7 +90,7 @@ export const ActiveTripScreen= () => {
                         origin={origin.description}
                         destination={destination.description}
                         apikey={GOOGLE_MAPS_APIKEY}
-                        strokeWidth={5}
+                        strokeWidth={2}
                         strokeColor="#039BE5"></MapViewDirections>
                         <MapView.Marker
                         coordinate={{
